@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FITNEXA AI — Train Smarter. Become Stronger.</title>
+    <meta name="description" content="FITNEXA AI is your premium AI-powered personal fitness trainer that adapts to your body, goals and performance. Train smarter with personalized workouts, nutrition and recovery.">
+    <meta name="keywords" content="AI fitness, personal trainer, workout, fitness AI, smart training">
+    <meta name="author" content="FITNEXA AI">
+    <meta name="theme-color" content="#02050A">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="FITNEXA AI — Train Smarter. Become Stronger.">
+    <meta property="og:description" content="Your AI-powered personal trainer that adapts to your body, goals and performance.">
+    <meta property="og:type" content="website">
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         LOADING SCREEN
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">FITNEXA <span>AI</span></div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill" id="loadingBarFill"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         CUSTOM CURSOR (Desktop only)
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="cursor-label" id="cursorLabel">VIEW</div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         GRID OVERLAY
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="grid-overlay">
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCROLL PROGRESS INDICATOR
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="scroll-progress" id="scrollProgress">
+        <div class="progress-dot active" data-section="hero"><span class="progress-label">01</span></div>
+        <div class="progress-dot" data-section="ai-intro"><span class="progress-label">02</span></div>
+        <div class="progress-dot" data-section="ai-coach"><span class="progress-label">03</span></div>
+        <div class="progress-dot" data-section="workouts"><span class="progress-label">04</span></div>
+        <div class="progress-dot" data-section="dashboard"><span class="progress-label">05</span></div>
+        <div class="progress-dot" data-section="nutrition"><span class="progress-label">06</span></div>
+        <div class="progress-dot" data-section="recovery"><span class="progress-label">07</span></div>
+        <div class="progress-dot" data-section="final-cta"><span class="progress-label">08</span></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         NAVBAR
+         ═══════════════════════════════════════════════════════════ -->
+    <nav class="fitnexa-nav" id="mainNav">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Logo -->
+                <a href="index.html" class="nav-logo" data-cursor="hover">FITNEXA <span>AI</span></a>
+
+                <!-- Desktop Nav -->
+                <ul class="nav-links d-none d-lg-flex">
+                    <li><a href="index.html" class="active" data-cursor="hover">Home</a></li>
+                    <li><a href="about.html" data-cursor="hover">About</a></li>
+                    <li><a href="programs.html" data-cursor="hover">Programs</a></li>
+                    <li><a href="ai-coach-overview.html" data-cursor="hover">AI Coach</a></li>
+                    <li><a href="pricing.html" data-cursor="hover">Pricing</a></li>
+                    <li><a href="contact.html" data-cursor="hover">Contact</a></li>
+                </ul>
+
+                <!-- CTA + Auth Cluster -->
+                <div class="d-flex align-items-center gap-3" id="navAuthCluster">
+                    <a href="login.html" class="nav-login-link text-white text-decoration-none d-none d-md-inline-block fw-semibold" style="font-size:0.9rem;" data-cursor="hover">Login</a>
+                    <a href="signup.html" class="nav-cta-btn d-none d-md-inline-flex" data-cursor="hover">Start Training <i class="bi bi-arrow-right"></i></a>
+                    <button class="mobile-menu-toggle d-lg-none" id="menuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" data-mobile-link>Home</a></li>
+            <li><a href="about.html" data-mobile-link>About</a></li>
+            <li><a href="programs.html" data-mobile-link>Programs</a></li>
+            <li><a href="ai-coach-overview.html" data-mobile-link>AI Coach</a></li>
+            <li><a href="pricing.html" data-mobile-link>Pricing</a></li>
+            <li><a href="contact.html" data-mobile-link>Contact</a></li>
+            <li><a href="login.html" data-mobile-link>Login</a></li>
+            <li><a href="signup.html" data-mobile-link>Start Training</a></li>
+            <li><a href="dashboard.html" data-mobile-link>Enter Dashboard</a></li>
+        </ul>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 1: HERO — CINEMATIC INTRO
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="hero" class="cinematic-section depth-container">
+        <!-- Background layers -->
+        <div class="hero-bg-gradient" id="heroBg"></div>
+        <div class="hero-glow" id="heroGlow"></div>
+        <div class="depth-atmospheric"></div>
+
+        <!-- 3D AI Core Behind Athlete -->
+        <div class="depth-3d-canvas" id="heroAICoreContainer" style="z-index:2;opacity:0.95;"></div>
+
+        <!-- Athlete image -->
+        <div class="hero-athlete-wrapper depth-athlete" id="heroAthlete" data-depth="0.06">
+            <img src="images/hero-athlete.webp" alt="Elite athlete sprinting" width="896" height="1200" loading="eager" decoding="async">
+        </div>
+
+        <!-- Hero content -->
+        <div class="container hero-content" id="heroContent">
+            <div class="row">
+                <div class="col-12 col-md-8 col-xl-6">
+                    <div class="hero-eyebrow" id="heroEyebrow">AI FITNESS TRAINER</div>
+                    <h1 class="heading-massive hero-headline" id="heroHeadline">
+                        <span class="line"><span id="heroDynamicPrefix">TRAIN</span></span>
+                        <span class="line"><span class="accent" id="heroDynamicSuffix">SMARTER.</span></span>
+                    </h1>
+                    <p class="hero-description" id="heroDesc">
+                        Your AI-powered personal trainer that adapts to your goals, performance, recovery and lifestyle.
+                    </p>
+                    <div class="hero-buttons" id="heroButtons">
+                        <a href="signup.html" class="btn-primary-glow" data-cursor="hover">
+                            START YOUR JOURNEY <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
+                        </a>
+                        <a href="ai-coach-overview.html" class="btn-outline-glow" data-cursor="hover">
+                            EXPLORE AI COACH
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating stats card with 3D tilt -->
+        <div class="hero-stats-card glass-card tilt-card depth-glass d-none d-md-block" id="heroStatsCard" data-depth="0.12">
+            <div class="stats-header">
+                <span class="text-label">This Week Progress</span>
+                <span style="font-family: var(--font-heading); font-weight: 700; color: var(--blue-accent);">78%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="heroProgressFill"></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" data-count="5">0</div>
+                    <div class="stat-label">Workouts</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" data-count="2450">0</div>
+                    <div class="stat-label">Calories Burned</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" data-count="6">0</div>
+                    <div class="stat-label">Active Days</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4.8</div>
+                    <div class="stat-label">Hours Trained</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         HERO SCROLL — TEXT TRANSFORMATIONS
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="text-transform-section" id="textTransformSection">
+        <div class="text-transform-pinned" id="textTransformPinned">
+            <div class="hero-bg-gradient"></div>
+            <div class="blue-glow blue-glow-xl" style="top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.3;"></div>
+
+            <div class="text-transform-phrase heading-massive" id="phrase1" style="opacity:1;">
+                <span class="phrase-line">YOUR BODY</span>
+                <span class="phrase-line" style="color:var(--blue-electric)">IS UNIQUE.</span>
+            </div>
+            <div class="text-transform-phrase heading-massive" id="phrase2" style="opacity:0;">
+                <span class="phrase-line">YOUR TRAINING</span>
+                <span class="phrase-line" style="color:var(--blue-electric)">SHOULD BE TOO.</span>
+            </div>
+            <div class="text-transform-phrase heading-massive" id="phrase3" style="opacity:0;">
+                <span class="phrase-line">POWERED</span>
+                <span class="phrase-line" style="color:var(--blue-electric)">BY AI.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 2: AI INTRODUCTION
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="ai-intro" class="cinematic-section" style="padding: var(--section-pad) 0;">
+        <div class="blue-glow blue-glow-lg" style="top:20%;right:-10%;opacity:0.15;"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-7">
+                    <div class="text-label mb-3" style="color: var(--blue-accent);">AI-POWERED INTELLIGENCE</div>
+                    <h2 class="heading-massive ai-intro-headline" id="aiIntroHeadline">
+                        <span class="line"><span>YOUR BODY.</span></span>
+                        <span class="line"><span class="accent-line">YOUR DATA.</span></span>
+                        <span class="line"><span>YOUR EVOLUTION.</span></span>
+                    </h2>
+                    <p class="text-body mt-4" style="max-width: 480px;">
+                        Our AI analyzes thousands of data points to create a training program that's uniquely yours. Every rep, every set, every recovery metric — optimized for your evolution.
+                    </p>
+                </div>
+                <div class="col-12 col-lg-5 mt-5 mt-lg-0">
+                    <div class="ai-data-cards" id="aiDataCards">
+                        <div class="ai-data-card glass-card-sm">
+                            <div class="card-label">Recovery</div>
+                            <div class="card-value"><span data-count="86">0</span><span class="card-unit">%</span></div>
+                        </div>
+                        <div class="ai-data-card glass-card-sm">
+                            <div class="card-label">Strength</div>
+                            <div class="card-value">+<span data-count="24">0</span><span class="card-unit">%</span></div>
+                        </div>
+                        <div class="ai-data-card glass-card-sm">
+                            <div class="card-label">Consistency</div>
+                            <div class="card-value"><span data-count="92">0</span><span class="card-unit">%</span></div>
+                        </div>
+                        <div class="ai-data-card glass-card-sm">
+                            <div class="card-label">Fitness Level</div>
+                            <div class="card-value" style="font-size:1.2rem;color:var(--blue-accent);">INTERMEDIATE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 3: AI VISUALIZATION
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="ai-visualization" class="cinematic-section">
+        <div class="blue-glow blue-glow-xl" style="top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.12;"></div>
+        <div class="container">
+            <div class="text-center mb-5">
+                <div class="text-label mb-2" style="color: var(--blue-accent);">NEURAL FITNESS ENGINE</div>
+                <h2 class="heading-xl" style="font-size: clamp(1.8rem, 4vw, 3rem);">AI FITNESS CORE</h2>
+            </div>
+            <div class="ai-viz-container mx-auto" id="aiVizContainer">
+                <!-- Rings -->
+                <div class="ai-core-ring"></div>
+                <div class="ai-core-ring"></div>
+                <div class="ai-core-ring"></div>
+                <!-- Center label -->
+                <div class="ai-core-label">
+                    <div class="core-title">FITNEXA</div>
+                    <div class="core-sub">AI CORE</div>
+                </div>
+                <!-- Data nodes -->
+                <div class="ai-node">
+                    <div class="node-label">Goal</div>
+                    <div class="node-value">STRENGTH</div>
+                </div>
+                <div class="ai-node">
+                    <div class="node-label">Recovery</div>
+                    <div class="node-value">86%</div>
+                </div>
+                <div class="ai-node">
+                    <div class="node-label">Sleep</div>
+                    <div class="node-value">7H 42M</div>
+                </div>
+                <div class="ai-node">
+                    <div class="node-label">Training Load</div>
+                    <div class="node-value">MEDIUM</div>
+                </div>
+                <div class="ai-node">
+                    <div class="node-label">Calories</div>
+                    <div class="node-value">2,420</div>
+                </div>
+                <div class="ai-node">
+                    <div class="node-label">Heart Rate</div>
+                    <div class="node-value">68 BPM</div>
+                </div>
+                <!-- Particles -->
+                <div class="ai-particle" style="top:15%;left:30%;animation-delay:0s;"></div>
+                <div class="ai-particle" style="top:40%;left:70%;animation-delay:2s;"></div>
+                <div class="ai-particle" style="top:65%;left:25%;animation-delay:4s;"></div>
+                <div class="ai-particle" style="top:80%;left:60%;animation-delay:1s;"></div>
+                <div class="ai-particle" style="top:30%;left:55%;animation-delay:3s;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 4: AI COACH
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="ai-coach" class="cinematic-section" style="padding: var(--section-pad) 0;">
+        <div class="blue-glow blue-glow-lg" style="top:30%;left:-15%;opacity:0.15;"></div>
+        <div class="container">
+            <div class="text-label mb-3" style="color: var(--blue-accent);">INTELLIGENT COACHING</div>
+            <h2 class="heading-massive coach-headline mb-5" id="coachHeadline">
+                <span class="line"><span>MEET YOUR</span></span>
+                <span class="line"><span style="color:var(--blue-electric)">AI COACH.</span></span>
+            </h2>
+
+            <div class="row align-items-center g-4 g-lg-5">
+                <!-- Coach image -->
+                <div class="col-12 col-lg-5">
+                    <div class="coach-image-wrapper" id="coachImage">
+                        <img src="images/coach-portrait.webp" alt="AI Fitness Coach" width="896" height="1200" loading="lazy" decoding="async">
+                        <div class="blue-glow blue-glow-md coach-glow" style="opacity:0.3;"></div>
+                    </div>
+                </div>
+
+                <!-- Chat interface -->
+                <div class="col-12 col-lg-7">
+                    <div class="ai-chat-interface" id="chatInterface">
+                        <div class="chat-bubble user" id="chatBubble1">
+                            <div class="chat-sender">YOU</div>
+                            <div class="chat-text">What should I train today?</div>
+                        </div>
+                        <div class="chat-bubble ai" id="chatBubble2">
+                            <div class="chat-sender ai-label"><i class="bi bi-stars me-1"></i>AI COACH</div>
+                            <div class="chat-text">Your recovery is strong today at 86%. Let's focus on upper-body strength — I've designed a progressive overload session targeting chest and shoulders.</div>
+                        </div>
+                        <div class="chat-bubble user" id="chatBubble3">
+                            <div class="chat-sender">YOU</div>
+                            <div class="chat-text">How has my progress been?</div>
+                        </div>
+                        <div class="chat-bubble ai" id="chatBubble4">
+                            <div class="chat-sender ai-label"><i class="bi bi-stars me-1"></i>AI COACH</div>
+                            <div class="chat-text">Your performance has improved 8% over the last three weeks. Bench press is up 12lbs, and your endurance has increased by 18%. You're right on track.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 5: WORKOUTS — HORIZONTAL SCROLL
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="workouts" class="cinematic-section" style="padding: var(--section-pad) 0;">
+        <div class="container">
+            <div class="text-label text-center mb-3" style="color: var(--blue-accent);">PERSONALIZED PROGRAMS</div>
+            <h2 class="heading-massive workout-headline" id="workoutHeadline">
+                EVERY WORKOUT.<br><span style="color:var(--blue-electric)">BUILT FOR YOU.</span>
+            </h2>
+        </div>
+
+        <div class="workout-horizontal-wrapper" id="workoutWrapper">
+            <div class="workout-horizontal-track" id="workoutTrack">
+                <!-- Workout Card 1 -->
+                <div class="workout-card" data-cursor="view">
+                    <img src="images/workout-strength.webp" alt="Strength Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                    <div class="card-overlay">
+                        <div class="card-category">Program</div>
+                        <h3 class="card-title">Strength</h3>
+                        <p class="card-desc">Build raw power with progressive overload training</p>
+                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                </div>
+
+                <!-- Workout Card 2 -->
+                <div class="workout-card" data-cursor="view">
+                    <img src="images/workout-hiit.webp" alt="HIIT Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                    <div class="card-overlay">
+                        <div class="card-category">Program</div>
+                        <h3 class="card-title">HIIT</h3>
+                        <p class="card-desc">High intensity intervals for maximum calorie burn</p>
+                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                </div>
+
+                <!-- Workout Card 3 -->
+                <div class="workout-card" data-cursor="view">
+                    <img src="images/workout-fatloss.webp" alt="Fat Loss Program" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                    <div class="card-overlay">
+                        <div class="card-category">Program</div>
+                        <h3 class="card-title">Fat Loss</h3>
+                        <p class="card-desc">Optimized routines designed to maximize fat burning</p>
+                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                </div>
+
+                <!-- Workout Card 4 -->
+                <div class="workout-card" data-cursor="view">
+                    <img src="images/workout-muscle.webp" alt="Muscle Building" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                    <div class="card-overlay">
+                        <div class="card-category">Program</div>
+                        <h3 class="card-title">Muscle Building</h3>
+                        <p class="card-desc">Hypertrophy-focused training for lean muscle gains</p>
+                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                </div>
+
+                <!-- Workout Card 5 -->
+                <div class="workout-card" data-cursor="view">
+                    <img src="images/workout-endurance.webp" alt="Endurance Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                    <div class="card-overlay">
+                        <div class="card-category">Program</div>
+                        <h3 class="card-title">Endurance</h3>
+                        <p class="card-desc">Build stamina and cardiovascular fitness</p>
+                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                </div>
+
+                <!-- Workout Card 6 -->
+                <div class="workout-card" data-cursor="view">
+                    <img src="images/workout-mobility.webp" alt="Mobility Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                    <div class="card-overlay">
+                        <div class="card-category">Program</div>
+                        <h3 class="card-title">Mobility</h3>
+                        <p class="card-desc">Improve flexibility and prevent injuries</p>
+                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 6: WORKOUT PLAYER
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="workout-player" class="cinematic-section">
+        <div class="blue-glow blue-glow-lg" style="top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.1;"></div>
+        <div class="container">
+            <div class="text-label text-center mb-3" style="color: var(--blue-accent);">ACTIVE SESSION</div>
+            <h2 class="heading-xl text-center mb-5" style="font-size: clamp(2rem, 5vw, 3.5rem);">LET'S GET TO WORK.</h2>
+
+            <div class="player-container glass-card" id="playerContainer">
+                <div class="player-image-wrapper">
+                    <img src="images/form-analysis.webp" alt="Barbell Squat Exercise" width="896" height="1200" loading="lazy" decoding="async">
+                    <div class="player-overlay">
+                        <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+                            <div>
+                                <div class="player-exercise-name">BARBELL SQUAT</div>
+                                <div class="player-set-info">Set 03 / 12 &nbsp;·&nbsp; 12 Reps &nbsp;·&nbsp; 00:45 Rest</div>
+                            </div>
+                            <div class="player-stats">
+                                <div class="player-stat">
+                                    <div class="ps-value"><span data-count="142">0</span></div>
+                                    <div class="ps-label">BPM</div>
+                                </div>
+                                <div class="player-stat">
+                                    <div class="ps-value"><span data-count="238">0</span></div>
+                                    <div class="ps-label">Calories</div>
+                                </div>
+                                <div class="player-stat">
+                                    <div class="ps-value"><span data-count="94">0</span>%</div>
+                                    <div class="ps-label">Form Score</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="player-ai-tip" id="playerAiTip">
+                            <div class="tip-icon"><i class="bi bi-stars"></i></div>
+                            <div class="tip-text">"Keep your chest up and drive through your heels. Excellent depth."</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 7: FORM ANALYSIS
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="form-analysis" class="cinematic-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-12 col-lg-6">
+                    <div class="text-label mb-3" style="color: var(--blue-accent);">AI FORM COACHING</div>
+                    <h2 class="heading-xl" style="font-size: clamp(2rem, 5vw, 3.5rem);">PERFECT YOUR<br><span style="color:var(--blue-electric)">FORM.</span></h2>
+                    <p class="text-body mt-3" style="max-width:420px;">Real-time motion analysis powered by AI. Every angle measured, every rep optimized.</p>
+
+                    <div class="form-score-display mt-4" style="text-align:left;">
+                        <div class="score-label">Form Score</div>
+                        <div class="score-value"><span data-count="94" id="formScoreValue">72</span><span class="score-unit">%</span></div>
+                    </div>
+                    <p class="form-ai-message mt-2" style="text-align:left;font-style:italic;color:var(--blue-accent);">
+                        <i class="bi bi-stars me-1"></i>"Excellent knee alignment. Keep driving through your heels."
+                    </p>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="form-athlete-container" id="formAthleteContainer">
+                        <img src="images/form-analysis.webp" alt="Form Analysis" width="896" height="1200" loading="lazy" decoding="async">
+                        <!-- Tracking SVG -->
+                        <svg class="form-tracking-lines" viewBox="0 0 500 700" id="trackingLines">
+                            <line x1="225" y1="154" x2="175" y2="280" />
+                            <line x1="175" y1="280" x2="240" y2="350" />
+                            <line x1="240" y1="350" x2="220" y2="490" />
+                            <line x1="220" y1="490" x2="210" y2="630" />
+                        </svg>
+                        <!-- Tracking points -->
+                        <div class="tracking-point point-shoulder" data-label="Shoulder"></div>
+                        <div class="tracking-point point-elbow" data-label="Elbow"></div>
+                        <div class="tracking-point point-hip" data-label="Hip"></div>
+                        <div class="tracking-point point-knee" data-label="Knee"></div>
+                        <div class="tracking-point point-ankle" data-label="Ankle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 8: DASHBOARD
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="dashboard" class="cinematic-section">
+        <div class="blue-glow blue-glow-xl" style="top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.08;"></div>
+        <div class="container">
+            <div class="text-center mb-5">
+                <div class="text-label mb-3" style="color: var(--blue-accent);">PERFORMANCE ANALYTICS</div>
+                <h2 class="heading-massive" style="font-size: clamp(2.5rem, 7vw, 5.5rem);" id="dashboardHeadline">
+                    KNOW YOUR<br><span style="color:var(--blue-electric)">PROGRESS.</span>
+                </h2>
+            </div>
+
+            <div class="dashboard-container glass-card" id="dashboardContainer">
+                <div class="dashboard-header">
+                    <div class="dash-title"><i class="bi bi-graph-up-arrow me-2" style="color:var(--blue-accent);"></i>Dashboard</div>
+                    <div class="dash-period">This Week</div>
+                </div>
+
+                <div class="dash-performance">
+                    <div class="perf-value"><span data-count="78">0</span>%</div>
+                    <div class="perf-label">Overall Performance</div>
+                </div>
+
+                <div class="row g-3 dash-stats-grid">
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="dash-stat">
+                            <div class="ds-value">5/6</div>
+                            <div class="ds-label">Workouts</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="dash-stat">
+                            <div class="ds-value"><span data-count="2450">0</span></div>
+                            <div class="ds-label">Calories</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="dash-stat">
+                            <div class="ds-value"><span data-count="6">0</span></div>
+                            <div class="ds-label">Active Days</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="dash-stat">
+                            <div class="ds-value">4.8h</div>
+                            <div class="ds-label">Hours Trained</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="dash-stat">
+                            <div class="ds-value"><span data-count="86">0</span>%</div>
+                            <div class="ds-label">Recovery</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-xl-2">
+                        <div class="dash-stat">
+                            <div class="ds-value">+<span data-count="24">0</span>%</div>
+                            <div class="ds-label">Strength</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Graph -->
+                <div class="dash-graph" id="dashGraph">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-label">Weekly Performance</span>
+                        <div class="d-flex gap-3">
+                            <span class="text-label" style="color:var(--blue-accent);"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>Strength +24%</span>
+                            <span class="text-label" style="color:var(--text-muted);"><i class="bi bi-circle-fill me-1" style="font-size:0.4rem;"></i>Endurance +18%</span>
+                        </div>
+                    </div>
+                    <svg viewBox="0 0 800 200" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="graphGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="rgba(30,144,255,0.3)"/>
+                                <stop offset="100%" stop-color="rgba(30,144,255,0)"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Grid lines -->
+                        <line x1="0" y1="50" x2="800" y2="50" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                        <line x1="0" y1="100" x2="800" y2="100" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                        <line x1="0" y1="150" x2="800" y2="150" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                        <!-- Graph area -->
+                        <path class="graph-area" d="M0,180 L114,140 L228,155 L342,110 L456,90 L570,60 L684,45 L800,35 L800,200 L0,200 Z" id="graphArea"/>
+                        <!-- Graph line -->
+                        <path class="graph-line" d="M0,180 L114,140 L228,155 L342,110 L456,90 L570,60 L684,45 L800,35" id="graphLine"/>
+                        <!-- Data points -->
+                        <circle class="graph-dot" cx="0" cy="180" r="5"/>
+                        <circle class="graph-dot" cx="114" cy="140" r="5"/>
+                        <circle class="graph-dot" cx="228" cy="155" r="5"/>
+                        <circle class="graph-dot" cx="342" cy="110" r="5"/>
+                        <circle class="graph-dot" cx="456" cy="90" r="5"/>
+                        <circle class="graph-dot" cx="570" cy="60" r="5"/>
+                        <circle class="graph-dot" cx="684" cy="45" r="5"/>
+                        <circle class="graph-dot" cx="800" cy="35" r="5"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 9: PROGRESS STORY
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="progress-story" class="cinematic-section">
+        <div class="container">
+            <div class="text-label text-center mb-3" style="color: var(--blue-accent);">YOUR TRANSFORMATION</div>
+            <h2 class="heading-massive progress-headline">
+                SEE YOURSELF<br><span style="color:var(--blue-electric)">GETTING STRONGER.</span>
+            </h2>
+
+            <div class="progress-timeline" id="progressTimeline">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-6 col-md-3">
+                        <div class="progress-week" id="progressWeek1">
+                            <div class="week-number">Week 01</div>
+                            <div class="week-image">
+                                <img src="images/hero-athlete.webp" alt="Week 1 Progress" width="896" height="1200" loading="lazy" decoding="async">
+                            </div>
+                            <div class="week-stats mt-3">
+                                <div class="ws-item">
+                                    <div class="ws-value">72%</div>
+                                    <div class="ws-label">Fitness</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="progress-week" id="progressWeek4">
+                            <div class="week-number">Week 04</div>
+                            <div class="week-image">
+                                <img src="images/workout-strength.webp" alt="Week 4 Progress" width="1376" height="768" loading="lazy" decoding="async" style="object-position: center top;">
+                            </div>
+                            <div class="week-stats mt-3">
+                                <div class="ws-item">
+                                    <div class="ws-value">79%</div>
+                                    <div class="ws-label">Fitness</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="progress-week" id="progressWeek8">
+                            <div class="week-number">Week 08</div>
+                            <div class="week-image">
+                                <img src="images/workout-muscle.webp" alt="Week 8 Progress" width="1376" height="768" loading="lazy" decoding="async" style="object-position: center top;">
+                            </div>
+                            <div class="week-stats mt-3">
+                                <div class="ws-item">
+                                    <div class="ws-value">87%</div>
+                                    <div class="ws-label">Fitness</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="progress-week" id="progressWeek12">
+                            <div class="week-number">Week 12</div>
+                            <div class="week-image">
+                                <img src="images/cta-athlete.webp" alt="Week 12 Progress" width="1376" height="768" loading="lazy" decoding="async" style="object-position: center top;">
+                            </div>
+                            <div class="week-stats mt-3">
+                                <div class="ws-item">
+                                    <div class="ws-value">94%</div>
+                                    <div class="ws-label">Fitness</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 10: NUTRITION AI
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="nutrition" class="cinematic-section" style="padding: var(--section-pad) 0;">
+        <div class="blue-glow blue-glow-lg" style="bottom:10%;right:-10%;opacity:0.12;"></div>
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-12 col-lg-6">
+                    <div class="text-label mb-3" style="color: var(--blue-accent);">AI NUTRITION</div>
+                    <h2 class="heading-massive nutrition-headline" id="nutritionHeadline">
+                        <span class="line"><span>TRAINING IS ONLY</span></span>
+                        <span class="line"><span style="color:var(--blue-electric)">HALF THE STORY.</span></span>
+                    </h2>
+                    <p class="text-body mt-3" style="max-width:420px;">AI-optimized meal plans that adapt to your training intensity, recovery needs, and personal goals.</p>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <!-- Macros -->
+                    <div class="row g-3 macro-grid">
+                        <div class="col-6 col-sm-3">
+                            <div class="macro-item">
+                                <div class="macro-value"><span data-count="2420">0</span></div>
+                                <div class="macro-label">KCAL</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div class="macro-item">
+                                <div class="macro-value"><span data-count="165">0</span><span class="macro-unit">g</span></div>
+                                <div class="macro-label">PROTEIN</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div class="macro-item">
+                                <div class="macro-value"><span data-count="240">0</span><span class="macro-unit">g</span></div>
+                                <div class="macro-label">CARBS</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3">
+                            <div class="macro-item">
+                                <div class="macro-value"><span data-count="70">0</span><span class="macro-unit">g</span></div>
+                                <div class="macro-label">FAT</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Meal cards -->
+                    <div class="meal-cards-track mt-4" id="mealCardsTrack">
+                        <div class="meal-card glass-card-sm">
+                            <div class="meal-time">Breakfast</div>
+                            <div class="meal-name">Greek Yogurt + Berries</div>
+                            <div class="meal-cal">420 kcal · 32g protein</div>
+                        </div>
+                        <div class="meal-card glass-card-sm">
+                            <div class="meal-time">Lunch</div>
+                            <div class="meal-name">Chicken Rice Bowl</div>
+                            <div class="meal-cal">680 kcal · 48g protein</div>
+                        </div>
+                        <div class="meal-card glass-card-sm">
+                            <div class="meal-time">Dinner</div>
+                            <div class="meal-name">Salmon + Vegetables</div>
+                            <div class="meal-cal">620 kcal · 52g protein</div>
+                        </div>
+                        <div class="meal-card glass-card-sm">
+                            <div class="meal-time">Snack</div>
+                            <div class="meal-name">Protein Smoothie</div>
+                            <div class="meal-cal">340 kcal · 33g protein</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 11: RECOVERY
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="recovery" class="cinematic-section">
+        <div class="blue-glow blue-glow-xl" style="top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.08;"></div>
+        <div class="container">
+            <div class="text-label text-center mb-3" style="color: var(--blue-accent);">SMART RECOVERY</div>
+            <h2 class="heading-massive recovery-headline" id="recoveryHeadline">
+                TRAIN HARD.<br><span style="color:var(--blue-electric)">RECOVER SMART.</span>
+            </h2>
+
+            <!-- Recovery rings -->
+            <div class="recovery-rings-container" id="recoveryRings">
+                <svg class="recovery-ring-svg" viewBox="0 0 260 260">
+                    <!-- Outer ring bg -->
+                    <circle class="recovery-ring-bg" cx="130" cy="130" r="120"/>
+                    <!-- Outer ring fill - 86% -->
+                    <circle class="recovery-ring-fill" cx="130" cy="130" r="120" id="recoveryRingOuter"/>
+                    <!-- Inner ring bg -->
+                    <circle class="recovery-ring-bg" cx="130" cy="130" r="90" style="stroke-width:6;"/>
+                    <!-- Inner ring fill - 78% -->
+                    <circle class="recovery-ring-inner" cx="130" cy="130" r="90" id="recoveryRingInner"/>
+                </svg>
+                <div class="recovery-center-text">
+                    <div class="rc-value"><span data-count="86" id="recoveryScore">0</span>%</div>
+                    <div class="rc-label">Recovery</div>
+                </div>
+            </div>
+
+            <!-- Recovery stats -->
+            <div class="row g-3 recovery-stats justify-content-center" style="max-width: 700px; margin: 0 auto;">
+                <div class="col-6 col-lg-3">
+                    <div class="recovery-stat">
+                        <div class="rs-value">7H 42M</div>
+                        <div class="rs-label">Sleep</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="recovery-stat">
+                        <div class="rs-value" style="color:var(--blue-accent);">LOW</div>
+                        <div class="rs-label">Stress</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="recovery-stat">
+                        <div class="rs-value" style="color:var(--blue-accent);">HIGH</div>
+                        <div class="rs-label">Muscle Ready</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="recovery-stat">
+                        <div class="rs-value"><span data-count="68">0</span> BPM</div>
+                        <div class="rs-label">Resting HR</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 12: EDITORIAL TRANSITION
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="editorial-transition" class="cinematic-section">
+        <div class="editorial-pinned" id="editorialPinned">
+            <div class="hero-bg-gradient"></div>
+            <div class="blue-glow blue-glow-xl" style="top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.15;"></div>
+
+            <!-- First text -->
+            <div class="editorial-text-container heading-massive" id="editorialText1">
+                <span class="editorial-line" id="editLine1">YOUR BODY</span>
+                <span class="editorial-line" id="editLine2" style="color:var(--blue-electric)">IS NOT A</span>
+                <span class="editorial-line" id="editLine3">TEMPLATE.</span>
+            </div>
+
+            <!-- Athlete image -->
+            <div class="editorial-athlete" id="editorialAthlete">
+                <img src="images/editorial-athlete.webp" alt="Athletic portrait" width="1376" height="768" loading="lazy" decoding="async">
+            </div>
+
+            <!-- Second text -->
+            <div class="editorial-second-text heading-massive" id="editorialText2">
+                <span class="editorial-line">TRAINING</span>
+                <span class="editorial-line" style="color:var(--blue-electric)">SHOULD NOT</span>
+                <span class="editorial-line">BE ONE EITHER.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 13: FINAL CTA
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="final-cta" class="cinematic-section">
+        <div class="cta-bg-image" id="ctaBgImage">
+            <img src="images/cta-athlete.webp" alt="Build Your Strongest Self" width="1376" height="768" loading="lazy" decoding="async">
+        </div>
+        <div class="cta-overlay"></div>
+        <div class="blue-glow blue-glow-xl" style="top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.2;z-index:3;"></div>
+
+        <div class="cta-content">
+            <div class="text-label mb-3" style="color: var(--blue-accent);">BEGIN TODAY</div>
+            <h2 class="heading-massive cta-headline" id="ctaHeadline">
+                BUILD YOUR<br><span style="color:var(--blue-electric)">STRONGEST SELF.</span>
+            </h2>
+            <p class="cta-subtext">
+                Join thousands of athletes who train smarter with AI-powered coaching, personalized nutrition, and real-time performance tracking.
+            </p>
+            <div class="cta-button-wrapper">
+                <a href="signup.html" class="btn-primary-glow" data-cursor="hover" style="font-size:1rem;padding:20px 48px;">
+                    START YOUR JOURNEY <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════════════════════ -->
+    <footer class="fitnexa-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="footer-logo">FITNEXA <span>AI</span></div>
+                    <p class="footer-tagline">Train smarter. Become stronger. Your AI-powered fitness evolution starts here.</p>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-2 offset-lg-1">
+                    <h4 class="footer-heading">Platform</h4>
+                    <ul class="footer-links">
+                        <li><a href="programs.html" data-cursor="hover">Programs</a></li>
+                        <li><a href="ai-coach-overview.html" data-cursor="hover">AI Coach</a></li>
+                        <li><a href="nutrition.html" data-cursor="hover">Nutrition</a></li>
+                        <li><a href="recovery.html" data-cursor="hover">Recovery</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-2">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html" data-cursor="hover">About</a></li>
+                        <li><a href="pricing.html" data-cursor="hover">Pricing</a></li>
+                        <li><a href="contact.html" data-cursor="hover">Contact</a></li>
+                        <li><a href="signup.html" data-cursor="hover">Join Now</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-2">
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html" data-cursor="hover">Help Center</a></li>
+                        <li><a href="contact.html" data-cursor="hover">Contact Us</a></li>
+                        <li><a href="privacy.html" data-cursor="hover">Privacy</a></li>
+                        <li><a href="terms.html" data-cursor="hover">Terms</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-2">
+                    <h4 class="footer-heading">Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" data-cursor="hover">Instagram</a></li>
+                        <li><a href="#" data-cursor="hover">Twitter</a></li>
+                        <li><a href="#" data-cursor="hover">YouTube</a></li>
+                        <li><a href="#" data-cursor="hover">Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span class="copyright">© 2026 FITNEXA AI. All rights reserved.</span>
+                <div class="footer-socials">
+                    <a href="#" data-cursor="hover"><i class="bi bi-instagram"></i></a>
+                    <a href="#" data-cursor="hover"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" data-cursor="hover"><i class="bi bi-youtube"></i></a>
+                    <a href="#" data-cursor="hover"><i class="bi bi-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCRIPTS
+         ═══════════════════════════════════════════════════════════ -->
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <!-- Native Scroll + GSAP ScrollTrigger (No Lenis) -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Data Store & Auth Systems -->
+    <script src="js/data-store.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- Three.js WebGL Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/three-core.js"></script>
+    <script src="js/motion-fx.js"></script>
+    <script src="js/form-analysis.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/cursor.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

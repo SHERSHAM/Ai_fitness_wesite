@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding — FITNEXA AI</title>
+    <meta name="description" content="Set up your personalized AI fitness profile.">
+    <meta name="theme-color" content="#02050A">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="app-body" style="cursor:auto;">
+    <div class="onboarding-page">
+        <div class="onboarding-header">
+            <a href="index.html" class="auth-logo">FITNEXA <span>AI</span></a>
+            <div class="onboarding-progress-bar">
+                <div class="onboarding-progress-fill" id="progressFill" style="width:12.5%"></div>
+            </div>
+            <div class="onboarding-step-label" id="stepLabel">01 / 08</div>
+        </div>
+
+        <!-- 3D AI Core Ambient Canvas -->
+        <div class="depth-3d-canvas" id="onboardingAICoreCanvas" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.25;pointer-events:none;z-index:0;width:500px;height:500px;"></div>
+
+        <div class="onboarding-body" id="onboardingBody">
+            <!-- Steps are rendered dynamically by JS -->
+        </div>
+
+        <div class="onboarding-footer">
+            <button class="btn-outline-glow" id="btnBack" style="display:none;padding:12px 28px;">
+                <i class="bi bi-arrow-left me-2"></i> BACK
+            </button>
+            <div class="flex-grow-1"></div>
+            <button class="btn-primary-glow" id="btnNext" style="padding:12px 32px;">
+                NEXT <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- AI Plan Generation Screen -->
+    <div class="onboarding-generating" id="generatingScreen" style="display:none;">
+        <div class="generating-content">
+            <div class="generating-rings">
+                <div class="gen-ring"></div>
+                <div class="gen-ring"></div>
+                <div class="gen-ring"></div>
+                <div class="gen-core">
+                    <i class="bi bi-stars" style="font-size:2rem;color:var(--blue-accent);"></i>
+                </div>
+            </div>
+            <h2 class="generating-title">BUILDING YOUR PERSONAL PLAN...</h2>
+            <p class="generating-sub">Our AI is analyzing your preferences to create the perfect fitness program.</p>
+        </div>
+    </div>
+
+    <!-- Plan Ready Screen -->
+    <div class="onboarding-ready" id="readyScreen" style="display:none;">
+        <div class="ready-content">
+            <div class="ready-badge"><i class="bi bi-check-circle-fill"></i> YOUR PLAN IS READY</div>
+            <h2 class="ready-title">YOUR AI FITNESS PROFILE</h2>
+            <div class="ready-profile-grid" id="readyProfileGrid">
+                <!-- Filled by JS -->
+            </div>
+            <div class="ready-plan" id="readyPlan">
+                <h3 class="ready-plan-title">YOUR WEEKLY PLAN</h3>
+                <div class="ready-plan-grid" id="readyPlanGrid"></div>
+            </div>
+            <button class="btn-primary-glow mt-4" id="btnEnterDashboard" style="padding:18px 48px;font-size:1rem;">
+                ENTER YOUR DASHBOARD <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
+            </button>
+        </div>
+    </div>
+
+    <script src="js/data-store.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/three-core.js"></script>
+    <script src="js/motion-fx.js"></script>
+    <script>
+    (function() {
+        'use strict';
+
+        if (!window.Auth || !window.Auth.requireAuth()) return;
+        const user = window.Auth.getCurrentUser();
+        if (!user) return;
+
+        const STEPS = [
+            {
+                title: 'What is your primary goal?',
+                subtitle: 'This helps us design your optimal training program.',
+                type: 'single',
+                key: 'primaryGoal',
+                options: [
+                    { label: 'Build Muscle', icon: 'bi-lightning-charge-fill' },
+                    { label: 'Lose Fat', icon: 'bi-fire' },
+                    { label: 'Build Strength', icon: 'bi-trophy-fill' },
+                    { label: 'Improve Endurance', icon: 'bi-heart-pulse-fill' },
+                    { label: 'Improve Fitness', icon: 'bi-activity' },
+                    { label: 'Improve Mobility', icon: 'bi-person-arms-up' },
+                    { label: 'Maintain Fitness', icon: 'bi-shield-check' }
+                ]
+            },
+            {
+                title: 'What is your current fitness level?',
+                subtitle: 'Be honest — we\'ll calibrate everything to match.',
+                type: 'single',
+                key: 'fitnessLevel',
+                options: [
+                    { label: 'Beginner', icon: 'bi-1-circle-fill', desc: 'New to structured training' },
+                    { label: 'Intermediate', icon: 'bi-2-circle-fill', desc: '6+ months consistent training' },
+                    { label: 'Advanced', icon: 'bi-3-circle-fill', desc: '2+ years serious training' }
+                ]
+            },
+            {
+                title: 'What type of training do you enjoy?',
+                subtitle: 'Select all that apply.',
+                type: 'multi',
+                key: 'preferredTraining',
+                options: [
+                    { label: 'Strength', icon: 'bi-trophy-fill' },
+                    { label: 'HIIT', icon: 'bi-lightning-fill' },
+                    { label: 'Running', icon: 'bi-speedometer2' },
+                    { label: 'Cycling', icon: 'bi-bicycle' },
+                    { label: 'Bodyweight', icon: 'bi-person-fill' },
+                    { label: 'Yoga', icon: 'bi-flower2' },
+                    { label: 'Mobility', icon: 'bi-arrows-angle-expand' },
+                    { label: 'Sports', icon: 'bi-dribbble' }
+                ]
+            },
+            {
+                title: 'How many days can you train each week?',
+                subtitle: 'We\'ll build your schedule around your availability.',
+                type: 'single',
+                key: 'trainingDays',
+                options: [
+                    { label: '2 days' }, { label: '3 days' }, { label: '4 days' },
+                    { label: '5 days' }, { label: '6 days' }, { label: '7 days' }
+                ]
+            },
+            {
+                title: 'How much time do you usually have?',
+                subtitle: 'Per training session.',
+                type: 'single',
+                key: 'sessionDuration',
+                options: [
+                    { label: '15–20 minutes' }, { label: '30 minutes' },
+                    { label: '45 minutes' }, { label: '60 minutes' }, { label: '90+ minutes' }
+                ]
+            },
+            {
+                title: 'What equipment do you have?',
+                subtitle: 'Select all available.',
+                type: 'multi',
+                key: 'equipment',
+                options: [
+                    { label: 'No equipment', icon: 'bi-x-circle' },
+                    { label: 'Dumbbells', icon: 'bi-gear-fill' },
+                    { label: 'Resistance bands', icon: 'bi-link-45deg' },
+                    { label: 'Home gym', icon: 'bi-house-fill' },
+                    { label: 'Full gym', icon: 'bi-building' },
+                    { label: 'Cardio equipment', icon: 'bi-heart-pulse-fill' }
+                ]
+            },
+            {
+                title: 'What is your preferred training environment?',
+                subtitle: 'Where do you train most often?',
+                type: 'single',
+                key: 'environment',
+                options: [
+                    { label: 'Home', icon: 'bi-house-fill' },
+                    { label: 'Gym', icon: 'bi-building' },
+                    { label: 'Outdoor', icon: 'bi-sun-fill' },
+                    { label: 'Mixed', icon: 'bi-shuffle' }
+                ]
+            },
+            {
+                title: 'Anything else we should consider?',
+                subtitle: 'Optional — share any preferences, constraints or focus areas.',
+                type: 'text',
+                key: 'notes',
+                placeholder: 'e.g., knee injury recovery, training for a marathon, prefer morning workouts...'
+            }
+        ];
+
+        let currentStep = 0;
+        const answers = {};
+
+        const body = document.getElementById('onboardingBody');
+        const progressFill = document.getElementById('progressFill');
+        const stepLabel = document.getElementById('stepLabel');
+        const btnBack = document.getElementById('btnBack');
+        const btnNext = document.getElementById('btnNext');
+
+        function renderStep(index) {
+            const step = STEPS[index];
+            progressFill.style.width = ((index + 1) / STEPS.length * 100) + '%';
+            stepLabel.textContent = (index + 1 < 10 ? '0' : '') + (index + 1) + ' / 08';
+            btnBack.style.display = index > 0 ? 'inline-flex' : 'none';
+            btnNext.innerHTML = index === STEPS.length - 1
+                ? 'FINISH <span class="btn-arrow"><i class="bi bi-check-lg"></i></span>'
+                : 'NEXT <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>';
+
+            let html = '<div class="onboarding-step">';
+            html += '<h2 class="ob-question">' + step.title + '</h2>';
+            html += '<p class="ob-subtitle">' + step.subtitle + '</p>';
+
+            if (step.type === 'text') {
+                html += '<textarea class="ob-textarea" id="obTextarea" placeholder="' + (step.placeholder || '') + '">' + (answers[step.key] || '') + '</textarea>';
+                if (step.key === 'notes') {
+                    html += '<p class="ob-disclaimer"><i class="bi bi-info-circle me-1"></i> Any medical or injury information shared is optional and will only be used for general wellness guidance. This is not a medical tool.</p>';
+                }
+            } else {
+                html += '<div class="ob-options-grid' + (step.options.length <= 3 ? ' ob-grid-3' : '') + '">';
+                step.options.forEach(function(opt) {
+                    const selected = step.type === 'multi'
+                        ? (answers[step.key] || []).includes(opt.label)
+                        : answers[step.key] === opt.label;
+                    html += '<button class="ob-option tilt-card' + (selected ? ' selected' : '') + '" data-value="' + opt.label + '">';
+                    if (opt.icon) html += '<i class="' + opt.icon + ' ob-option-icon"></i>';
+                    html += '<span class="ob-option-label">' + opt.label + '</span>';
+                    if (opt.desc) html += '<span class="ob-option-desc">' + opt.desc + '</span>';
+                    html += '</button>';
+                });
+                html += '</div>';
+            }
+            html += '</div>';
+            body.innerHTML = html;
+
+            // Re-init tilt on new options
+            if (window.MotionFX) window.MotionFX.initTilt();
+
+            // Attach selection handlers
+            if (step.type === 'single' || step.type === 'multi') {
+                body.querySelectorAll('.ob-option').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        if (window.onboardingAICore) window.onboardingAICore.pulse(0.45);
+                        const val = this.getAttribute('data-value');
+                        if (step.type === 'single') {
+                            answers[step.key] = val;
+                            body.querySelectorAll('.ob-option').forEach(function(b) { b.classList.remove('selected'); });
+                            this.classList.add('selected');
+                        } else {
+                            if (!answers[step.key]) answers[step.key] = [];
+                            const idx = answers[step.key].indexOf(val);
+                            if (idx > -1) {
+                                answers[step.key].splice(idx, 1);
+                                this.classList.remove('selected');
+                            } else {
+                                answers[step.key].push(val);
+                                this.classList.add('selected');
+                            }
+                        }
+                    });
+                });
+            }
+        }
+
+        btnNext.addEventListener('click', function() {
+            const step = STEPS[currentStep];
+            // Save text input
+            if (step.type === 'text') {
+                const ta = document.getElementById('obTextarea');
+                if (ta) answers[step.key] = ta.value.trim();
+            }
+            // Validate required
+            if (step.type === 'single' && !answers[step.key]) {
+                body.querySelector('.ob-question').style.color = '#ff4466';
+                setTimeout(function() { body.querySelector('.ob-question').style.color = ''; }, 1500);
+                return;
+            }
+            if (step.type === 'multi' && (!answers[step.key] || answers[step.key].length === 0)) {
+                body.querySelector('.ob-question').style.color = '#ff4466';
+                setTimeout(function() { body.querySelector('.ob-question').style.color = ''; }, 1500);
+                return;
+            }
+
+            if (currentStep < STEPS.length - 1) {
+                currentStep++;
+                renderStep(currentStep);
+            } else {
+                finishOnboarding();
+            }
+        });
+
+        btnBack.addEventListener('click', function() {
+            if (currentStep > 0) {
+                currentStep--;
+                renderStep(currentStep);
+            }
+        });
+
+        function finishOnboarding() {
+            // Show generating screen
+            document.querySelector('.onboarding-page').style.display = 'none';
+            const genScreen = document.getElementById('generatingScreen');
+            genScreen.style.display = 'flex';
+
+            // Parse training days
+            let days = 4;
+            if (answers.trainingDays) {
+                const m = answers.trainingDays.match(/(\d+)/);
+                if (m) days = parseInt(m[1], 10);
+            }
+
+            // Save to DataStore
+            const onboardingData = {
+                primaryGoal: answers.primaryGoal || 'Build Muscle',
+                fitnessLevel: answers.fitnessLevel || 'Intermediate',
+                preferredTraining: answers.preferredTraining || ['Strength'],
+                trainingDays: days,
+                sessionDuration: answers.sessionDuration || '45 minutes',
+                equipment: answers.equipment || ['Full gym'],
+                environment: answers.environment || 'Gym',
+                notes: answers.notes || ''
+            };
+
+            window.DataStore.saveOnboarding(user.id, onboardingData);
+
+            // Multi-stage cinematic AI generation progression
+            const titleEl = genScreen.querySelector('.generating-title');
+            const subEl = genScreen.querySelector('.generating-sub');
+            if (titleEl) titleEl.innerText = "ANALYZING YOUR PROFILE...";
+
+            setTimeout(function() {
+                if (titleEl) titleEl.innerText = "BUILDING YOUR TRAINING SYSTEM...";
+                if (subEl) subEl.innerText = "Synthesizing hypertrophy curves, recovery targets, and weekly volume splits.";
+            }, 1000);
+
+            setTimeout(function() {
+                if (titleEl) titleEl.innerText = "YOUR PLAN IS READY.";
+                if (subEl) subEl.innerText = "Calibrated specifically to your biomechanics and athletic schedule.";
+            }, 2000);
+
+            setTimeout(function() {
+                genScreen.style.display = 'none';
+                showReadyScreen(onboardingData);
+            }, 2800);
+        }
+
+        function showReadyScreen(data) {
+            const screen = document.getElementById('readyScreen');
+            screen.style.display = 'flex';
+
+            // Profile summary
+            const grid = document.getElementById('readyProfileGrid');
+            const items = [
+                { label: 'PRIMARY GOAL', value: data.primaryGoal, icon: 'bi-bullseye' },
+                { label: 'FITNESS LEVEL', value: data.fitnessLevel, icon: 'bi-speedometer2' },
+                { label: 'TRAINING', value: data.trainingDays + ' Days / Week', icon: 'bi-calendar-check' },
+                { label: 'SESSION', value: data.sessionDuration, icon: 'bi-clock' },
+                { label: 'EQUIPMENT', value: (data.equipment || []).join(', '), icon: 'bi-gear-fill' },
+                { label: 'ENVIRONMENT', value: data.environment, icon: 'bi-geo-alt-fill' }
+            ];
+            grid.innerHTML = items.map(function(item) {
+                return '<div class="ready-item tilt-card"><div class="ready-item-icon"><i class="bi ' + item.icon + '"></i></div><div class="ready-item-label">' + item.label + '</div><div class="ready-item-value">' + item.value + '</div></div>';
+            }).join('');
+
+            // Generate weekly plan
+            const planGrid = document.getElementById('readyPlanGrid');
+            const dayNames = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+            const plans = generateWeeklyPlan(data);
+            planGrid.innerHTML = plans.map(function(day, i) {
+                return '<div class="plan-day tilt-card' + (day.rest ? ' rest-day' : '') + '"><div class="plan-day-name">' + dayNames[i] + '</div><div class="plan-day-workout">' + day.name + '</div></div>';
+            }).join('');
+
+            if (window.MotionFX) window.MotionFX.initTilt();
+
+            document.getElementById('btnEnterDashboard').addEventListener('click', function() {
+                window.location.href = 'dashboard.html';
+            });
+        }
+
+        function generateWeeklyPlan(data) {
+            const days = data.trainingDays || 4;
+            const goal = data.primaryGoal || 'Build Muscle';
+            const plan = [];
+            const workoutNames = {
+                'Build Muscle': ['Upper Body Hypertrophy', 'Lower Body Hypertrophy', 'Push Day', 'Pull Day', 'Full Body', 'Arms & Shoulders', 'Legs & Core'],
+                'Lose Fat': ['HIIT Circuit', 'Metabolic Conditioning', 'Fat Burn Cardio', 'Total Body Shred', 'Core & Cardio', 'Sprint Intervals', 'Active Recovery'],
+                'Build Strength': ['Upper Body Power', 'Lower Body Power', 'Bench & Shoulders', 'Squat & Deadlift', 'Full Body Strength', 'Olympic Lifts', 'Mobility'],
+                'Improve Endurance': ['Tempo Run', 'Interval Training', 'Long Distance', 'Cross Training', 'Hill Sprints', 'Recovery Jog', 'Swim or Cycle'],
+                'Improve Fitness': ['Functional Circuit', 'Strength & Cardio', 'HIIT', 'Mobility Flow', 'Athletic Conditioning', 'Core Work', 'Active Recovery'],
+                'Improve Mobility': ['Full Body Stretch', 'Yoga Flow', 'Hip Mobility', 'Spine & Shoulders', 'Recovery Movement', 'Dynamic Flexibility', 'Deep Stretch'],
+                'Maintain Fitness': ['Full Body', 'Cardio', 'Upper Body', 'Lower Body', 'HIIT', 'Yoga', 'Active Recovery']
+            };
+            const names = workoutNames[goal] || workoutNames['Build Muscle'];
+            let workoutIdx = 0;
+            const restPattern = days <= 3 ? [1,0,1,0,1,0,0] : days <= 4 ? [1,0,1,0,1,1,0] : days <= 5 ? [1,1,0,1,1,1,0] : [1,1,1,0,1,1,1];
+            for (let i = 0; i < 7; i++) {
+                if (restPattern[i] && workoutIdx < days) {
+                    plan.push({ name: names[workoutIdx % names.length], rest: false });
+                    workoutIdx++;
+                } else {
+                    plan.push({ name: 'Rest Day', rest: true });
+                }
+            }
+            return plan;
+        }
+
+        // Initialize 3D AI Core in Onboarding background
+        if (window.Fitnexa3D) {
+            window.onboardingAICore = window.Fitnexa3D.createAICore('#onboardingAICoreCanvas', {
+                size: 450,
+                sphereRadius: 1.4,
+                particlesCount: 75,
+                cameraDistance: 5.2
+            });
+        }
+
+        renderStep(0);
+    })();
+    </script>
+</body>
+</html>

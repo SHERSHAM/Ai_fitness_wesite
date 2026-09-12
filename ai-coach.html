@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Coach — FITNEXA AI</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#02050A">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .ai-core-telemetry-card {
+            background: rgba(10, 18, 35, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            min-height: 580px;
+        }
+    </style>
+</head>
+<body class="app-body">
+    <div id="appNavMount"></div>
+    <main class="app-main">
+        <div class="container-fluid px-3 px-lg-4 py-4">
+            <div class="row g-4">
+                <!-- Left: 3D AI Core & Telemetry -->
+                <div class="col-12 col-lg-5 col-xl-5">
+                    <div class="ai-core-telemetry-card tilt-card glass-card-3d depth-container">
+                        <div class="depth-atmospheric"></div>
+                        <div class="w-100 d-flex justify-content-between align-items-center mb-2" style="position:relative;z-index:4;">
+                            <span class="text-label" style="color:var(--blue-accent);"><i class="bi bi-cpu-fill me-1"></i> NEURAL ENGINE</span>
+                            <span style="font-size:0.75rem;color:#00e5a3;background:rgba(0,229,163,0.1);padding:3px 10px;border-radius:12px;border:1px solid rgba(0,229,163,0.3);">
+                                <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e5a3;margin-right:5px;box-shadow:0 0 6px #00e5a3;"></span>ONLINE
+                            </span>
+                        </div>
+
+                        <!-- 3D AI Core Canvas -->
+                        <div id="coachPageAICore" style="width:100%;height:320px;display:flex;align-items:center;justify-content:center;position:relative;z-index:3;"></div>
+
+                        <!-- Live Telemetry Badges -->
+                        <div class="w-100 mt-auto" style="position:relative;z-index:4;">
+                            <div class="text-center mb-3">
+                                <h3 class="heading-md mb-1" style="font-size:1.25rem;">FITNEXA CORE v4.2</h3>
+                                <p class="text-muted mb-0" style="font-size:0.82rem;">Calibrating against real-time athlete biometrics</p>
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="p-2 glass-card-sm text-center" style="border-radius:10px;background:rgba(2,5,10,0.6);">
+                                        <div class="text-muted" style="font-size:0.7rem;">RECOVERY SYNC</div>
+                                        <div style="font-weight:700;color:var(--blue-accent);font-size:0.95rem;">86% (OPTIMAL)</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-2 glass-card-sm text-center" style="border-radius:10px;background:rgba(2,5,10,0.6);">
+                                        <div class="text-muted" style="font-size:0.7rem;">LATENCY</div>
+                                        <div style="font-weight:700;color:#00e5a3;font-size:0.95rem;">18 MS</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive Chat Panel -->
+                <div class="col-12 col-lg-7 col-xl-7">
+                    <div class="ai-chat-page glass-card-3d tilt-card" style="min-height:580px;display:flex;flex-direction:column;">
+                        <div class="acp-header">
+                            <div class="acp-icon"><i class="bi bi-stars"></i></div>
+                            <div>
+                                <h1 class="acp-title">Conversational Coach</h1>
+                                <p class="acp-subtitle">Your dedicated 24/7 athletic intelligence assistant.</p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="acp-quick-actions mb-3">
+                            <button class="acp-chip" data-prompt="What should I train today?"><i class="bi bi-lightning-fill me-1"></i> Today's Workout</button>
+                            <button class="acp-chip" data-prompt="How is my recovery looking?"><i class="bi bi-heart-pulse me-1"></i> Recovery</button>
+                            <button class="acp-chip" data-prompt="What should I eat today?"><i class="bi bi-egg-fried me-1"></i> Nutrition</button>
+                            <button class="acp-chip" data-prompt="How is my progress?"><i class="bi bi-graph-up me-1"></i> Progress</button>
+                            <button class="acp-chip" data-prompt="Can you change my training plan?"><i class="bi bi-arrow-repeat me-1"></i> Change Plan</button>
+                            <button class="acp-chip" data-prompt="I need some motivation."><i class="bi bi-emoji-sunglasses me-1"></i> Motivation</button>
+                        </div>
+
+                        <!-- Chat Messages -->
+                        <div class="acp-messages flex-grow-1" id="chatMessages" style="max-height:380px;overflow-y:auto;"></div>
+
+                        <!-- Input Bar -->
+                        <div class="acp-input-bar mt-3">
+                            <input type="text" id="chatInput" class="acp-input" placeholder="Ask your AI coach anything..." autocomplete="off">
+                            <button class="acp-send-btn" id="chatSendBtn"><i class="bi bi-send-fill"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data-store.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/ai-coach.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/three-core.js"></script>
+    <script src="js/motion-fx.js"></script>
+
+    <script>
+    (function() {
+        'use strict';
+        window.App.init();
+        const user = window.Auth.getCurrentUser();
+        if (!user) return;
+
+        const messagesContainer = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('chatSendBtn');
+
+        // Initialize 3D AI Core on left
+        let pageAICore = null;
+        if (window.Fitnexa3D) {
+            pageAICore = window.Fitnexa3D.createAICore('#coachPageAICore', {
+                size: 320,
+                sphereRadius: 1.3,
+                particlesCount: 90,
+                cameraDistance: 4.8
+            });
+        }
+
+        function renderMessage(msg) {
+            const isAI = msg.sender === 'ai';
+            const div = document.createElement('div');
+            div.className = 'acp-msg ' + (isAI ? 'acp-msg-ai' : 'acp-msg-user');
+            let text = msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            div.innerHTML = (isAI ? '<div class="acp-msg-sender"><i class="bi bi-stars me-1"></i> AI COACH</div>' : '<div class="acp-msg-sender">YOU</div>') +
+                '<div class="acp-msg-text">' + text + '</div>';
+            messagesContainer.appendChild(div);
+        }
+
+        function renderTypingIndicator() {
+            const div = document.createElement('div');
+            div.className = 'acp-msg acp-msg-ai acp-typing';
+            div.id = 'typingIndicator';
+            div.innerHTML = '<div class="acp-msg-sender"><i class="bi bi-stars me-1"></i> AI COACH</div><div class="acp-typing-dots"><span></span><span></span><span></span></div>';
+            messagesContainer.appendChild(div);
+            scrollToBottom();
+        }
+
+        function removeTypingIndicator() {
+            const el = document.getElementById('typingIndicator');
+            if (el) el.remove();
+        }
+
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Load chat history
+        const history = window.AICoach.getChatHistory(user.id);
+        if (history.length === 0) {
+            renderMessage({
+                sender: 'ai',
+                text: "Hello **" + user.name.split(' ')[0] + "**! I'm your FITNEXA AI coach. Your current recovery is **" + (user.recovery ? user.recovery.score : 86) + "%**, and your weekly focus is **" + (user.profile ? user.profile.primaryGoal : 'Build Strength') + "**. How can I assist your training today?",
+                timestamp: new Date().toISOString()
+            });
+        } else {
+            history.forEach(renderMessage);
+        }
+        scrollToBottom();
+
+        // Send message handler with 3D Core pulse
+        function sendMessage(text) {
+            text = (text || chatInput.value).trim();
+            if (!text) return;
+
+            // Pulse AI core on user dispatch
+            if (pageAICore) {
+                pageAICore.pulse(0.5);
+                pageAICore.setIntensity(1.6);
+            }
+
+            // User message
+            renderMessage({ sender: 'user', text: text, timestamp: new Date().toISOString() });
+            chatInput.value = '';
+            scrollToBottom();
+
+            // Typing indicator
+            renderTypingIndicator();
+
+            // AI response
+            setTimeout(function() {
+                removeTypingIndicator();
+                const reply = window.AICoach.generateResponse(user, text);
+                renderMessage({ sender: 'ai', text: reply, timestamp: new Date().toISOString() });
+                scrollToBottom();
+
+                // Pulse AI core on response completion
+                if (pageAICore) {
+                    pageAICore.pulse(0.8);
+                    pageAICore.setIntensity(1.0);
+                }
+            }, 600 + Math.random() * 400);
+        }
+
+        sendBtn.addEventListener('click', function() { sendMessage(); });
+        chatInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Quick action chips
+        document.querySelectorAll('.acp-chip').forEach(function(chip) {
+            chip.addEventListener('click', function() {
+                sendMessage(this.getAttribute('data-prompt'));
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition — FITNEXA AI</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#02050A">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="app-body">
+    <div id="appNavMount"></div>
+    <main class="app-main">
+        <div class="container-fluid px-3 px-lg-4 py-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="page-title">Nutrition Plan</h1>
+                    <p class="page-subtitle">AI-optimized nutrition for your goals.</p>
+                </div>
+                <button class="btn-primary-glow" id="btnRegenerate" style="padding:12px 24px;font-size:0.82rem;">
+                    <i class="bi bi-arrow-repeat me-2"></i> GENERATE MEAL PLAN
+                </button>
+            </div>
+
+            <!-- Macro Targets with 3D depth -->
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md-4 col-lg">
+                    <div class="nutrition-ring-card tilt-card glass-card-3d">
+                        <svg class="nutrition-ring" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="var(--blue-electric)" stroke-width="8" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="50" transform="rotate(-90 50 50)" id="calorieRing"/>
+                        </svg>
+                        <div class="nrc-value" id="calorieValue">2,420</div>
+                        <div class="nrc-label">CALORIES</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg">
+                    <div class="nutrition-ring-card">
+                        <svg class="nutrition-ring" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#22c55e" stroke-width="8" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="88" transform="rotate(-90 50 50)"/>
+                        </svg>
+                        <div class="nrc-value" id="proteinValue">165g</div>
+                        <div class="nrc-label">PROTEIN</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg">
+                    <div class="nutrition-ring-card">
+                        <svg class="nutrition-ring" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="100" transform="rotate(-90 50 50)"/>
+                        </svg>
+                        <div class="nrc-value" id="carbsValue">240g</div>
+                        <div class="nrc-label">CARBS</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg">
+                    <div class="nutrition-ring-card">
+                        <svg class="nutrition-ring" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#ef4444" stroke-width="8" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="175" transform="rotate(-90 50 50)"/>
+                        </svg>
+                        <div class="nrc-value" id="fatValue">70g</div>
+                        <div class="nrc-label">FAT</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg">
+                    <div class="nutrition-ring-card">
+                        <svg class="nutrition-ring" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#06b6d4" stroke-width="8" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="60" transform="rotate(-90 50 50)"/>
+                        </svg>
+                        <div class="nrc-value" id="waterValue">2.8L</div>
+                        <div class="nrc-label">WATER</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meal Plan -->
+            <div class="dash-card mb-4">
+                <div class="dash-card-header">
+                    <span class="text-label" style="color:var(--blue-accent);">DAILY MEAL PLAN</span>
+                </div>
+                <div id="mealList" class="meal-plan-list"></div>
+            </div>
+
+            <div class="nutrition-disclaimer">
+                <i class="bi bi-info-circle me-2"></i>
+                <span>These nutritional recommendations represent general athletic wellness guidance and should not replace clinical dietetic advice. Consult a registered dietitian for personalized medical nutrition therapy.</span>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data-store.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/motion-fx.js"></script>
+    <script>
+    (function() {
+        'use strict';
+        window.App.init();
+        const user = window.Auth.getCurrentUser();
+        if (!user) return;
+
+        const n = user.nutrition;
+        document.getElementById('calorieValue').textContent = n.calorieTarget.toLocaleString();
+        document.getElementById('proteinValue').textContent = n.proteinGrams + 'g';
+        document.getElementById('carbsValue').textContent = n.carbsGrams + 'g';
+        document.getElementById('fatValue').textContent = n.fatGrams + 'g';
+        document.getElementById('waterValue').textContent = n.waterLiters + 'L';
+
+        const mealList = document.getElementById('mealList');
+        mealList.innerHTML = n.meals.map(function(meal) {
+            return '<div class="meal-plan-item tilt-card glass-card-3d mb-2">' +
+                '<div class="mpi-time">' + meal.time + '</div>' +
+                '<div class="mpi-info">' +
+                    '<div class="mpi-name">' + meal.name + '</div>' +
+                    '<div class="mpi-macros">' +
+                        '<span>' + meal.calories + ' cal</span>' +
+                        '<span>P: ' + meal.protein + 'g</span>' +
+                        '<span>C: ' + meal.carbs + 'g</span>' +
+                        '<span>F: ' + meal.fat + 'g</span>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+
+        if (window.MotionFX) window.MotionFX.initTilt();
+
+        document.getElementById('btnRegenerate').addEventListener('click', function() {
+            this.innerHTML = '<i class="bi bi-check-lg me-2"></i> PLAN REGENERATED';
+            this.style.background = '#22c55e';
+            const btn = this;
+            setTimeout(function() { btn.innerHTML = '<i class="bi bi-arrow-repeat me-2"></i> GENERATE MEAL PLAN'; btn.style.background = ''; }, 2000);
+        });
+    })();
+    </script>
+</body>
+</html>

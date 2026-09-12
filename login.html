@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — FITNEXA AI</title>
+    <meta name="description" content="Log in to your FITNEXA AI account. Access your personalized workouts, AI coaching, and progress tracking.">
+    <meta name="theme-color" content="#02050A">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="app-body" style="cursor:auto;">
+    <div class="auth-page">
+        <!-- Left: Branding with 3D AI Core -->
+        <div class="auth-branding d-none d-lg-flex depth-container">
+            <div class="auth-brand-bg">
+                <img src="images/hero-athlete.webp" alt="Athlete" loading="eager">
+                <div class="auth-brand-overlay"></div>
+            </div>
+            <div class="depth-atmospheric"></div>
+            <div class="depth-3d-canvas" id="authAICoreCanvas" style="opacity:0.85;"></div>
+            <div class="auth-brand-content depth-typography">
+                <a href="index.html" class="auth-logo">FITNEXA <span>AI</span></a>
+                <h1 class="auth-brand-headline">TRAIN<br><span>SMARTER.</span></h1>
+                <p class="auth-brand-sub">Your AI-powered personal trainer that adapts to your goals, performance and recovery.</p>
+            </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="auth-form-side">
+            <div class="auth-form-container">
+                <a href="index.html" class="auth-logo d-lg-none mb-4 d-block">FITNEXA <span>AI</span></a>
+                <h2 class="auth-title">Welcome Back</h2>
+                <p class="auth-subtitle">Log in to your fitness command center.</p>
+
+                <div id="loginError" class="auth-error" style="display:none;"></div>
+
+                <form id="loginForm" class="auth-form" novalidate>
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label-custom">Email Address</label>
+                        <input type="email" id="loginEmail" class="form-input-custom" placeholder="you@email.com" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label-custom">Password</label>
+                        <input type="password" id="loginPassword" class="form-input-custom" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <label class="form-check-custom">
+                            <input type="checkbox" id="rememberMe"> <span>Remember me</span>
+                        </label>
+                        <a href="forgot-password.html" class="auth-link">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn-primary-glow w-100" id="loginBtn">
+                        LOG IN <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
+                    </button>
+                </form>
+
+                <div class="auth-divider"><span>or</span></div>
+
+                <div class="auth-demo-section">
+                    <p class="text-label mb-3" style="color:var(--blue-accent);">QUICK DEMO ACCESS</p>
+                    <button class="btn-outline-glow w-100 mb-2" id="demoAlex" style="padding:12px 20px;font-size:0.8rem;">
+                        <i class="bi bi-person-fill me-2"></i> Alex Mercer — Strength
+                    </button>
+                    <button class="btn-outline-glow w-100" id="demoSarah" style="padding:12px 20px;font-size:0.8rem;">
+                        <i class="bi bi-person-fill me-2"></i> Sarah Connor — Fat Loss
+                    </button>
+                </div>
+
+                <p class="auth-footer-text">
+                    Don't have an account? <a href="signup.html" class="auth-link">Create one</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data-store.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/three-core.js"></script>
+    <script src="js/motion-fx.js"></script>
+    <script>
+    (function() {
+        'use strict';
+        // Redirect if already logged in
+        if (window.Auth && window.Auth.redirectIfAuth('dashboard.html')) return;
+
+        const form = document.getElementById('loginForm');
+        const errorBox = document.getElementById('loginError');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            errorBox.style.display = 'none';
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                errorBox.textContent = 'Please enter your email and password.';
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            const result = window.Auth.login(email, password);
+            if (result.success) {
+                const user = result.user;
+                // Check if onboarding is needed (new users with no workout history and default profile)
+                const params = new URLSearchParams(window.location.search);
+                const returnUrl = params.get('returnUrl');
+                window.location.href = returnUrl ? decodeURIComponent(returnUrl) : 'dashboard.html';
+            } else {
+                errorBox.textContent = result.message;
+                errorBox.style.display = 'block';
+            }
+        });
+
+        // Demo login buttons
+        document.getElementById('demoAlex').addEventListener('click', function() {
+            window.Auth.setCurrentUser('user_alex_mercer');
+            window.location.href = 'dashboard.html';
+        });
+        document.getElementById('demoSarah').addEventListener('click', function() {
+            window.Auth.setCurrentUser('user_sarah_connor');
+            window.location.href = 'dashboard.html';
+        });
+
+        // Initialize 3D AI Core in left branding
+        if (window.Fitnexa3D) {
+            window.authAICore = window.Fitnexa3D.createAICore('#authAICoreCanvas', {
+                size: 420,
+                sphereRadius: 1.35,
+                particlesCount: 85,
+                cameraDistance: 5.0
+            });
+
+            // React to input focus
+            document.querySelectorAll('.form-input-custom').forEach(input => {
+                input.addEventListener('focus', function() {
+                    if (window.authAICore) {
+                        window.authAICore.pulse(0.6);
+                        window.authAICore.setIntensity(1.6);
+                    }
+                });
+                input.addEventListener('blur', function() {
+                    if (window.authAICore) {
+                        window.authAICore.setIntensity(1.0);
+                    }
+                });
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recovery — FITNEXA AI</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#02050A">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="app-body">
+    <div id="appNavMount"></div>
+    <main class="app-main">
+        <div class="container-fluid px-3 px-lg-4 py-4">
+            <h1 class="page-title">Recovery & Readiness</h1>
+            <p class="page-subtitle mb-4">Biometric insights to optimize your training intensity.</p>
+
+            <div class="row g-4">
+                <div class="col-12 col-lg-5">
+                    <!-- Recovery Score Ring with 3D Depth -->
+                    <div class="dash-card tilt-card glass-card-3d text-center py-4">
+                        <div class="text-label mb-3" style="color:var(--blue-accent);">RECOVERY SCORE</div>
+                        <div class="recovery-ring-wrapper">
+                            <svg viewBox="0 0 300 300" class="recovery-main-ring">
+                                <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="14"/>
+                                <circle cx="150" cy="150" r="120" fill="none" stroke="var(--blue-electric)" stroke-width="14" stroke-linecap="round" id="recoveryMainRing" stroke-dasharray="754" stroke-dashoffset="754" transform="rotate(-90 150 150)"/>
+                                <circle cx="150" cy="150" r="95" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="10"/>
+                                <circle cx="150" cy="150" r="95" fill="none" stroke="var(--blue-accent)" stroke-width="10" stroke-linecap="round" id="recoveryInnerRing" stroke-dasharray="597" stroke-dashoffset="597" transform="rotate(-90 150 150)"/>
+                            </svg>
+                            <div class="recovery-ring-center">
+                                <div class="rrc-value" id="recScore">86%</div>
+                                <div class="rrc-label" id="recReadiness">HIGH READINESS</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-7">
+                    <!-- Metrics Grid -->
+                    <div class="row g-3">
+                        <div class="col-6 col-md-4">
+                            <div class="dash-stat-card">
+                                <div class="dsc-icon" style="color:#8b5cf6;"><i class="bi bi-moon-stars-fill"></i></div>
+                                <div class="dsc-value" id="recSleep">7h 42m</div>
+                                <div class="dsc-label">Sleep Duration</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="dash-stat-card">
+                                <div class="dsc-icon" style="color:#06b6d4;"><i class="bi bi-bar-chart-fill"></i></div>
+                                <div class="dsc-value" id="recEfficiency">91%</div>
+                                <div class="dsc-label">Sleep Efficiency</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="dash-stat-card">
+                                <div class="dsc-icon" style="color:#ef4444;"><i class="bi bi-heart-pulse-fill"></i></div>
+                                <div class="dsc-value" id="recHR">54 BPM</div>
+                                <div class="dsc-label">Resting Heart Rate</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="dash-stat-card">
+                                <div class="dsc-icon" style="color:#22c55e;"><i class="bi bi-activity"></i></div>
+                                <div class="dsc-value" id="recHRV">68 ms</div>
+                                <div class="dsc-label">HRV</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="dash-stat-card">
+                                <div class="dsc-icon" style="color:#f59e0b;"><i class="bi bi-speedometer2"></i></div>
+                                <div class="dsc-value" id="recLoad">Medium</div>
+                                <div class="dsc-label">Training Load</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="dash-stat-card">
+                                <div class="dsc-icon" style="color:var(--blue-accent);"><i class="bi bi-shield-check"></i></div>
+                                <div class="dsc-value" id="recReadinessVal">High</div>
+                                <div class="dsc-label">Readiness</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Recommendation -->
+                    <div class="dash-card dash-ai-card tilt-card glass-card-3d mt-3">
+                        <div class="dash-card-header">
+                            <span class="text-label" style="color:var(--blue-accent);"><i class="bi bi-stars me-1"></i> AI RECOVERY INSIGHT</span>
+                        </div>
+                        <p class="dash-ai-message" id="recAIMessage">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nutrition-disclaimer mt-4">
+                <i class="bi bi-info-circle me-2"></i>
+                <span>Recovery metrics are estimated from simulated biometric data. This tool provides general wellness insights and does not constitute medical advice. Consult a healthcare professional for clinical assessments.</span>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data-store.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/motion-fx.js"></script>
+    <script>
+    (function() {
+        'use strict';
+        window.App.init();
+        const user = window.Auth.getCurrentUser();
+        if (!user) return;
+
+        const r = user.recovery;
+        document.getElementById('recScore').textContent = r.score + '%';
+        document.getElementById('recReadiness').textContent = r.readiness.toUpperCase() + ' READINESS';
+        document.getElementById('recSleep').textContent = r.sleepHours;
+        document.getElementById('recEfficiency').textContent = r.sleepEfficiency + '%';
+        document.getElementById('recHR').textContent = r.restingHeartRate + ' BPM';
+        document.getElementById('recHRV').textContent = r.hrv + ' ms';
+        document.getElementById('recLoad').textContent = r.trainingLoad;
+        document.getElementById('recReadinessVal').textContent = r.readiness;
+        document.getElementById('recAIMessage').textContent = r.aiRecommendation;
+
+        // Animate recovery ring
+        setTimeout(function() {
+            const mainRing = document.getElementById('recoveryMainRing');
+            const innerRing = document.getElementById('recoveryInnerRing');
+            if (mainRing) mainRing.style.transition = 'stroke-dashoffset 1.8s ease-out';
+            if (innerRing) innerRing.style.transition = 'stroke-dashoffset 1.8s ease-out';
+            if (mainRing) mainRing.style.strokeDashoffset = 754 * (1 - r.score / 100);
+            if (innerRing) innerRing.style.strokeDashoffset = 597 * (1 - r.sleepEfficiency / 100);
+        }, 300);
+
+        if (window.MotionFX) window.MotionFX.initTilt();
+    })();
+    </script>
+</body>
+</html>

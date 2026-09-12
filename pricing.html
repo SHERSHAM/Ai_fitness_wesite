@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Plans — FITNEXA AI</title>
+    <meta name="description" content="Flexible pricing for elite personal AI fitness coaching. Choose the plan that fits your athletic goals.">
+    <meta name="theme-color" content="#02050A">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .pricing-card {
+            background: rgba(13, 20, 36, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 212, 255, 0.1);
+        }
+        .pricing-card.featured {
+            background: linear-gradient(180deg, rgba(0, 102, 255, 0.15) 0%, rgba(13, 20, 36, 0.85) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            box-shadow: 0 16px 48px rgba(0, 102, 255, 0.2), 0 0 30px rgba(0, 212, 255, 0.15);
+        }
+        .pricing-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--blue-electric), #0066ff);
+            color: #fff;
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 16px;
+            border-radius: 999px;
+            box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);
+        }
+        .price-amount {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+        }
+        .price-currency {
+            font-size: 1.5rem;
+            vertical-align: super;
+            color: var(--blue-accent);
+        }
+        .price-period {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 0.9rem;
+            font-size: 0.92rem;
+            color: #d1d5db;
+        }
+        .feature-icon {
+            color: var(--blue-accent);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .billing-toggle-wrap {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 4px;
+        }
+        .billing-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 999px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .billing-btn.active {
+            background: var(--blue-electric);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 2px 10px rgba(0, 212, 255, 0.3);
+        }
+        .faq-item {
+            background: rgba(13, 20, 36, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+        .faq-q {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-a {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="fitnexa-nav" id="mainNav">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="index.html" class="nav-logo">FITNEXA <span>AI</span></a>
+            <ul class="nav-links d-none d-lg-flex">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="ai-coach-overview.html">AI Coach</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="pricing.html" class="active">Pricing</a></li>
+            </ul>
+            <div class="d-flex align-items-center gap-3">
+                <a href="login.html" class="nav-cta-btn d-none d-md-inline-flex">LOGIN</a>
+                <a href="signup.html" class="btn-primary-glow d-none d-md-inline-flex" style="padding:10px 24px;font-size:0.75rem;">START TRAINING</a>
+                <button class="mobile-menu-toggle d-lg-none" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" data-mobile-link>Home</a></li>
+            <li><a href="programs.html" data-mobile-link>Programs</a></li>
+            <li><a href="ai-coach-overview.html" data-mobile-link>AI Coach</a></li>
+            <li><a href="about.html" data-mobile-link>About</a></li>
+            <li><a href="pricing.html" data-mobile-link>Pricing</a></li>
+            <li><a href="login.html" data-mobile-link>Login</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- Hero -->
+        <section class="public-hero-simple text-center pt-5 pb-4">
+            <div class="container">
+                <div class="public-hero-eyebrow">TRANSPARENT MEMBERSHIP</div>
+                <h1 class="heading-massive" style="font-size:clamp(2.8rem, 7vw, 6rem);">INVEST IN YOUR<br><span style="color:var(--blue-electric);">PERFORMANCE.</span></h1>
+                <p class="text-body mt-3 mx-auto" style="max-width:620px;">Choose the tier engineered for your athletic commitment. Every plan comes with our adaptive intelligence core, zero lock-in contracts, and a 14-day money-back guarantee.</p>
+
+                <!-- Billing Toggle -->
+                <div class="mt-4 mb-3">
+                    <div class="billing-toggle-wrap">
+                        <button class="billing-btn" id="btnMonthly">Monthly</button>
+                        <button class="billing-btn active" id="btnAnnual">Annual <span style="color:var(--text-white);background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:12px;font-size:0.75rem;margin-left:4px;">SAVE 20%</span></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Cards -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row g-4 align-items-stretch">
+                    <!-- Starter -->
+                    <div class="col-12 col-lg-4">
+                        <div class="pricing-card tilt-card">
+                            <h3 class="heading-md" style="font-size:1.3rem;">STARTER</h3>
+                            <p class="text-muted" style="font-size:0.85rem;min-height:40px;">Fundamental tracking and core workout routines for beginners.</p>
+                            
+                            <div class="my-4">
+                                <span class="price-amount"><span class="price-currency">$</span>0</span>
+                                <span class="price-period">/ forever</span>
+                            </div>
+
+                            <a href="signup.html" class="btn-outline-glow w-100 text-center py-3 mb-4" style="border-radius:10px;font-size:0.85rem;font-weight:700;">CREATE FREE ACCOUNT</a>
+
+                            <div class="mt-auto">
+                                <div class="text-label mb-3" style="font-size:0.75rem;color:var(--text-muted);">WHAT'S INCLUDED</div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>Access to 4 core catalog workouts</span></div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>Manual session logging</span></div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>Basic progress tracking</span></div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>Community support hub</span></div>
+                                <div class="feature-item text-muted" style="opacity:0.4;"><i class="bi bi-x feature-icon" style="color:var(--text-muted);"></i><span>AI dynamic workout adaptation</span></div>
+                                <div class="feature-item text-muted" style="opacity:0.4;"><i class="bi bi-x feature-icon" style="color:var(--text-muted);"></i><span>Biometric recovery sync</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pro -->
+                    <div class="col-12 col-lg-4">
+                        <div class="pricing-card featured tilt-card">
+                            <div class="pricing-badge">MOST POPULAR</div>
+                            <h3 class="heading-md" style="font-size:1.3rem;color:var(--blue-accent);">PRO ATHLETE</h3>
+                            <p class="text-muted" style="font-size:0.85rem;min-height:40px;">Complete AI-guided training with real-time HUD workout execution.</p>
+                            
+                            <div class="my-4">
+                                <span class="price-amount" id="proPrice"><span class="price-currency">$</span>19</span>
+                                <span class="price-period" id="proPeriod">/ month, billed annually</span>
+                            </div>
+
+                            <a href="signup.html" class="btn-primary-glow w-100 text-center py-3 mb-4" style="border-radius:10px;font-size:0.85rem;font-weight:700;">START 14-DAY TRIAL</a>
+
+                            <div class="mt-auto">
+                                <div class="text-label mb-3" style="font-size:0.75rem;color:var(--blue-accent);">EVERYTHING IN STARTER PLUS</div>
+                                <div class="feature-item"><i class="bi bi-check2-circle feature-icon"></i><span>Full 8+ advanced training programs</span></div>
+                                <div class="feature-item"><i class="bi bi-check2-circle feature-icon"></i><span>Real-time Interactive Workout HUD</span></div>
+                                <div class="feature-item"><i class="bi bi-check2-circle feature-icon"></i><span>Personalized Onboarding & AI Program</span></div>
+                                <div class="feature-item"><i class="bi bi-check2-circle feature-icon"></i><span>Daily Macro Targets & Meal Planning</span></div>
+                                <div class="feature-item"><i class="bi bi-check2-circle feature-icon"></i><span>Recovery Score & Readiness Index</span></div>
+                                <div class="feature-item"><i class="bi bi-check2-circle feature-icon"></i><span>Interactive AI Coach chat assistant</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Elite -->
+                    <div class="col-12 col-lg-4">
+                        <div class="pricing-card tilt-card">
+                            <h3 class="heading-md" style="font-size:1.3rem;">ELITE PERFORMANCE</h3>
+                            <p class="text-muted" style="font-size:0.85rem;min-height:40px;">Uncompromising 1-on-1 AI physiology coaching for serious competitors.</p>
+                            
+                            <div class="my-4">
+                                <span class="price-amount" id="elitePrice"><span class="price-currency">$</span>39</span>
+                                <span class="price-period" id="elitePeriod">/ month, billed annually</span>
+                            </div>
+
+                            <a href="signup.html" class="btn-outline-glow w-100 text-center py-3 mb-4" style="border-radius:10px;font-size:0.85rem;font-weight:700;">GO ELITE</a>
+
+                            <div class="mt-auto">
+                                <div class="text-label mb-3" style="font-size:0.75rem;color:var(--text-muted);">EVERYTHING IN PRO PLUS</div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>24/7 Priority AI Coach intelligence</span></div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>Live form score & biomechanics cues</span></div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>Advanced HRV & strain load modeling</span></div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>Custom macro cycling & metabolic plans</span></div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>Early access to beta biometric integrations</span></div>
+                                <div class="feature-item"><i class="bi bi-check2 feature-icon"></i><span>VIP 1-on-1 support line</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-5" style="border-top:1px solid rgba(255,255,255,0.06);">
+            <div class="container" style="max-width:860px;">
+                <div class="text-center mb-5">
+                    <div class="text-label mb-2" style="color:var(--blue-accent);">CLARITY FIRST</div>
+                    <h2 class="heading-lg">FREQUENTLY ASKED QUESTIONS</h2>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q"><span>Can I cancel or switch plans anytime?</span><i class="bi bi-chevron-down text-muted"></i></div>
+                    <p class="faq-a">Yes. You can upgrade, downgrade, or cancel your subscription at any moment directly from your account settings with no penalties or hidden fees.</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q"><span>How does the 14-day trial work?</span><i class="bi bi-chevron-down text-muted"></i></div>
+                    <p class="faq-a">You receive full unrestricted access to all Pro features for 14 days. If FITNEXA AI doesn't elevate your athletic performance, simply cancel before the trial concludes and you will not be charged.</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q"><span>Do I need specialized equipment to use FITNEXA?</span><i class="bi bi-chevron-down text-muted"></i></div>
+                    <p class="faq-a">Not at all. During your 8-step onboarding, you can select 'Bodyweight Only', 'Dumbbells', 'Home Gym', or 'Commercial Gym'. FITNEXA adapts every session to match what you have.</p>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-q"><span>How does the AI Coach tailor recommendations?</span><i class="bi bi-chevron-down text-muted"></i></div>
+                    <p class="faq-a">Our proprietary engine synthesizes your recovery metrics, previous workout volume, sleep consistency, and target goals to adjust weights, reps, and tempo dynamically.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="py-5 text-center">
+            <div class="container">
+                <h2 class="heading-xl mb-3" style="font-size:clamp(2rem, 5vw, 3.5rem);">ELEVATE YOUR STANDARD.</h2>
+                <p class="text-body mb-4" style="color:var(--text-muted);max-width:500px;margin:0 auto;">Join over 25,000 athletes building their dream physique with FITNEXA AI.</p>
+                <a href="signup.html" class="btn-primary-glow" style="padding:16px 40px;">CLAIM YOUR 14-DAY TRIAL <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span></a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="fitnexa-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <a href="index.html" class="nav-logo" style="font-size:1.2rem;">FITNEXA <span>AI</span></a>
+                    <p class="text-muted mt-3" style="font-size:0.85rem;">Train Smarter. Become Stronger.</p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-label mb-3">Product</h6>
+                    <ul class="footer-links">
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="ai-coach-overview.html">AI Coach</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-label mb-3">Company</h6>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4">
+                    <h6 class="text-label mb-3">Get Started</h6>
+                    <a href="signup.html" class="btn-primary-glow" style="padding:10px 24px;font-size:0.75rem;">CREATE FREE ACCOUNT</a>
+                </div>
+            </div>
+            <div class="footer-bottom mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,0.06);">
+                <p class="text-muted" style="font-size:0.75rem;">© 2026 FITNEXA AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/motion-fx.js"></script>
+    <script>
+    (function() {
+        const nav = document.getElementById('mainNav');
+        const toggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('mobileMenu');
+        window.addEventListener('scroll', function() { nav.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
+        if (toggle && menu) {
+            toggle.addEventListener('click', function() { toggle.classList.toggle('active'); menu.classList.toggle('active'); document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : ''; });
+            menu.querySelectorAll('[data-mobile-link]').forEach(function(a) { a.addEventListener('click', function() { toggle.classList.remove('active'); menu.classList.remove('active'); document.body.style.overflow = ''; }); });
+        }
+
+        // Pricing toggle
+        const btnMonthly = document.getElementById('btnMonthly');
+        const btnAnnual = document.getElementById('btnAnnual');
+        const proPrice = document.getElementById('proPrice');
+        const proPeriod = document.getElementById('proPeriod');
+        const elitePrice = document.getElementById('elitePrice');
+        const elitePeriod = document.getElementById('elitePeriod');
+
+        btnMonthly.addEventListener('click', function() {
+            btnMonthly.classList.add('active');
+            btnAnnual.classList.remove('active');
+            proPrice.innerHTML = '<span class="price-currency">$</span>24';
+            proPeriod.innerText = '/ month, billed monthly';
+            elitePrice.innerHTML = '<span class="price-currency">$</span>49';
+            elitePeriod.innerText = '/ month, billed monthly';
+        });
+
+        btnAnnual.addEventListener('click', function() {
+            btnAnnual.classList.add('active');
+            btnMonthly.classList.remove('active');
+            proPrice.innerHTML = '<span class="price-currency">$</span>19';
+            proPeriod.innerText = '/ month, billed annually';
+            elitePrice.innerHTML = '<span class="price-currency">$</span>39';
+            elitePeriod.innerText = '/ month, billed annually';
+        });
+    })();
+    </script>
+</body>
+</html>
