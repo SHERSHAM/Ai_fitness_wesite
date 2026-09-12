@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — FITNEXA AI</title>
+    <meta name="description" content="FITNEXA AI Privacy Architecture — How your biometric, physical telemetry, and athletic data is safeguarded.">
+    <meta name="theme-color" content="#02050A">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .policy-hero {
+            padding: 130px 0 60px;
+            position: relative;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.12), transparent 70%);
+        }
+        .policy-card {
+            background: rgba(10, 18, 35, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 2.2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s ease;
+        }
+        .policy-card:hover {
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+        .policy-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .policy-card p, .policy-card li {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+        .policy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--blue-accent);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="fitnexa-nav" id="mainNav">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="index.html" class="nav-logo">FITNEXA <span>AI</span></a>
+            <ul class="nav-links d-none d-lg-flex">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="ai-coach-overview.html">AI Coach</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+            </ul>
+            <div class="d-flex align-items-center gap-3">
+                <a href="login.html" class="nav-cta-btn d-none d-md-inline-flex">LOGIN</a>
+                <a href="signup.html" class="btn-primary-glow d-none d-md-inline-flex" style="padding:10px 24px;font-size:0.75rem;">START TRAINING</a>
+                <button class="menu-toggle d-lg-none" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" data-mobile-link>Home</a></li>
+            <li><a href="programs.html" data-mobile-link>Programs</a></li>
+            <li><a href="ai-coach-overview.html" data-mobile-link>AI Coach</a></li>
+            <li><a href="about.html" data-mobile-link>About</a></li>
+            <li><a href="pricing.html" data-mobile-link>Pricing</a></li>
+            <li><a href="login.html" data-mobile-link>Login</a></li>
+            <li><a href="signup.html" data-mobile-link class="text-cyan">Create Account →</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- Policy Hero -->
+        <section class="policy-hero">
+            <div class="container text-center">
+                <div class="policy-badge"><i class="bi bi-shield-lock-fill"></i> DATA INTEGRITY & PRIVACY</div>
+                <h1 class="heading-xl mb-3">PRIVACY ARCHITECTURE</h1>
+                <p class="hero-desc mx-auto" style="max-width: 650px;">
+                    At FITNEXA AI, we engineer fitness intelligence with zero compromise on privacy. Understand how your biometrics, computer vision telemetry, and performance vectors are protected.
+                </p>
+                <div class="text-muted small mt-2">Effective Date: January 1, 2026 &nbsp;|&nbsp; Version 2.4.0</div>
+            </div>
+        </section>
+
+        <!-- Policy Content -->
+        <section class="py-5">
+            <div class="container" style="max-width: 900px;">
+                <div class="policy-card">
+                    <h3><i class="bi bi-cpu text-cyan"></i> 1. Local Processing & Edge Computer Vision</h3>
+                    <p>
+                        Our real-time Computer Vision Form Analysis calculates joint angles, skeletal orientation, and eccentric velocity directly on your client device using hardware-accelerated WebGL and vector computations.
+                    </p>
+                    <p class="mb-0">
+                        <strong>No video streams, camera feeds, or raw visual footage are ever transmitted to or stored on remote cloud servers.</strong> All joint node coordinate transformations remain transient in client-side runtime memory and are discarded immediately upon session completion.
+                    </p>
+                </div>
+
+                <div class="policy-card">
+                    <h3><i class="bi bi-database-lock text-cyan"></i> 2. Biometric Data Isolation</h3>
+                    <p>
+                        Physiological markers—including Heart Rate Variability (HRV), estimated resting pulse, sleep efficiency ratios, and central nervous system recovery scores—are siloed specifically under your authenticated athlete profile.
+                    </p>
+                    <ul class="mb-0 ps-3">
+                        <li>Individual accounts (e.g. Alex Mercer, Sarah Connor, and custom registrations) maintain isolated local storage partitions.</li>
+                        <li>Biometric telemetry is utilized solely to calibrate workout loads, recovery recommendations, and macronutrient targets.</li>
+                        <li>We never sell, broker, or monetize athlete biometrics to advertisers or third-party insurers.</li>
+                    </ul>
+                </div>
+
+                <div class="policy-card">
+                    <h3><i class="bi bi-shield-check text-cyan"></i> 3. Client Storage & Persistence</h3>
+                    <p>
+                        FITNEXA AI utilizes modern HTML5 LocalStorage and SessionStorage to preserve your workouts, chat history with the AI Coach, active streaks, and custom onboarding preferences.
+                    </p>
+                    <p class="mb-0">
+                        You retain full control over this data. You can inspect, modify, or permanently purge all stored metrics at any time through the <a href="settings.html" class="text-cyan">Settings</a> panel using the "Delete Account & Data" action.
+                    </p>
+                </div>
+
+                <div class="policy-card">
+                    <h3><i class="bi bi-chat-dots text-cyan"></i> 4. AI Coach Conversations</h3>
+                    <p>
+                        Prompts and fitness queries dispatched to the FITNEXA AI Coach are analyzed to generate contextual athletic guidance, progressive overload recommendations, and nutritional timing suggestions.
+                    </p>
+                    <p class="mb-0">
+                        Your conversational history is retained locally in your profile record to maintain session context and continuity across visits.
+                    </p>
+                </div>
+
+                <div class="policy-card">
+                    <h3><i class="bi bi-person-gear text-cyan"></i> 5. Athlete Rights & Contact</h3>
+                    <p>
+                        You possess the right to export your training history, recalibrate your onboarding parameters, or request technical support regarding your data integrity.
+                    </p>
+                    <p class="mb-0">
+                        For questions regarding this privacy architecture, reach out via our athlete desk on our <a href="contact.html" class="text-cyan">Contact Page</a> or email <span class="text-white">privacy@fitnexa.ai</span>.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="fitnexa-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <a href="index.html" class="nav-logo" style="font-size:1.2rem;">FITNEXA <span>AI</span></a>
+                    <p class="text-muted mt-3" style="font-size:0.85rem;">Train Smarter. Become Stronger.</p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-label mb-3">Product</h6>
+                    <ul class="footer-links">
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="ai-coach-overview.html">AI Coach</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-label mb-3">Company</h6>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-label mb-3">Legal</h6>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html" class="text-cyan">Privacy</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-2">
+                    <h6 class="text-label mb-3">Get Started</h6>
+                    <a href="signup.html" class="btn-primary-glow" style="padding:10px 24px;font-size:0.75rem;">CREATE FREE ACCOUNT</a>
+                </div>
+            </div>
+            <div class="footer-bottom mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,0.06);">
+                <p class="text-muted" style="font-size:0.75rem;">© 2026 FITNEXA AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/motion-fx.js"></script>
+    <script>
+    (function() {
+        const nav = document.getElementById('mainNav');
+        const toggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('mobileMenu');
+        window.addEventListener('scroll', function() { nav.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
+        if (toggle && menu) {
+            toggle.addEventListener('click', function() { toggle.classList.toggle('active'); menu.classList.toggle('active'); document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : ''; });
+            menu.querySelectorAll('[data-mobile-link]').forEach(function(a) { a.addEventListener('click', function() { toggle.classList.remove('active'); menu.classList.remove('active'); document.body.style.overflow = ''; }); });
+        }
+    })();
+    </script>
+</body>
+</html>

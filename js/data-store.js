@@ -532,11 +532,35 @@
 
     // ── INITIALIZE STORAGE ───────────────────────────────────
     function initStorage() {
-        if (!localStorage.getItem(STORAGE_KEY_PREFIX + 'users')) {
-            localStorage.setItem(STORAGE_KEY_PREFIX + 'users', JSON.stringify(SEED_USERS));
+        try {
+            const existingUsers = localStorage.getItem(STORAGE_KEY_PREFIX + 'users');
+            if (!existingUsers) {
+                localStorage.setItem(STORAGE_KEY_PREFIX + 'users', JSON.stringify(SEED_USERS));
+            } else {
+                // Verify valid JSON
+                JSON.parse(existingUsers);
+            }
+        } catch (e) {
+            try {
+                localStorage.setItem(STORAGE_KEY_PREFIX + 'users', JSON.stringify(SEED_USERS));
+            } catch (err) {
+                console.warn('LocalStorage unavailable or quota exceeded. Operating with in-memory state.', err);
+            }
         }
-        if (!localStorage.getItem(STORAGE_KEY_PREFIX + 'workouts')) {
-            localStorage.setItem(STORAGE_KEY_PREFIX + 'workouts', JSON.stringify(WORKOUT_CATALOG));
+
+        try {
+            const existingWorkouts = localStorage.getItem(STORAGE_KEY_PREFIX + 'workouts');
+            if (!existingWorkouts) {
+                localStorage.setItem(STORAGE_KEY_PREFIX + 'workouts', JSON.stringify(WORKOUT_CATALOG));
+            } else {
+                JSON.parse(existingWorkouts);
+            }
+        } catch (e) {
+            try {
+                localStorage.setItem(STORAGE_KEY_PREFIX + 'workouts', JSON.stringify(WORKOUT_CATALOG));
+            } catch (err) {
+                console.warn('LocalStorage unavailable for workouts.', err);
+            }
         }
     }
 
@@ -766,8 +790,12 @@
 
         // Reset demo data helper
         resetDemoData: function() {
-            localStorage.setItem(STORAGE_KEY_PREFIX + 'users', JSON.stringify(SEED_USERS));
-            localStorage.setItem(STORAGE_KEY_PREFIX + 'workouts', JSON.stringify(WORKOUT_CATALOG));
+            try {
+                localStorage.setItem(STORAGE_KEY_PREFIX + 'users', JSON.stringify(SEED_USERS));
+                localStorage.setItem(STORAGE_KEY_PREFIX + 'workouts', JSON.stringify(WORKOUT_CATALOG));
+            } catch (e) {
+                console.warn('LocalStorage unavailable for reset.', e);
+            }
         }
     };
 

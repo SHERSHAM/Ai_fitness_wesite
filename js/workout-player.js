@@ -81,13 +81,22 @@
                         <img id="playerExImg" src="${this.workout.image || 'images/form-analysis.webp'}" alt="Exercise visual" class="player-visual-media">
                         <div class="player-live-badge"><span class="pulse-dot"></span> LIVE HUD</div>
 
-                        <!-- Rest Overlay Modal -->
+                        <!-- Rest Overlay Modal with Animated Circular Ring -->
                         <div class="player-rest-overlay" id="playerRestOverlay" style="display: none;">
-                            <div class="rest-overlay-content">
-                                <div class="text-label text-cyan mb-2">RECOVERY INTERVAL</div>
-                                <div class="rest-counter" id="restTimerDisplay">00:45</div>
-                                <p class="text-muted mb-4">Focus on diaphragmatic breathing. Lower heart rate.</p>
-                                <button class="btn-primary-glow btn-sm" id="btnSkipRest">Skip Rest <i class="bi bi-fast-forward-fill ms-1"></i></button>
+                            <div class="rest-overlay-content text-center">
+                                <div class="text-label text-cyan mb-3"><i class="bi bi-heart-pulse-fill me-1"></i> RECOVERY INTERVAL</div>
+                                <div class="position-relative d-inline-block mb-3" style="width: 150px; height: 150px;">
+                                    <svg width="150" height="150" viewBox="0 0 150 150" style="transform: rotate(-90deg);">
+                                        <circle cx="75" cy="75" r="64" stroke="rgba(255,255,255,0.08)" stroke-width="7" fill="none"></circle>
+                                        <circle id="restRingCircle" cx="75" cy="75" r="64" stroke="#00d4ff" stroke-width="7" fill="none" stroke-linecap="round" style="stroke-dasharray: 402; stroke-dashoffset: 0; transition: stroke-dashoffset 0.9s linear; filter: drop-shadow(0 0 8px #00d4ff);"></circle>
+                                    </svg>
+                                    <div class="position-absolute top-50 start-50 translate-middle text-center" style="pointer-events: none;">
+                                        <div class="rest-counter" id="restTimerDisplay" style="font-family:var(--font-heading); font-size:2.2rem; font-weight:900; line-height:1; color:#ffffff;">00:45</div>
+                                        <div style="font-size:0.65rem; color:#94a3b8; letter-spacing:1px; margin-top:4px;">REST</div>
+                                    </div>
+                                </div>
+                                <p class="text-muted mb-4" style="max-width:320px; margin:0 auto 1.5rem;">Focus on diaphragmatic breathing. Lower heart rate.</p>
+                                <button class="btn-primary-glow btn-sm px-4" id="btnSkipRest">Skip Rest <i class="bi bi-fast-forward-fill ms-1"></i></button>
                             </div>
                         </div>
 
@@ -231,6 +240,14 @@
             if (idx === this.currentExerciseIndex) item.classList.add('active');
             if (idx < this.currentExerciseIndex) item.classList.add('done');
         });
+
+        // Smooth GSAP transition between exercises
+        const stageImg = document.getElementById('playerExImg');
+        const titleEl = document.getElementById('playerExTitle');
+        if (typeof gsap !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            if (stageImg) gsap.fromTo(stageImg, { opacity: 0.75, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' });
+            if (titleEl) gsap.fromTo(titleEl, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
+        }
     };
 
     WorkoutPlayer.prototype.updateTimerDisplay = function() {
@@ -270,9 +287,17 @@
         if (!overlay || !restDisplay) return;
 
         this.isResting = true;
-        this.restTimeRemaining = 45;
+        this.initialRestTime = 45;
+        this.restTimeRemaining = this.initialRestTime;
         restDisplay.textContent = this.formatTime(this.restTimeRemaining);
         overlay.style.display = 'flex';
+
+        const ringCircle = document.getElementById('restRingCircle');
+        if (ringCircle) ringCircle.style.strokeDashoffset = '0';
+
+        if (typeof gsap !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            gsap.fromTo('.rest-overlay-content', { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.5)' });
+        }
 
         clearInterval(this.restInterval);
         const self = this;
@@ -280,6 +305,10 @@
             if (!self.isPaused) {
                 self.restTimeRemaining--;
                 restDisplay.textContent = self.formatTime(self.restTimeRemaining);
+                if (ringCircle) {
+                    const fraction = Math.max(0, self.restTimeRemaining / self.initialRestTime);
+                    ringCircle.style.strokeDashoffset = (402 * (1 - fraction)).toString();
+                }
                 if (self.restTimeRemaining <= 0) {
                     self.skipRest();
                 }

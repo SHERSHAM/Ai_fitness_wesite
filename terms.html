@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service — FITNEXA AI</title>
+    <meta name="description" content="FITNEXA AI Terms of Service — Operating parameters, athletic safety guidelines, and user agreements.">
+    <meta name="theme-color" content="#02050A">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .terms-hero {
+            padding: 130px 0 60px;
+            position: relative;
+            background: radial-gradient(circle at 50% 0%, rgba(123, 44, 191, 0.15), transparent 70%);
+        }
+        .terms-card {
+            background: rgba(10, 18, 35, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 2.2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s ease;
+        }
+        .terms-card:hover {
+            border-color: rgba(123, 44, 191, 0.4);
+        }
+        .terms-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .terms-card p, .terms-card li {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+        .terms-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(123, 44, 191, 0.15);
+            border: 1px solid rgba(123, 44, 191, 0.35);
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #c77dff;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="fitnexa-nav" id="mainNav">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="index.html" class="nav-logo">FITNEXA <span>AI</span></a>
+            <ul class="nav-links d-none d-lg-flex">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="ai-coach-overview.html">AI Coach</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+            </ul>
+            <div class="d-flex align-items-center gap-3">
+                <a href="login.html" class="nav-cta-btn d-none d-md-inline-flex">LOGIN</a>
+                <a href="signup.html" class="btn-primary-glow d-none d-md-inline-flex" style="padding:10px 24px;font-size:0.75rem;">START TRAINING</a>
+                <button class="menu-toggle d-lg-none" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" data-mobile-link>Home</a></li>
+            <li><a href="programs.html" data-mobile-link>Programs</a></li>
+            <li><a href="ai-coach-overview.html" data-mobile-link>AI Coach</a></li>
+            <li><a href="about.html" data-mobile-link>About</a></li>
+            <li><a href="pricing.html" data-mobile-link>Pricing</a></li>
+            <li><a href="login.html" data-mobile-link>Login</a></li>
+            <li><a href="signup.html" data-mobile-link class="text-cyan">Create Account →</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- Terms Hero -->
+        <section class="terms-hero">
+            <div class="container text-center">
+                <div class="terms-badge"><i class="bi bi-file-earmark-text-fill"></i> LEGAL PROTOCOLS</div>
+                <h1 class="heading-xl mb-3">TERMS OF SERVICE</h1>
+                <p class="hero-desc mx-auto" style="max-width: 650px;">
+                    Review the operating guidelines, liability disclaimers, and user agreements governing your interaction with the FITNEXA AI fitness technology platform.
+                </p>
+                <div class="text-muted small mt-2">Last Updated: January 1, 2026 &nbsp;|&nbsp; Version 2.4.0</div>
+            </div>
+        </section>
+
+        <!-- Terms Content -->
+        <section class="py-5">
+            <div class="container" style="max-width: 900px;">
+                <div class="terms-card">
+                    <h3><i class="bi bi-shield-exclamation text-warning"></i> 1. Health & Physical Activity Disclaimer</h3>
+                    <p>
+                        FITNEXA AI provides algorithmically generated fitness recommendations, exercise routines, computer vision kinematic feedback, and nutritional guidelines.
+                    </p>
+                    <p class="mb-0">
+                        <strong>FITNEXA AI is not a licensed medical healthcare provider.</strong> You must consult a qualified medical physician before undertaking any strenuous physical exertion or new dietary protocol, especially if you have pre-existing cardiovascular, musculoskeletal, or metabolic conditions. Participation is entirely voluntary and undertaken at your own risk.
+                    </p>
+                </div>
+
+                <div class="terms-card">
+                    <h3><i class="bi bi-robot text-cyan"></i> 2. AI Coach & Guidance Limitations</h3>
+                    <p>
+                        The AI Coach conversational engine and Computer Vision Form Analysis are intended for athletic optimization and educational demonstration.
+                    </p>
+                    <ul class="mb-0 ps-3">
+                        <li>Form score percentages represent algorithmic estimations based on standard biomechanical angles and cannot replace certified human coaches.</li>
+                        <li>Nutritional targets and macronutrient distributions represent generalized performance estimations rather than clinical dietary therapy.</li>
+                        <li>Listen to your body at all times; never force reps through joint pain or acute physical discomfort.</li>
+                    </ul>
+                </div>
+
+                <div class="terms-card">
+                    <h3><i class="bi bi-person-badge text-cyan"></i> 3. User Accounts & Integrity</h3>
+                    <p>
+                        When creating an account, you agree to provide truthful information regarding your fitness background to enable accurate algorithmic calibration.
+                    </p>
+                    <p class="mb-0">
+                        You are solely responsible for maintaining the confidentiality of your credentials and all activities occurring within your authenticated session.
+                    </p>
+                </div>
+
+                <div class="terms-card">
+                    <h3><i class="bi bi-credit-card text-cyan"></i> 4. Membership & Billing</h3>
+                    <p>
+                        Access to FITNEXA AI Pro and Elite tiers is billed according to the subscription cycle selected (Monthly or Annually) as described on our <a href="pricing.html" class="text-cyan">Pricing Page</a>.
+                    </p>
+                    <p class="mb-0">
+                        Subscriptions can be canceled at any time prior to the next renewal billing date through your account settings.
+                    </p>
+                </div>
+
+                <div class="terms-card">
+                    <h3><i class="bi bi-award text-cyan"></i> 5. Intellectual Property</h3>
+                    <p class="mb-0">
+                        All proprietary visual assets, WebGL 3D shaders, training algorithms, brand trademarks, and interface designs are the intellectual property of FITNEXA AI. Unauthorized reproduction, scraping, or commercial exploitation is strictly prohibited.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="fitnexa-footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <a href="index.html" class="nav-logo" style="font-size:1.2rem;">FITNEXA <span>AI</span></a>
+                    <p class="text-muted mt-3" style="font-size:0.85rem;">Train Smarter. Become Stronger.</p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-label mb-3">Product</h6>
+                    <ul class="footer-links">
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="ai-coach-overview.html">AI Coach</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-label mb-3">Company</h6>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-label mb-3">Legal</h6>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy</a></li>
+                        <li><a href="terms.html" class="text-cyan">Terms</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-2">
+                    <h6 class="text-label mb-3">Get Started</h6>
+                    <a href="signup.html" class="btn-primary-glow" style="padding:10px 24px;font-size:0.75rem;">CREATE FREE ACCOUNT</a>
+                </div>
+            </div>
+            <div class="footer-bottom mt-4 pt-4" style="border-top:1px solid rgba(255,255,255,0.06);">
+                <p class="text-muted" style="font-size:0.75rem;">© 2026 FITNEXA AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/motion-fx.js"></script>
+    <script>
+    (function() {
+        const nav = document.getElementById('mainNav');
+        const toggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('mobileMenu');
+        window.addEventListener('scroll', function() { nav.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
+        if (toggle && menu) {
+            toggle.addEventListener('click', function() { toggle.classList.toggle('active'); menu.classList.toggle('active'); document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : ''; });
+            menu.querySelectorAll('[data-mobile-link]').forEach(function(a) { a.addEventListener('click', function() { toggle.classList.remove('active'); menu.classList.remove('active'); document.body.style.overflow = ''; }); });
+        }
+    })();
+    </script>
+</body>
+</html>

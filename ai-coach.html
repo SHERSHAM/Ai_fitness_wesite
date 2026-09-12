@@ -110,13 +110,16 @@
         </div>
     </main>
 
-    <script src="js/data-store.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/ai-coach.js"></script>
+    <script src="js/data-store.js?v=2.0"></script>
+    <script src="js/auth.js?v=2.0"></script>
+    <script src="js/app.js?v=2.0"></script>
+    <script src="js/ai-coach.js?v=2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/three-core.js"></script>
-    <script src="js/motion-fx.js"></script>
+    <script src="js/three-core.js?v=2.0"></script>
+    <script src="js/motion-fx.js?v=2.0"></script>
+    <script src="js/app-motion.js?v=2.0"></script>
 
     <script>
     (function() {
@@ -168,14 +171,22 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Load chat history
-        const history = window.AICoach.getChatHistory(user.id);
+        // Load chat history safely
+        const history = (window.AICoach && typeof window.AICoach.getChatHistory === 'function' && user && user.id) 
+            ? window.AICoach.getChatHistory(user.id) 
+            : ((user && Array.isArray(user.chatHistory)) ? user.chatHistory : []);
+        const athleteName = (user.fullName || 'Athlete').split(' ')[0];
+        const athleteGoal = (user.profile && user.profile.fitnessGoal) ? user.profile.fitnessGoal : 'Build Strength';
+        const athleteRecovery = (user.recovery && typeof user.recovery.score === 'number') ? user.recovery.score : 86;
+
         if (history.length === 0) {
-            renderMessage({
+            const welcomeMsg = {
                 sender: 'ai',
-                text: "Hello **" + user.name.split(' ')[0] + "**! I'm your FITNEXA AI coach. Your current recovery is **" + (user.recovery ? user.recovery.score : 86) + "%**, and your weekly focus is **" + (user.profile ? user.profile.primaryGoal : 'Build Strength') + "**. How can I assist your training today?",
+                text: "Hello **" + athleteName + "**! I'm your FITNEXA AI coach. Your current recovery is **" + athleteRecovery + "%**, and your weekly focus is **" + athleteGoal + "**. How can I assist your training today?",
                 timestamp: new Date().toISOString()
-            });
+            };
+            renderMessage(welcomeMsg);
+            if (window.DataStore) window.DataStore.addChatMessage(user.id, welcomeMsg);
         } else {
             history.forEach(renderMessage);
         }
@@ -193,7 +204,9 @@
             }
 
             // User message
-            renderMessage({ sender: 'user', text: text, timestamp: new Date().toISOString() });
+            const userMsg = { sender: 'user', text: text, timestamp: new Date().toISOString() };
+            renderMessage(userMsg);
+            if (window.DataStore) window.DataStore.addChatMessage(user.id, userMsg);
             chatInput.value = '';
             scrollToBottom();
 
@@ -203,8 +216,12 @@
             // AI response
             setTimeout(function() {
                 removeTypingIndicator();
-                const reply = window.AICoach.generateResponse(user, text);
-                renderMessage({ sender: 'ai', text: reply, timestamp: new Date().toISOString() });
+                const reply = (window.AICoach && typeof window.AICoach.generateResponse === 'function')
+                    ? window.AICoach.generateResponse(user, text)
+                    : ("I've analyzed your question through your " + athleteGoal + " profile. Keep pushing forward!");
+                const aiMsg = { sender: 'ai', text: reply, timestamp: new Date().toISOString() };
+                renderMessage(aiMsg);
+                if (window.DataStore) window.DataStore.addChatMessage(user.id, aiMsg);
                 scrollToBottom();
 
                 // Pulse AI core on response completion

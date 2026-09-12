@@ -104,9 +104,9 @@
                                         </div>
                                         <div class="user-menu-links">
                                             <a href="profile.html" class="menu-item"><i class="bi bi-person me-2"></i> Profile & Goals</a>
+                                            <a href="progress.html" class="menu-item"><i class="bi bi-graph-up me-2"></i> Progress & Records</a>
+                                            <a href="programs.html" class="menu-item"><i class="bi bi-collection-play me-2"></i> All Programs</a>
                                             <a href="settings.html" class="menu-item"><i class="bi bi-gear me-2"></i> Settings</a>
-                                            <a href="achievements.html" class="menu-item"><i class="bi bi-trophy me-2"></i> Achievements</a>
-                                            <a href="community.html" class="menu-item"><i class="bi bi-people me-2"></i> Community</a>
                                             <a href="index.html" class="menu-item"><i class="bi bi-house me-2"></i> Public Home</a>
                                             <div class="dropdown-divider"></div>
                                             <button class="menu-item text-danger border-0 bg-transparent w-100 text-start" id="btnLogoutAction">
@@ -139,8 +139,7 @@
                         <li><a href="recovery.html"><i class="bi bi-heart-pulse-fill me-2"></i> Biometric Recovery</a></li>
                         <li><a href="profile.html"><i class="bi bi-person me-2"></i> Profile & Goals</a></li>
                         <li><a href="settings.html"><i class="bi bi-gear me-2"></i> Settings</a></li>
-                        <li><a href="achievements.html"><i class="bi bi-trophy me-2"></i> Achievements</a></li>
-                        <li><a href="community.html"><i class="bi bi-people me-2"></i> Community</a></li>
+                        <li><a href="programs.html"><i class="bi bi-collection-play me-2"></i> All Programs</a></li>
                         <li><a href="index.html"><i class="bi bi-house me-2"></i> Back to Public Website</a></li>
                     </ul>
                     <div class="p-3">

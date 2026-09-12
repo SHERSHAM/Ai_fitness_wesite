@@ -4,16 +4,26 @@
    ============================================================ */
 
 (function(window) {
-    'use strict';
-
     const AICoach = {
+        getChatHistory: function(userId) {
+            if (!window.DataStore) return [];
+            const user = window.DataStore.getUserById(userId);
+            return (user && Array.isArray(user.chatHistory)) ? user.chatHistory : [];
+        },
+
         generateResponse: function(user, promptText) {
-            const prompt = promptText.toLowerCase().trim();
-            const goal = user.profile.fitnessGoal;
-            const recovery = user.recovery.score;
-            const streak = user.dashboardStats.activeStreakDays;
-            const name = user.fullName.split(' ')[0];
-            const todayWorkout = window.DataStore ? window.DataStore.getWorkoutById(user.profile.todayWorkoutId) : null;
+            if (!user) return "System calibrating. Please verify your athlete profile.";
+            const prompt = (promptText || '').toLowerCase().trim();
+            const profile = user.profile || {};
+            const recoveryObj = user.recovery || {};
+            const stats = user.dashboardStats || {};
+            const nutrition = user.nutrition || {};
+
+            const goal = profile.fitnessGoal || 'Overall Athleticism';
+            const recovery = typeof recoveryObj.score === 'number' ? recoveryObj.score : 86;
+            const streak = stats.activeStreakDays || 1;
+            const name = (user.fullName || 'Athlete').split(' ')[0];
+            const todayWorkout = (window.DataStore && profile.todayWorkoutId) ? window.DataStore.getWorkoutById(profile.todayWorkoutId) : null;
             const workoutName = todayWorkout ? todayWorkout.name : 'Targeted Functional Session';
 
             // Specific intent matching

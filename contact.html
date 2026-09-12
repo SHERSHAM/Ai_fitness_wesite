@@ -169,6 +169,7 @@
                         <div class="contact-form-card tilt-card glass-card-3d">
                             <h3 class="heading-md mb-2">SEND AN INQUIRY</h3>
                             <p class="text-muted mb-4" style="font-size:0.88rem;">Fill out the form below and an athlete specialist will connect with you promptly.</p>
+                            <div id="contactError" class="auth-error d-none mb-3 p-3 rounded" style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);color:#fca5a5;font-size:0.85rem;"></div>
 
                             <form id="contactForm">
                                 <div class="row g-3">
@@ -239,7 +240,14 @@
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-6 col-md-2">
+                    <h6 class="text-label mb-3">Legal</h6>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-2">
                     <h6 class="text-label mb-3">Get Started</h6>
                     <a href="signup.html" class="btn-primary-glow" style="padding:10px 24px;font-size:0.75rem;">CREATE FREE ACCOUNT</a>
                 </div>
@@ -267,10 +275,33 @@
         const form = document.getElementById('contactForm');
         const success = document.getElementById('contactSuccess');
         const submitBtn = document.getElementById('submitBtn');
+        const errorBox = document.getElementById('contactError');
 
         if (form) {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
+                if (errorBox) errorBox.classList.add('d-none');
+
+                const name = (document.getElementById('contactName').value || '').trim();
+                const email = (document.getElementById('contactEmail').value || '').trim();
+                const msg = (document.getElementById('contactMessage').value || '').trim();
+
+                if (!name || name.length < 2) {
+                    showError('Please enter your full name.');
+                    return;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email)) {
+                    showError('Please enter a valid email address.');
+                    return;
+                }
+
+                if (!msg || msg.length < 10) {
+                    showError('Please enter a message with at least 10 characters.');
+                    return;
+                }
+
                 submitBtn.innerHTML = 'DISPATCHING...';
                 submitBtn.disabled = true;
                 if (window.contactAICore) window.contactAICore.pulse(0.8);
@@ -279,6 +310,15 @@
                     success.classList.remove('d-none');
                 }, 700);
             });
+        }
+
+        function showError(text) {
+            if (errorBox) {
+                errorBox.textContent = text;
+                errorBox.classList.remove('d-none');
+            } else {
+                alert(text);
+            }
         }
 
         // Initialize 3D Core with input focus reaction
