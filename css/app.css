@@ -1453,3 +1453,24 @@ body.app-body .cursor-label {
 .bg-cyan-soft {
   background: rgba(0, 212, 255, 0.12) !important;
 }
+
+.text-gold {
+  color: var(--gold-metallic) !important;
+}
+
+.bg-gold-soft {
+  background: rgba(212, 175, 55, 0.12) !important;
+}
+
+/* Sparta Spec Panel Extension in App Shell */
+.app-card.sparta-spec-panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 2px solid var(--gold-metallic);
+  background: rgba(8, 14, 28, 0.7);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.app-card.sparta-spec-panel:hover {
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55), 0 0 20px rgba(212, 175, 55, 0.12);
+}

@@ -304,6 +304,11 @@
             const genScreen = document.getElementById('generatingScreen');
             genScreen.style.display = 'flex';
 
+            if (window.onboardingAICore && window.onboardingAICore.setState) {
+                window.onboardingAICore.setState('ANALYZING');
+                window.onboardingAICore.setIntensity(1.8);
+            }
+
             // Parse training days
             let days = 4;
             if (answers.trainingDays) {
@@ -333,6 +338,9 @@
             setTimeout(function() {
                 if (titleEl) titleEl.innerText = "BUILDING YOUR TRAINING SYSTEM...";
                 if (subEl) subEl.innerText = "Synthesizing hypertrophy curves, recovery targets, and weekly volume splits.";
+                if (window.onboardingAICore && window.onboardingAICore.setState) {
+                    window.onboardingAICore.setState('THINKING');
+                }
             }, 1000);
 
             setTimeout(function() {
@@ -350,6 +358,11 @@
             const screen = document.getElementById('readyScreen');
             screen.style.display = 'flex';
 
+            if (window.onboardingAICore && window.onboardingAICore.setState) {
+                window.onboardingAICore.setState('SUCCESS');
+                window.onboardingAICore.setIntensity(1.5);
+            }
+
             // Profile summary
             const grid = document.getElementById('readyProfileGrid');
             const items = [
@@ -361,7 +374,7 @@
                 { label: 'ENVIRONMENT', value: data.environment, icon: 'bi-geo-alt-fill' }
             ];
             grid.innerHTML = items.map(function(item) {
-                return '<div class="ready-item tilt-card"><div class="ready-item-icon"><i class="bi ' + item.icon + '"></i></div><div class="ready-item-label">' + item.label + '</div><div class="ready-item-value">' + item.value + '</div></div>';
+                return '<div class="ready-item sparta-spec-panel tilt-card"><div class="ready-item-icon"><i class="bi ' + item.icon + '"></i></div><div class="ready-item-label">' + item.label + '</div><div class="ready-item-value">' + item.value + '</div></div>';
             }).join('');
 
             // Generate weekly plan

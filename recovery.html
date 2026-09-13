@@ -19,24 +19,28 @@
     <div id="appNavMount"></div>
     <main class="app-main">
         <div class="container-fluid px-3 px-lg-4 py-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                <div class="spec-badge-gold"><i class="bi bi-shield-check me-1"></i> SPARTA READINESS TELEMETRY</div>
+                <div class="spec-badge-cyan"><i class="bi bi-activity me-1"></i> 100Hz BIO-SAMPLING</div>
+            </div>
             <h1 class="page-title">Recovery & Readiness</h1>
             <p class="page-subtitle mb-4">Biometric insights to optimize your training intensity.</p>
 
             <div class="row g-4">
                 <div class="col-12 col-lg-5">
-                    <!-- Recovery Score Ring with 3D Depth -->
-                    <div class="dash-card tilt-card glass-card-3d text-center py-4">
-                        <div class="text-label mb-3" style="color:var(--blue-accent);">RECOVERY SCORE</div>
+                    <!-- Recovery Score Ring with Sparta Titan HUD Framing -->
+                    <div class="dash-card sparta-spec-panel hud-corner-bracket tilt-card glass-card-3d text-center py-4">
+                        <div class="spec-badge-cyan mb-3 mx-auto" style="width:fit-content;font-size:0.68rem;"><i class="bi bi-heart-pulse-fill me-1"></i> SUBSYSTEM 02 // RECOVERY EFFICIENCY</div>
                         <div class="recovery-ring-wrapper">
                             <svg viewBox="0 0 300 300" class="recovery-main-ring">
-                                <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="14"/>
-                                <circle cx="150" cy="150" r="120" fill="none" stroke="var(--blue-electric)" stroke-width="14" stroke-linecap="round" id="recoveryMainRing" stroke-dasharray="754" stroke-dashoffset="754" transform="rotate(-90 150 150)"/>
-                                <circle cx="150" cy="150" r="95" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="10"/>
-                                <circle cx="150" cy="150" r="95" fill="none" stroke="var(--blue-accent)" stroke-width="10" stroke-linecap="round" id="recoveryInnerRing" stroke-dasharray="597" stroke-dashoffset="597" transform="rotate(-90 150 150)"/>
+                                <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="14"/>
+                                <circle cx="150" cy="150" r="120" fill="none" stroke="var(--gold-metallic)" stroke-width="14" stroke-linecap="round" id="recoveryMainRing" stroke-dasharray="754" stroke-dashoffset="754" transform="rotate(-90 150 150)" style="filter:drop-shadow(0 0 12px rgba(212,175,55,0.6));"/>
+                                <circle cx="150" cy="150" r="95" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>
+                                <circle cx="150" cy="150" r="95" fill="none" stroke="var(--blue-neon)" stroke-width="10" stroke-linecap="round" id="recoveryInnerRing" stroke-dasharray="597" stroke-dashoffset="597" transform="rotate(-90 150 150)" style="filter:drop-shadow(0 0 8px rgba(0,212,255,0.5));"/>
                             </svg>
                             <div class="recovery-ring-center">
-                                <div class="rrc-value" id="recScore">86%</div>
-                                <div class="rrc-label" id="recReadiness">HIGH READINESS</div>
+                                <div class="rrc-value" id="recScore" style="color:#ffffff;">86%</div>
+                                <div class="rrc-label" id="recReadiness" style="color:var(--gold-light);letter-spacing:1.5px;">HIGH READINESS</div>
                             </div>
                         </div>
                     </div>

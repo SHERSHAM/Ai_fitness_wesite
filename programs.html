@@ -180,7 +180,10 @@
 
     <main>
         <div class="container programs-hero-container">
-            <div class="text-label mb-2" style="color:var(--blue-accent);">DISCIPLINES & SYSTEMS</div>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                <div class="spec-badge-gold"><i class="bi bi-grid-3x3-gap-fill me-1"></i> SPARTA CATALOG ARCHITECTURE</div>
+                <div class="spec-badge-cyan d-none d-md-inline-block"><i class="bi bi-cpu me-1"></i> 8 ADAPTIVE DISCIPLINES</div>
+            </div>
             <h1 class="heading-massive mb-3" style="font-size:clamp(2.6rem, 6.5vw, 5rem);">IMMERSIVE TRAINING<br><span style="color:var(--blue-electric);">ARCHITECTURE.</span></h1>
             <p class="text-body mb-4" style="max-width:620px;">Every program is dynamically calibrated by our neural engine to fit your recovery score, weekly volume limits, and targeted athletic adaptation.</p>
 
@@ -195,15 +198,14 @@
                 <button class="program-tab-btn" data-prog="recovery">RECOVERY & RESTORE</button>
             </div>
 
-            <!-- Central Stage Display -->
-            <div class="stage-card tilt-card" id="stageCard" style="--stage-ambient: rgba(0, 212, 255, 0.3);">
+            <!-- Central Stage Display (Sparta Titan Visual Engine) -->
+            <div class="stage-card sparta-spec-panel hud-corner-bracket tilt-card" id="stageCard" style="--stage-ambient: rgba(0, 212, 255, 0.35);">
                 <img src="images/workout-strength.webp" alt="Strength Program" class="stage-bg-img" id="stageImage">
                 <div class="stage-gradient-overlay" id="stageOverlay"></div>
 
                 <div class="stage-content">
                     <div class="d-flex align-items-center gap-2 mb-2">
-                        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#00d4ff;box-shadow:0 0 10px #00d4ff;"></span>
-                        <span class="text-label" id="stageSub" style="color:var(--blue-accent);letter-spacing:0.12em;">NEURAL PATHWAY OVERLOAD</span>
+                        <span class="spec-badge-cyan" id="stageSub"><i class="bi bi-activity me-1"></i> NEURAL PATHWAY OVERLOAD</span>
                     </div>
                     <h2 class="heading-xl mb-3" id="stageTitle" style="font-size:clamp(2.2rem, 5vw, 3.8rem);text-transform:uppercase;">STRENGTH & POWER</h2>
                     <p class="text-body mb-4" id="stageDesc" style="max-width:540px;color:#e2e8f0;font-size:0.98rem;line-height:1.6;">
@@ -212,26 +214,26 @@
 
                     <!-- Real-Time Program Metrics -->
                     <div class="d-flex flex-wrap gap-3 align-items-center mb-4">
-                        <div class="stage-stat-pill">
+                        <div class="stage-stat-pill sparta-spec-panel">
                             <span class="stage-stat-val" id="stageDuration">45 MIN</span>
                             <span class="stage-stat-lbl">SESSION DURATION</span>
                         </div>
-                        <div class="stage-stat-pill">
-                            <span class="stage-stat-val" id="stageExercises">12</span>
+                        <div class="stage-stat-pill sparta-spec-panel">
+                            <span class="stage-stat-val" id="stageExercises" style="color:var(--gold-metallic);">12</span>
                             <span class="stage-stat-lbl">EXERCISES</span>
                         </div>
-                        <div class="stage-stat-pill">
-                            <span class="stage-stat-val" id="stageCalories">420 CAL</span>
+                        <div class="stage-stat-pill sparta-spec-panel">
+                            <span class="stage-stat-val" id="stageCalories" style="color:#f59e0b;">420 CAL</span>
                             <span class="stage-stat-lbl">ENERGY BURN</span>
                         </div>
-                        <div class="stage-stat-pill">
-                            <span class="stage-stat-val" id="stageLevel" style="color:var(--blue-accent);">ADVANCED</span>
+                        <div class="stage-stat-pill sparta-spec-panel">
+                            <span class="stage-stat-val" id="stageLevel" style="color:var(--blue-neon);">ADVANCED</span>
                             <span class="stage-stat-lbl">DIFFICULTY TIER</span>
                         </div>
                     </div>
 
                     <div>
-                        <a href="signup.html" class="btn-primary-glow px-4 py-3" style="font-size:0.85rem;border-radius:10px;">
+                        <a href="signup.html" class="btn-gold-glow px-4 py-3" style="font-size:0.85rem;border-radius:10px;">
                             ACTIVATE THIS PROGRAM <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
                         </a>
                     </div>
@@ -299,10 +301,15 @@
         </div>
     </footer>
 
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
     <!-- Three.js + Motion FX -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/three-core.js"></script>
     <script src="js/motion-fx.js"></script>
+    <script src="js/subpage-motion.js"></script>
 
     <script>
     const programData = {

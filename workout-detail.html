@@ -21,21 +21,24 @@
         <div class="container-fluid px-3 px-lg-4 py-4">
             <a href="workouts.html" class="back-link mb-3 d-inline-block"><i class="bi bi-arrow-left me-2"></i>Back to Workouts</a>
 
-            <!-- Workout Header -->
-            <div class="workout-detail-header mb-4" id="detailHeader">
+            <!-- Workout Header with Sparta Titan HUD Framing -->
+            <div class="workout-detail-header sparta-spec-panel hud-corner-bracket p-4 p-md-5 mb-4" id="detailHeader">
                 <div class="wdh-image" id="detailImage"></div>
                 <div class="wdh-info">
-                    <div class="wdh-category" id="detailCategory">Strength</div>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="spec-badge-gold" id="detailCategory">Strength</span>
+                        <span class="spec-badge-cyan"><i class="bi bi-camera-video me-1"></i> CV SENSOR ACTIVE</span>
+                    </div>
                     <h1 class="wdh-title" id="detailTitle">Upper Body Power</h1>
                     <p class="wdh-desc" id="detailDesc">Description loading...</p>
                     <div class="wdh-meta">
-                        <div class="wdh-meta-item"><i class="bi bi-clock"></i><span id="detailDuration">45</span> min</div>
-                        <div class="wdh-meta-item"><i class="bi bi-speedometer2"></i><span id="detailDifficulty">Intermediate</span></div>
-                        <div class="wdh-meta-item"><i class="bi bi-fire"></i><span id="detailCalories">420</span> cal</div>
-                        <div class="wdh-meta-item"><i class="bi bi-gear"></i><span id="detailEquipment">Full Gym</span></div>
+                        <div class="wdh-meta-item"><i class="bi bi-clock text-warning"></i><span id="detailDuration">45</span> min</div>
+                        <div class="wdh-meta-item"><i class="bi bi-speedometer2 text-cyan"></i><span id="detailDifficulty">Intermediate</span></div>
+                        <div class="wdh-meta-item"><i class="bi bi-fire text-danger"></i><span id="detailCalories">420</span> cal</div>
+                        <div class="wdh-meta-item"><i class="bi bi-gear text-muted"></i><span id="detailEquipment">Full Gym</span></div>
                     </div>
                     <div class="wdh-targets mt-3" id="detailTargets"></div>
-                    <a href="#" class="btn-primary-glow mt-4" id="startDetailBtn" style="padding:14px 36px;">
+                    <a href="#" class="btn-gold-glow mt-4" id="startDetailBtn" style="padding:14px 38px;width:fit-content;">
                         START WORKOUT <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
                     </a>
                 </div>

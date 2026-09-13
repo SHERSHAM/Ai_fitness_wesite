@@ -470,6 +470,38 @@
   }
 }
 
+/* ── SPARTA / LUXORA / EOSAI RESPONSIVE RULES ────────────────── */
+@media (max-width: 991.98px) {
+  .eosai-scroll-track {
+    display: none !important;
+  }
+  .sparta-spec-panel {
+    padding: 22px;
+  }
+  .luxora-stat-col {
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sparta-spec-panel {
+    padding: 16px;
+  }
+  .sparta-telemetry-cluster {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .sparta-telemetry-item {
+    padding: 12px 8px;
+  }
+  .sparta-telemetry-val {
+    font-size: 1.1rem;
+  }
+  .luxora-stat-num {
+    font-size: 1.8rem;
+  }
+}
+
 /* ── LANDSCAPE PHONE ────────────────────────────────────────── */
 @media (max-height: 500px) and (orientation: landscape) {
   #hero {

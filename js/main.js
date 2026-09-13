@@ -368,7 +368,91 @@
     }
 
     // ═══════════════════════════════════════════════════════════
-    // WORKOUTS — Dynamic Horizontal Pinned Track
+    // SPARTA INTEL — Telemetry Rollups & Circular Readiness Gauge
+    // ═══════════════════════════════════════════════════════════
+    function initSpartaIntel() {
+        const section = document.getElementById('sparta-intel');
+        if (!section) return;
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: section,
+                start: 'top 75%',
+                once: true
+            }
+        });
+
+        tl.from('#sparta-intel .spec-badge-gold', {
+            y: 20,
+            opacity: 0,
+            duration: 0.5,
+            ease: 'power3.out'
+        })
+        .from('#sparta-intel h2', {
+            y: 35,
+            opacity: 0,
+            duration: 0.7,
+            ease: 'power3.out'
+        }, '-=0.3')
+        .from('#sparta-intel .sparta-telemetry-item', {
+            y: 30,
+            opacity: 0,
+            scale: 0.92,
+            stagger: 0.08,
+            duration: 0.6,
+            ease: 'power2.out'
+        }, '-=0.4')
+        .from('#sparta-intel .row.g-4 > div', {
+            y: 35,
+            opacity: 0,
+            stagger: 0.12,
+            duration: 0.7,
+            ease: 'power3.out'
+        }, '-=0.3');
+
+        // Circular readiness gauge fill animation
+        const gaugeCircle = section.querySelector('svg circle[stroke*="var(--gold-metallic)"]');
+        if (gaugeCircle) {
+            gsap.fromTo(gaugeCircle, 
+                { strokeDashoffset: 452 },
+                { 
+                    strokeDashoffset: 50, 
+                    duration: 1.8, 
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 65%',
+                        once: true
+                    }
+                }
+            );
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // CAPABILITIES — Luxora Cards Stagger
+    // ═══════════════════════════════════════════════════════════
+    function initCapabilities() {
+        const section = document.getElementById('capabilities');
+        if (!section) return;
+
+        gsap.from('#capabilities .luxora-card', {
+            y: 40,
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: section,
+                start: 'top 75%',
+                once: true
+            }
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // WORKOUTS — Dynamic Horizontal Pinned Track & Category Filter
     // ═══════════════════════════════════════════════════════════
     function initWorkouts() {
         const section = document.getElementById('workouts');
@@ -419,6 +503,37 @@
                 start: 'top 85%',
                 once: true
             }
+        });
+
+        // Interactive Category Filter Pills
+        const categoryPills = section.querySelectorAll('.d-flex.flex-wrap.gap-2 span');
+        const workoutCards = section.querySelectorAll('.workout-card');
+
+        categoryPills.forEach(function(pill) {
+            pill.addEventListener('click', function() {
+                const category = this.textContent.trim().replace(/^[^a-zA-Z]+/, '');
+                
+                // Update active pill styling
+                categoryPills.forEach(p => {
+                    p.style.opacity = '0.6';
+                    p.style.boxShadow = 'none';
+                });
+                this.style.opacity = '1';
+                this.style.boxShadow = '0 0 14px rgba(0, 212, 255, 0.4)';
+
+                // Highlight or filter cards
+                workoutCards.forEach(function(card) {
+                    const cardCat = card.querySelector('.card-category');
+                    if (!cardCat) return;
+                    const match = cardCat.textContent.trim().toUpperCase() === category.toUpperCase();
+                    if (match) {
+                        gsap.to(card, { scale: 1.04, borderColor: 'var(--gold-metallic)', duration: 0.35 });
+                        card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                    } else {
+                        gsap.to(card, { scale: 0.96, borderColor: 'rgba(255,255,255,0.06)', duration: 0.35 });
+                    }
+                });
+            });
         });
     }
 
@@ -875,6 +990,27 @@
     }
 
     // ═══════════════════════════════════════════════════════════
+    // EOSAI SPATIAL SCROLL BEACON
+    // ═══════════════════════════════════════════════════════════
+    function initEosaiScrollTrack() {
+        const beacon = document.getElementById('eosaiBeacon');
+        const track = document.getElementById('eosaiScrollTrack');
+        if (!beacon || !track) return;
+
+        ScrollTrigger.create({
+            trigger: document.body,
+            start: 'top top',
+            end: 'bottom bottom',
+            onUpdate: function(self) {
+                const trackHeight = track.clientHeight || 200;
+                const beaconHeight = beacon.clientHeight || 24;
+                const maxTravel = trackHeight - beaconHeight;
+                gsap.set(beacon, { y: self.progress * maxTravel });
+            }
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
     // INITIALIZATION (Scoped via gsap.context)
     // ═══════════════════════════════════════════════════════════
     let rootCtx = null;
@@ -885,9 +1021,12 @@
         rootCtx = gsap.context(function() {
             initLoadingScreen();
             initNavbar();
+            initEosaiScrollTrack();
             initScrollProgress();
             initHeroScrollAnimation();
             initTextTransformSection();
+            initSpartaIntel();
+            initCapabilities();
             initAIIntro();
             initAIVisualization();
             initAICoach();

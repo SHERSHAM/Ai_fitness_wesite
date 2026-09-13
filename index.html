@@ -61,21 +61,28 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════
-         SCROLL PROGRESS INDICATOR
+         SCROLL PROGRESS INDICATOR & EOSAI SPATIAL TRACK
          ═══════════════════════════════════════════════════════════ -->
     <div class="scroll-progress" id="scrollProgress">
         <div class="progress-dot active" data-section="hero"><span class="progress-label">01</span></div>
-        <div class="progress-dot" data-section="ai-intro"><span class="progress-label">02</span></div>
-        <div class="progress-dot" data-section="ai-coach"><span class="progress-label">03</span></div>
-        <div class="progress-dot" data-section="workouts"><span class="progress-label">04</span></div>
-        <div class="progress-dot" data-section="dashboard"><span class="progress-label">05</span></div>
-        <div class="progress-dot" data-section="nutrition"><span class="progress-label">06</span></div>
-        <div class="progress-dot" data-section="recovery"><span class="progress-label">07</span></div>
-        <div class="progress-dot" data-section="final-cta"><span class="progress-label">08</span></div>
+        <div class="progress-dot" data-section="sparta-intel"><span class="progress-label">02</span></div>
+        <div class="progress-dot" data-section="capabilities"><span class="progress-label">03</span></div>
+        <div class="progress-dot" data-section="ai-coach"><span class="progress-label">04</span></div>
+        <div class="progress-dot" data-section="workouts"><span class="progress-label">05</span></div>
+        <div class="progress-dot" data-section="dashboard"><span class="progress-label">06</span></div>
+        <div class="progress-dot" data-section="nutrition"><span class="progress-label">07</span></div>
+        <div class="progress-dot" data-section="recovery"><span class="progress-label">08</span></div>
+        <div class="progress-dot" data-section="final-cta"><span class="progress-label">09</span></div>
+    </div>
+
+    <!-- EOSAI SPATIAL SCROLL TRACK (Desktop) -->
+    <div class="eosai-scroll-track" id="eosaiScrollTrack">
+        <div class="eosai-track-lbl">SCROLL</div>
+        <div class="eosai-track-line"></div>
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════
-         NAVBAR
+         NAVBAR — LUXURY GLASS WITH METALLIC ACCENT
          ═══════════════════════════════════════════════════════════ -->
     <nav class="fitnexa-nav" id="mainNav">
         <div class="container-fluid px-4 px-lg-5">
@@ -84,19 +91,20 @@
                 <a href="index.html" class="nav-logo" data-cursor="hover">FITNEXA <span>AI</span></a>
 
                 <!-- Desktop Nav -->
-                <ul class="nav-links d-none d-lg-flex">
+                <ul class="nav-links d-none d-lg-flex mb-0">
                     <li><a href="index.html" class="active" data-cursor="hover">Home</a></li>
-                    <li><a href="about.html" data-cursor="hover">About</a></li>
                     <li><a href="programs.html" data-cursor="hover">Programs</a></li>
                     <li><a href="ai-coach-overview.html" data-cursor="hover">AI Coach</a></li>
+                    <li><a href="#sparta-intel" data-cursor="hover">Technology</a></li>
+                    <li><a href="about.html" data-cursor="hover">About</a></li>
                     <li><a href="pricing.html" data-cursor="hover">Pricing</a></li>
                     <li><a href="contact.html" data-cursor="hover">Contact</a></li>
                 </ul>
 
                 <!-- CTA + Auth Cluster -->
                 <div class="d-flex align-items-center gap-3" id="navAuthCluster">
-                    <a href="login.html" class="nav-login-link text-white text-decoration-none d-none d-md-inline-block fw-semibold" style="font-size:0.9rem;" data-cursor="hover">Login</a>
-                    <a href="signup.html" class="nav-cta-btn d-none d-md-inline-flex" data-cursor="hover">Start Training <i class="bi bi-arrow-right"></i></a>
+                    <a href="login.html" class="nav-login-link text-white text-decoration-none d-none d-md-inline-block fw-semibold" style="font-size:0.85rem;" data-cursor="hover">Login</a>
+                    <a href="signup.html" class="nav-cta-btn d-none d-md-inline-flex" data-cursor="hover">Start Training <i class="bi bi-arrow-right ms-1"></i></a>
                     <button class="mobile-menu-toggle d-lg-none" id="menuToggle" aria-label="Toggle menu">
                         <span></span>
                         <span></span>
@@ -111,9 +119,10 @@
     <div class="mobile-menu-overlay" id="mobileMenu">
         <ul class="mobile-nav-links">
             <li><a href="index.html" data-mobile-link>Home</a></li>
-            <li><a href="about.html" data-mobile-link>About</a></li>
             <li><a href="programs.html" data-mobile-link>Programs</a></li>
             <li><a href="ai-coach-overview.html" data-mobile-link>AI Coach</a></li>
+            <li><a href="#sparta-intel" data-mobile-link>Technology</a></li>
+            <li><a href="about.html" data-mobile-link>About</a></li>
             <li><a href="pricing.html" data-mobile-link>Pricing</a></li>
             <li><a href="contact.html" data-mobile-link>Contact</a></li>
             <li><a href="login.html" data-mobile-link>Login</a></li>
@@ -143,19 +152,19 @@
         <div class="container hero-content" id="heroContent">
             <div class="row">
                 <div class="col-12 col-md-8 col-xl-6">
-                    <div class="hero-eyebrow" id="heroEyebrow">AI FITNESS TRAINER</div>
+                    <div class="spec-badge-gold mb-3" id="heroEyebrow"><i class="bi bi-cpu-fill me-1"></i> NEURAL FITNESS ARCHITECTURE V2.4</div>
                     <h1 class="heading-massive hero-headline" id="heroHeadline">
                         <span class="line"><span id="heroDynamicPrefix">TRAIN</span></span>
-                        <span class="line"><span class="accent" id="heroDynamicSuffix">SMARTER.</span></span>
+                        <span class="line"><span class="accent" style="color:var(--blue-neon);" id="heroDynamicSuffix">SMARTER.</span></span>
                     </h1>
                     <p class="hero-description" id="heroDesc">
-                        Your AI-powered personal trainer that adapts to your goals, performance, recovery and lifestyle.
+                        Your AI-powered personal trainer that adapts to your body, goals, recovery and performance in real time.
                     </p>
-                    <div class="hero-buttons" id="heroButtons">
-                        <a href="signup.html" class="btn-primary-glow" data-cursor="hover">
-                            START YOUR JOURNEY <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
+                    <div class="hero-buttons d-flex flex-wrap gap-3" id="heroButtons">
+                        <a href="signup.html" class="btn-gold-glow" data-cursor="hover">
+                            START YOUR JOURNEY <i class="bi bi-arrow-right ms-1"></i>
                         </a>
-                        <a href="ai-coach-overview.html" class="btn-outline-glow" data-cursor="hover">
+                        <a href="ai-coach-overview.html" class="btn-sparta-outline" data-cursor="hover">
                             EXPLORE AI COACH
                         </a>
                     </div>
@@ -163,31 +172,39 @@
             </div>
         </div>
 
-        <!-- Floating stats card with 3D tilt -->
-        <div class="hero-stats-card glass-card tilt-card depth-glass d-none d-md-block" id="heroStatsCard" data-depth="0.12">
-            <div class="stats-header">
-                <span class="text-label">This Week Progress</span>
-                <span style="font-family: var(--font-heading); font-weight: 700; color: var(--blue-accent);">78%</span>
+        <!-- Floating stats card with Sparta-style technical framing -->
+        <div class="hero-stats-card sparta-spec-panel hud-corner-bracket tilt-card depth-glass d-none d-md-block" id="heroStatsCard" data-depth="0.12" style="max-width:380px;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-label" style="color:var(--gold-light);"><i class="bi bi-activity me-1"></i> TELEMETRY OVERVIEW</span>
+                <span style="font-family: var(--font-heading); font-weight: 800; color: var(--blue-neon);">78% READINESS</span>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="heroProgressFill"></div>
+            <div class="progress-bar mb-3" style="height:6px;background:rgba(255,255,255,0.06);border-radius:3px;">
+                <div class="progress-fill" id="heroProgressFill" style="background:var(--gold-gradient);height:100%;border-radius:3px;"></div>
             </div>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value" data-count="5">0</div>
-                    <div class="stat-label">Workouts</div>
+            <div class="row g-2">
+                <div class="col-6">
+                    <div class="p-2 rounded text-center" style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.04);">
+                        <div class="stat-value" style="font-size:1.3rem;font-weight:800;color:#fff;" data-count="5">0</div>
+                        <div class="stat-label" style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;">Workouts</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value" data-count="2450">0</div>
-                    <div class="stat-label">Calories Burned</div>
+                <div class="col-6">
+                    <div class="p-2 rounded text-center" style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.04);">
+                        <div class="stat-value" style="font-size:1.3rem;font-weight:800;color:var(--gold-metallic);" data-count="2450">0</div>
+                        <div class="stat-label" style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;">Calories</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value" data-count="6">0</div>
-                    <div class="stat-label">Active Days</div>
+                <div class="col-6">
+                    <div class="p-2 rounded text-center" style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.04);">
+                        <div class="stat-value" style="font-size:1.3rem;font-weight:800;color:#fff;" data-count="6">0</div>
+                        <div class="stat-label" style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;">Active Days</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">4.8</div>
-                    <div class="stat-label">Hours Trained</div>
+                <div class="col-6">
+                    <div class="p-2 rounded text-center" style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.04);">
+                        <div class="stat-value" style="font-size:1.3rem;font-weight:800;color:var(--blue-neon);">4.8h</div>
+                        <div class="stat-label" style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;">Trained</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -215,6 +232,241 @@
             </div>
         </div>
     </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         LUXORA-INSPIRED MINIMAL TELEMETRY RIBBON
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="luxora-stats-ribbon">
+        <div class="container">
+            <div class="row g-4 text-center">
+                <div class="col-6 col-md-3 luxora-stat-col">
+                    <div class="d-flex justify-content-center align-items-baseline gap-1">
+                        <span class="luxora-stat-num" data-count="50">0</span>
+                        <span style="font-family:var(--font-heading);font-weight:800;font-size:1.5rem;color:var(--gold-metallic);">K+</span>
+                    </div>
+                    <div class="luxora-stat-lbl">Athletes Trained</div>
+                </div>
+                <div class="col-6 col-md-3 luxora-stat-col">
+                    <div class="d-flex justify-content-center align-items-baseline gap-1">
+                        <span class="luxora-stat-num" data-count="12">0</span>
+                        <span style="font-family:var(--font-heading);font-weight:800;font-size:1.5rem;color:var(--blue-neon);">M+</span>
+                    </div>
+                    <div class="luxora-stat-lbl">Biometric Data Points</div>
+                </div>
+                <div class="col-6 col-md-3 luxora-stat-col">
+                    <div class="d-flex justify-content-center align-items-baseline gap-1">
+                        <span class="luxora-stat-num" data-count="94">0</span>
+                        <span style="font-family:var(--font-heading);font-weight:800;font-size:1.5rem;color:var(--gold-metallic);">%</span>
+                    </div>
+                    <div class="luxora-stat-lbl">Form Precision Rate</div>
+                </div>
+                <div class="col-6 col-md-3 luxora-stat-col">
+                    <div class="d-flex justify-content-center align-items-baseline gap-1">
+                        <span class="luxora-stat-num" data-count="99">0</span>
+                        <span style="font-family:var(--font-heading);font-weight:800;font-size:1.5rem;color:var(--blue-neon);">.8%</span>
+                    </div>
+                    <div class="luxora-stat-lbl">Neural Engine Uptime</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SPARTA TITAN SPECIFICATION SECTION — FITNEXA INTELLIGENCE SYSTEM
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="sparta-intel" class="cinematic-section py-5" style="background: radial-gradient(circle at 50% 30%, rgba(13, 27, 42, 0.45), transparent 70%);">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <div class="spec-badge-gold mb-3"><i class="bi bi-shield-check me-1"></i> BEYOND STANDARD FITNESS</div>
+                <h2 class="heading-massive" style="font-size: clamp(2.2rem, 5vw, 4.2rem);">THE FITNEXA INTELLIGENCE SYSTEM</h2>
+                <p class="text-muted mx-auto mt-2" style="max-width: 620px;">Precision sports-science architecture engineered to monitor, adapt, and accelerate physical evolution.</p>
+            </div>
+
+            <!-- Top Specs Ribbon (Sparta Titan Style) -->
+            <div class="sparta-spec-panel hud-corner-bracket mb-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="spec-badge-cyan">NEURAL SUBSYSTEM V2.4</span>
+                        <span class="text-muted" style="font-size:0.8rem;">AUTONOMOUS FITNESS OPERATING PLATFORM</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 text-muted" style="font-size:0.78rem;">
+                        <span><i class="bi bi-lightning-charge-fill text-warning me-1"></i> LATENCY &lt; 4ms</span>
+                        <span><i class="bi bi-broadcast text-info me-1"></i> REAL-TIME TELEMETRY</span>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sparta-telemetry-item">
+                            <i class="bi bi-cpu-fill sparta-telemetry-icon"></i>
+                            <div class="sparta-telemetry-val">OCTA-CORE</div>
+                            <div class="sparta-telemetry-lbl">Neural Engine</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sparta-telemetry-item">
+                            <i class="bi bi-bullseye sparta-telemetry-icon" style="color:var(--blue-neon);"></i>
+                            <div class="sparta-telemetry-val">17-POINT</div>
+                            <div class="sparta-telemetry-lbl">CV Tracking</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sparta-telemetry-item">
+                            <i class="bi bi-activity sparta-telemetry-icon"></i>
+                            <div class="sparta-telemetry-val">100Hz</div>
+                            <div class="sparta-telemetry-lbl">Bio-Sampling</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sparta-telemetry-item">
+                            <i class="bi bi-heart-pulse-fill sparta-telemetry-icon" style="color:#ef4444;"></i>
+                            <div class="sparta-telemetry-val">0.1 BPM</div>
+                            <div class="sparta-telemetry-lbl">HRV Precision</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sparta-telemetry-item">
+                            <i class="bi bi-fire sparta-telemetry-icon" style="color:#f59e0b;"></i>
+                            <div class="sparta-telemetry-val">DYNAMIC</div>
+                            <div class="sparta-telemetry-lbl">Metabolic Burn</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="sparta-telemetry-item">
+                            <i class="bi bi-database-check sparta-telemetry-icon" style="color:var(--blue-neon);"></i>
+                            <div class="sparta-telemetry-val">256-BIT</div>
+                            <div class="sparta-telemetry-lbl">Data Isolation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed 3-Column Specifications (Sparta Titan Middle Layout) -->
+            <div class="row g-4">
+                <!-- Col 1: Movement & Form -->
+                <div class="col-12 col-lg-4">
+                    <div class="sparta-spec-panel h-100">
+                        <div class="text-label text-warning mb-2">SUBSYSTEM 01 // CV INTELLIGENCE</div>
+                        <h3 class="heading-lg mb-3" style="font-size:1.4rem;">FORM INTELLIGENCE</h3>
+                        <p class="text-muted" style="font-size:0.85rem;line-height:1.6;">Computer vision kinematics track joint angles at 60 frames per second, calculating torque and trajectory in real time.</p>
+                        <div class="mt-4 pt-3" style="border-top:1px solid rgba(255,255,255,0.06);">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted" style="font-size:0.8rem;">Joint Angle Accuracy</span>
+                                <span class="text-white fw-bold" style="font-size:0.8rem;">± 0.5°</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted" style="font-size:0.8rem;">Velocity Loss Tracking</span>
+                                <span class="text-white fw-bold" style="font-size:0.8rem;">Active</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted" style="font-size:0.8rem;">Injury Risk Prediction</span>
+                                <span class="text-cyan fw-bold" style="font-size:0.8rem;">Real-Time</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 2: Circular Readiness Gauge (Sparta Center Dial) -->
+                <div class="col-12 col-lg-4">
+                    <div class="sparta-spec-panel h-100 text-center d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="text-label text-cyan mb-2">SUBSYSTEM 02 // READINESS ENGINE</div>
+                            <h3 class="heading-lg mb-3" style="font-size:1.4rem;">RECOVERY EFFICIENCY</h3>
+                        </div>
+                        <div class="my-3">
+                            <div class="position-relative d-inline-block" style="width: 170px; height: 170px;">
+                                <svg width="170" height="170" viewBox="0 0 170 170" style="transform: rotate(-90deg);">
+                                    <circle cx="85" cy="85" r="72" stroke="rgba(255,255,255,0.06)" stroke-width="10" fill="none"></circle>
+                                    <circle cx="85" cy="85" r="72" stroke="var(--gold-metallic)" stroke-width="10" fill="none" stroke-linecap="round" style="stroke-dasharray: 452; stroke-dashoffset: 50; filter: drop-shadow(0 0 10px rgba(212,175,55,0.6));"></circle>
+                                </svg>
+                                <div class="position-absolute top-50 start-50 translate-middle text-center">
+                                    <div style="font-family:var(--font-heading); font-size:2.5rem; font-weight:900; color:#ffffff; line-height:1;">89%</div>
+                                    <div style="font-size:0.65rem; color:var(--gold-light); letter-spacing:1.5px; margin-top:2px;">MAX READINESS</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-start pt-3" style="border-top:1px solid rgba(255,255,255,0.06);">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted" style="font-size:0.8rem;">CNS Fatigue Index</span>
+                                <span class="text-white fw-bold" style="font-size:0.8rem;">Low (12%)</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted" style="font-size:0.8rem;">Autonomous Adaptation</span>
+                                <span class="text-success fw-bold" style="font-size:0.8rem;">Prime Cleared</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 3: Adaptive Nutrition & Load -->
+                <div class="col-12 col-lg-4">
+                    <div class="sparta-spec-panel h-100">
+                        <div class="text-label text-warning mb-2">SUBSYSTEM 03 // METABOLIC AI</div>
+                        <h3 class="heading-lg mb-3" style="font-size:1.4rem;">NUTRITION & LOAD</h3>
+                        <p class="text-muted" style="font-size:0.85rem;line-height:1.6;">Autonomous macro balancing calculating glycogen depletion against session RPE and biometric expenditure.</p>
+                        <div class="mt-4 pt-3" style="border-top:1px solid rgba(255,255,255,0.06);">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted" style="font-size:0.8rem;">Protein Synthesis Window</span>
+                                <span class="text-white fw-bold" style="font-size:0.8rem;">165g / Day</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted" style="font-size:0.8rem;">Hydration Optimal Target</span>
+                                <span class="text-white fw-bold" style="font-size:0.8rem;">2.8L Active</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted" style="font-size:0.8rem;">Metabolic State</span>
+                                <span class="text-info fw-bold" style="font-size:0.8rem;">Hypertrophic</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         CAPABILITIES SECTION — ENGINEERED FOR YOUR EVOLUTION
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="capabilities" class="cinematic-section py-5">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <div class="spec-badge-cyan mb-3"><i class="bi bi-stars me-1"></i> CORE PILLARS</div>
+                <h2 class="heading-massive" style="font-size: clamp(2.2rem, 5vw, 4.2rem);">ENGINEERED FOR YOUR EVOLUTION</h2>
+                <p class="text-muted mx-auto mt-2" style="max-width: 600px;">Four integrated neural systems driving unmatched athletic transformation.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="luxora-card h-100">
+                        <div class="luxora-card-icon"><i class="bi bi-cpu"></i></div>
+                        <h4 class="heading-lg mb-2" style="font-size:1.25rem;">AI PERSONALIZATION</h4>
+                        <p class="text-muted" style="font-size:0.85rem;line-height:1.6;">Training architecture that continuously learns your strength curve and adapts daily sets and weights.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="luxora-card h-100">
+                        <div class="luxora-card-icon" style="color:var(--blue-neon);"><i class="bi bi-camera-video"></i></div>
+                        <h4 class="heading-lg mb-2" style="font-size:1.25rem;">FORM INTELLIGENCE</h4>
+                        <p class="text-muted" style="font-size:0.85rem;line-height:1.6;">Real-time computer vision joint tracking that alerts you to kinematic breakdown before injury occurs.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="luxora-card h-100">
+                        <div class="luxora-card-icon" style="color:#22c55e;"><i class="bi bi-heart-pulse"></i></div>
+                        <h4 class="heading-lg mb-2" style="font-size:1.25rem;">RECOVERY INTELLIGENCE</h4>
+                        <p class="text-muted" style="font-size:0.85rem;line-height:1.6;">Know exactly when central nervous system recovery is primed for PRs, and when to downshift.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="luxora-card h-100">
+                        <div class="luxora-card-icon"><i class="bi bi-graph-up-arrow"></i></div>
+                        <h4 class="heading-lg mb-2" style="font-size:1.25rem;">PERFORMANCE ANALYTICS</h4>
+                        <p class="text-muted" style="font-size:0.85rem;line-height:1.6;">Understand your progressive overload trajectory across 12-week cycles with granular data clarity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- ═══════════════════════════════════════════════════════════
          SECTION 2: AI INTRODUCTION
@@ -360,81 +612,146 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════
-         SECTION 5: WORKOUTS — HORIZONTAL SCROLL
+         SECTION 5: WORKOUTS — INTERACTIVE TRAINING ARCHITECTURE
          ═══════════════════════════════════════════════════════════ -->
     <section id="workouts" class="cinematic-section" style="padding: var(--section-pad) 0;">
         <div class="container">
-            <div class="text-label text-center mb-3" style="color: var(--blue-accent);">PERSONALIZED PROGRAMS</div>
-            <h2 class="heading-massive workout-headline" id="workoutHeadline">
-                EVERY WORKOUT.<br><span style="color:var(--blue-electric)">BUILT FOR YOU.</span>
-            </h2>
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+                <div>
+                    <div class="spec-badge-gold mb-2"><i class="bi bi-grid-3x3-gap-fill me-1"></i> TRAINING DISCIPLINES</div>
+                    <h2 class="heading-massive workout-headline" id="workoutHeadline">
+                        EVERY WORKOUT.<br><span style="color:var(--blue-neon)">BUILT FOR YOU.</span>
+                    </h2>
+                </div>
+                <div>
+                    <a href="programs.html" class="btn-sparta-outline" data-cursor="hover">VIEW FULL CATALOG <i class="bi bi-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+
+            <!-- Interactive Category Selector Pills -->
+            <div class="d-flex flex-wrap gap-2 mb-4 pb-2" style="overflow-x:auto;">
+                <span class="spec-badge-cyan" style="cursor:pointer;"><i class="bi bi-check2 me-1"></i> STRENGTH</span>
+                <span class="spec-badge-gold" style="cursor:pointer;">HYPERTROPHY</span>
+                <span class="spec-badge-cyan" style="cursor:pointer;background:transparent;opacity:0.7;">HIIT</span>
+                <span class="spec-badge-cyan" style="cursor:pointer;background:transparent;opacity:0.7;">FAT LOSS</span>
+                <span class="spec-badge-cyan" style="cursor:pointer;background:transparent;opacity:0.7;">MOBILITY</span>
+                <span class="spec-badge-cyan" style="cursor:pointer;background:transparent;opacity:0.7;">ATHLETIC</span>
+                <span class="spec-badge-cyan" style="cursor:pointer;background:transparent;opacity:0.7;">BEGINNER</span>
+                <span class="spec-badge-cyan" style="cursor:pointer;background:transparent;opacity:0.7;">HOME</span>
+            </div>
         </div>
 
         <div class="workout-horizontal-wrapper" id="workoutWrapper">
             <div class="workout-horizontal-track" id="workoutTrack">
                 <!-- Workout Card 1 -->
-                <div class="workout-card" data-cursor="view">
+                <div class="workout-card" data-cursor="view" onclick="window.location.href='workout-detail.html?id=upper-body-power'">
                     <img src="images/workout-strength.webp" alt="Strength Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
                     <div class="card-overlay">
-                        <div class="card-category">Program</div>
-                        <h3 class="card-title">Strength</h3>
-                        <p class="card-desc">Build raw power with progressive overload training</p>
-                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="card-category">STRENGTH</span>
+                            <span class="spec-badge-gold" style="font-size:0.62rem;padding:2px 8px;">RPE 8.5</span>
+                        </div>
+                        <h3 class="card-title">Upper Body Power</h3>
+                        <p class="card-desc">Maximal neurological recruitment with barbell compounds.</p>
+                        <div class="card-action">Launch Protocol <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
                 </div>
 
                 <!-- Workout Card 2 -->
-                <div class="workout-card" data-cursor="view">
-                    <img src="images/workout-hiit.webp" alt="HIIT Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                <div class="workout-card" data-cursor="view" onclick="window.location.href='workout-detail.html?id=hypertrophy-push'">
+                    <img src="images/workout-muscle.webp" alt="Muscle Building" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
                     <div class="card-overlay">
-                        <div class="card-category">Program</div>
-                        <h3 class="card-title">HIIT</h3>
-                        <p class="card-desc">High intensity intervals for maximum calorie burn</p>
-                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="card-category">HYPERTROPHY</span>
+                            <span class="spec-badge-cyan" style="font-size:0.62rem;padding:2px 8px;">VOLUME 24 SETS</span>
+                        </div>
+                        <h3 class="card-title">Hypertrophy Push</h3>
+                        <p class="card-desc">Mechanical tension and metabolic stress for muscle synthesis.</p>
+                        <div class="card-action">Launch Protocol <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
                 </div>
 
                 <!-- Workout Card 3 -->
-                <div class="workout-card" data-cursor="view">
-                    <img src="images/workout-fatloss.webp" alt="Fat Loss Program" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                <div class="workout-card" data-cursor="view" onclick="window.location.href='workout-detail.html?id=hiit-circuit'">
+                    <img src="images/workout-hiit.webp" alt="HIIT Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
                     <div class="card-overlay">
-                        <div class="card-category">Program</div>
-                        <h3 class="card-title">Fat Loss</h3>
-                        <p class="card-desc">Optimized routines designed to maximize fat burning</p>
-                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="card-category">HIIT</span>
+                            <span class="spec-badge-gold" style="font-size:0.62rem;padding:2px 8px;">32 MIN · HR 165</span>
+                        </div>
+                        <h3 class="card-title">Metabolic Conditioning</h3>
+                        <p class="card-desc">Tabata intervals engineered to spike VO2 max and caloric burn.</p>
+                        <div class="card-action">Launch Protocol <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
                 </div>
 
                 <!-- Workout Card 4 -->
-                <div class="workout-card" data-cursor="view">
-                    <img src="images/workout-muscle.webp" alt="Muscle Building" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                <div class="workout-card" data-cursor="view" onclick="window.location.href='workout-detail.html?id=fat-loss-shred'">
+                    <img src="images/workout-fatloss.webp" alt="Fat Loss Program" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
                     <div class="card-overlay">
-                        <div class="card-category">Program</div>
-                        <h3 class="card-title">Muscle Building</h3>
-                        <p class="card-desc">Hypertrophy-focused training for lean muscle gains</p>
-                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="card-category">FAT LOSS</span>
+                            <span class="spec-badge-cyan" style="font-size:0.62rem;padding:2px 8px;">EPOC BOOST</span>
+                        </div>
+                        <h3 class="card-title">Accelerated Shred</h3>
+                        <p class="card-desc">High-density supersets maximizing post-exercise oxygen consumption.</p>
+                        <div class="card-action">Launch Protocol <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
                 </div>
 
                 <!-- Workout Card 5 -->
-                <div class="workout-card" data-cursor="view">
-                    <img src="images/workout-endurance.webp" alt="Endurance Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                <div class="workout-card" data-cursor="view" onclick="window.location.href='workout-detail.html?id=deep-mobility'">
+                    <img src="images/workout-mobility.webp" alt="Mobility Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
                     <div class="card-overlay">
-                        <div class="card-category">Program</div>
-                        <h3 class="card-title">Endurance</h3>
-                        <p class="card-desc">Build stamina and cardiovascular fitness</p>
-                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="card-category">MOBILITY</span>
+                            <span class="spec-badge-gold" style="font-size:0.62rem;padding:2px 8px;">JOINT HEALTH</span>
+                        </div>
+                        <h3 class="card-title">Kinetic Restoration</h3>
+                        <p class="card-desc">Fascial release and active range-of-motion restoration.</p>
+                        <div class="card-action">Launch Protocol <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
                 </div>
 
                 <!-- Workout Card 6 -->
-                <div class="workout-card" data-cursor="view">
-                    <img src="images/workout-mobility.webp" alt="Mobility Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                <div class="workout-card" data-cursor="view" onclick="window.location.href='workout-detail.html?id=athletic-conditioning'">
+                    <img src="images/hero-athlete.webp" alt="Athletic Performance" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
                     <div class="card-overlay">
-                        <div class="card-category">Program</div>
-                        <h3 class="card-title">Mobility</h3>
-                        <p class="card-desc">Improve flexibility and prevent injuries</p>
-                        <div class="card-action">Explore <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="card-category">ATHLETIC</span>
+                            <span class="spec-badge-cyan" style="font-size:0.62rem;padding:2px 8px;">EXPLOSIVE</span>
+                        </div>
+                        <h3 class="card-title">Athletic Prime</h3>
+                        <p class="card-desc">Plyometrics and multi-planar power transfer for elite field readiness.</p>
+                        <div class="card-action">Launch Protocol <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                </div>
+
+                <!-- Workout Card 7 -->
+                <div class="workout-card" data-cursor="view" onclick="window.location.href='workout-detail.html?id=foundation-start'">
+                    <img src="images/editorial-athlete.webp" alt="Beginner Foundation" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                    <div class="card-overlay">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="card-category">BEGINNER</span>
+                            <span class="spec-badge-gold" style="font-size:0.62rem;padding:2px 8px;">FOUNDATION</span>
+                        </div>
+                        <h3 class="card-title">Neuromuscular Base</h3>
+                        <p class="card-desc">Fundamental movement patterns and posture stabilization.</p>
+                        <div class="card-action">Launch Protocol <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
+                    </div>
+                </div>
+
+                <!-- Workout Card 8 -->
+                <div class="workout-card" data-cursor="view" onclick="window.location.href='workout-detail.html?id=home-bodyweight'">
+                    <img src="images/cta-athlete.webp" alt="Home Training" width="1376" height="768" class="card-image" loading="lazy" decoding="async">
+                    <div class="card-overlay">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="card-category">HOME</span>
+                            <span class="spec-badge-cyan" style="font-size:0.62rem;padding:2px 8px;">ZERO GEAR</span>
+                        </div>
+                        <h3 class="card-title">Calisthenic Forge</h3>
+                        <p class="card-desc">Bodyweight leverage progressions for home or travel environments.</p>
+                        <div class="card-action">Launch Protocol <span class="arrow"><i class="bi bi-arrow-right"></i></span></div>
                     </div>
                 </div>
             </div>
@@ -879,8 +1196,8 @@
                 Join thousands of athletes who train smarter with AI-powered coaching, personalized nutrition, and real-time performance tracking.
             </p>
             <div class="cta-button-wrapper">
-                <a href="signup.html" class="btn-primary-glow" data-cursor="hover" style="font-size:1rem;padding:20px 48px;">
-                    START YOUR JOURNEY <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
+                <a href="signup.html" class="btn-gold-glow" data-cursor="hover" style="font-size:1rem;padding:20px 48px;">
+                    START YOUR JOURNEY <i class="bi bi-arrow-right ms-2"></i>
                 </a>
             </div>
         </div>
@@ -894,31 +1211,29 @@
             <div class="row g-4">
                 <div class="col-12 col-sm-6 col-lg-3">
                     <div class="footer-logo">FITNEXA <span>AI</span></div>
-                    <p class="footer-tagline">Train smarter. Become stronger. Your AI-powered fitness evolution starts here.</p>
+                    <p class="footer-tagline">TRAIN SMARTER.<br><span style="color:var(--gold-metallic);">EVOLVE FASTER.</span><br><small class="text-muted mt-2 d-block">Autonomous AI Fitness Architecture.</small></p>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-2 offset-lg-1">
-                    <h4 class="footer-heading">Platform</h4>
+                    <h4 class="footer-heading">Product</h4>
                     <ul class="footer-links">
                         <li><a href="programs.html" data-cursor="hover">Programs</a></li>
                         <li><a href="ai-coach-overview.html" data-cursor="hover">AI Coach</a></li>
+                        <li><a href="workouts.html" data-cursor="hover">Workouts</a></li>
                         <li><a href="nutrition.html" data-cursor="hover">Nutrition</a></li>
-                        <li><a href="recovery.html" data-cursor="hover">Recovery</a></li>
+                        <li><a href="progress.html" data-cursor="hover">Progress</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-2">
                     <h4 class="footer-heading">Company</h4>
                     <ul class="footer-links">
                         <li><a href="about.html" data-cursor="hover">About</a></li>
-                        <li><a href="pricing.html" data-cursor="hover">Pricing</a></li>
+                        <li><a href="index.html#sparta-intel" data-cursor="hover">Technology</a></li>
                         <li><a href="contact.html" data-cursor="hover">Contact</a></li>
-                        <li><a href="signup.html" data-cursor="hover">Join Now</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-2">
-                    <h4 class="footer-heading">Support</h4>
+                    <h4 class="footer-heading">Legal</h4>
                     <ul class="footer-links">
-                        <li><a href="contact.html" data-cursor="hover">Help Center</a></li>
-                        <li><a href="contact.html" data-cursor="hover">Contact Us</a></li>
                         <li><a href="privacy.html" data-cursor="hover">Privacy</a></li>
                         <li><a href="terms.html" data-cursor="hover">Terms</a></li>
                     </ul>

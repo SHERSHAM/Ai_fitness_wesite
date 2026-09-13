@@ -30,21 +30,21 @@
             <div class="row g-4">
                 <!-- Left Column -->
                 <div class="col-12 col-xl-8">
-                    <!-- Today's Workout with 3D Depth -->
-                    <div class="dash-card dash-today-workout tilt-card glass-card-3d mb-4" id="todayWorkoutCard">
-                        <div class="dash-card-header">
-                            <span class="text-label" style="color:var(--blue-accent);">TODAY'S WORKOUT</span>
+                    <!-- Today's Workout with 3D Depth & Sparta Titan Framing -->
+                    <div class="dash-card dash-today-workout sparta-spec-panel hud-corner-bracket tilt-card glass-card-3d mb-4" id="todayWorkoutCard">
+                        <div class="dash-card-header d-flex justify-content-between align-items-center">
+                            <span class="spec-badge-gold" style="font-size:0.68rem;"><i class="bi bi-lightning-charge-fill me-1"></i> ACTIVE PROTOCOL // TODAY</span>
                             <span class="text-label" id="todayDate"></span>
                         </div>
-                        <div class="dash-workout-info">
-                            <h2 class="dash-workout-name" id="todayWorkoutName">UPPER BODY POWER</h2>
-                            <div class="dash-workout-meta">
-                                <span><i class="bi bi-clock me-1"></i> <span id="todayDuration">45</span> MIN</span>
-                                <span><i class="bi bi-list-ol me-1"></i> <span id="todayExercises">6</span> EXERCISES</span>
-                                <span><i class="bi bi-fire me-1"></i> <span id="todayCalories">420</span> CAL</span>
+                        <div class="dash-workout-info my-3">
+                            <h2 class="dash-workout-name" id="todayWorkoutName" style="font-size:clamp(1.8rem, 4vw, 2.5rem);letter-spacing:0.02em;">UPPER BODY POWER</h2>
+                            <div class="dash-workout-meta d-flex flex-wrap gap-3 mt-2">
+                                <span class="badge" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:6px 12px;font-size:0.8rem;"><i class="bi bi-clock text-warning me-1"></i> <span id="todayDuration">45</span> MIN</span>
+                                <span class="badge" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:6px 12px;font-size:0.8rem;"><i class="bi bi-list-ol text-cyan me-1"></i> <span id="todayExercises">6</span> EXERCISES</span>
+                                <span class="badge" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);padding:6px 12px;font-size:0.8rem;"><i class="bi bi-fire text-danger me-1"></i> <span id="todayCalories">420</span> CAL</span>
                             </div>
                         </div>
-                        <a href="#" class="btn-primary-glow" id="startWorkoutBtn" style="padding:14px 32px;">
+                        <a href="#" class="btn-gold-glow" id="startWorkoutBtn" style="padding:14px 34px;width:fit-content;">
                             START WORKOUT <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
                         </a>
                     </div>

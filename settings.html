@@ -19,20 +19,21 @@
     <div id="appNavMount"></div>
     <main class="app-main">
         <div class="container-fluid px-3 px-lg-4 py-4">
+            <div class="spec-badge-gold mb-2"><i class="bi bi-sliders me-1"></i> SPARTA SYSTEM PREFERENCES</div>
             <h1 class="page-title">Settings</h1>
-            <p class="page-subtitle mb-4">Manage your account, notifications, and preferences.</p>
+            <p class="page-subtitle mb-4">Manage your account, notifications, and telemetry preferences.</p>
 
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
                     <!-- Account -->
-                    <div class="dash-card mb-4">
-                        <div class="dash-card-header"><span class="text-label" style="color:var(--blue-accent);">ACCOUNT</span></div>
+                    <div class="dash-card sparta-spec-panel hud-corner-bracket mb-4">
+                        <div class="dash-card-header"><span class="spec-badge-cyan" style="font-size:0.68rem;"><i class="bi bi-shield-lock me-1"></i> ACCOUNT CREDENTIALS</span></div>
                         <div class="settings-section">
                             <div class="settings-item">
                                 <div><div class="si-label">Email</div><div class="si-value" id="setEmail">user@email.com</div></div>
                             </div>
                             <div class="settings-item">
-                                <div><div class="si-label">Plan</div><div class="si-value" id="setPlan">Pro AI Member</div></div>
+                                <div><div class="si-label">Plan</div><div class="si-value text-gold fw-bold" id="setPlan">Pro AI Member</div></div>
                             </div>
                             <div class="settings-item">
                                 <div><div class="si-label">Member Since</div><div class="si-value" id="setSince">January 2026</div></div>
@@ -41,12 +42,12 @@
                     </div>
 
                     <!-- Security -->
-                    <div class="dash-card mb-4">
-                        <div class="dash-card-header"><span class="text-label" style="color:var(--blue-accent);">SECURITY</span></div>
+                    <div class="dash-card sparta-spec-panel hud-corner-bracket mb-4">
+                        <div class="dash-card-header"><span class="spec-badge-gold" style="font-size:0.68rem;"><i class="bi bi-key-fill me-1"></i> ACCESS SECURITY</span></div>
                         <div class="settings-section">
                             <div class="settings-item">
                                 <div><div class="si-label">Change Password</div><div class="si-desc">Update your account password</div></div>
-                                <button class="btn-outline-glow" style="padding:8px 20px;font-size:0.78rem;" id="btnChangePassword">CHANGE</button>
+                                <button class="btn-sparta-outline" style="padding:8px 20px;font-size:0.78rem;" id="btnChangePassword">CHANGE</button>
                             </div>
                         </div>
                         <div id="passwordForm" style="display:none;padding:16px 20px;">
@@ -58,7 +59,7 @@
                                 <label class="form-label-custom">Confirm Password</label>
                                 <input type="password" class="form-input-custom" placeholder="Confirm" id="confirmPassword">
                             </div>
-                            <button class="btn-primary-glow" style="padding:10px 24px;font-size:0.8rem;" id="btnSavePassword">UPDATE PASSWORD</button>
+                            <button class="btn-gold-glow" style="padding:10px 24px;font-size:0.8rem;" id="btnSavePassword">UPDATE PASSWORD</button>
                             <div id="pwdMsg" class="auth-success mt-2" style="display:none;"><i class="bi bi-check-circle-fill me-2"></i> Password updated.</div>
                         </div>
                     </div>

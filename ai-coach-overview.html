@@ -91,7 +91,10 @@
             <div class="depth-3d-canvas" id="coachAICoreCanvas" style="opacity:0.95;"></div>
 
             <div class="container text-center depth-typography" style="pointer-events:none;">
-                <div class="public-hero-eyebrow" style="pointer-events:auto;">NEURAL FITNESS INTELLIGENCE</div>
+                <div class="d-inline-flex align-items-center gap-2 mb-3" style="pointer-events:auto;">
+                    <span class="spec-badge-gold"><i class="bi bi-cpu-fill me-1"></i> NEURAL ENGINE V2.4</span>
+                    <span class="spec-badge-cyan d-none d-md-inline-block"><i class="bi bi-shield-check me-1"></i> REAL-TIME TELEMETRY</span>
+                </div>
                 <h1 class="heading-massive" style="font-size:clamp(2.8rem, 7vw, 6rem);pointer-events:auto;">
                     YOUR PERSONAL<br><span style="color:var(--blue-electric);">TRAINING REVOLUTION.</span>
                 </h1>
@@ -99,26 +102,26 @@
                     A dynamic conversational intelligence that tracks your biometrics, adjusts workout loads in real-time, and keeps you accountable 24 hours a day.
                 </p>
                 <div class="mt-4" style="pointer-events:auto;">
-                    <a href="signup.html" class="btn-primary-glow px-5 py-3" style="font-size:0.9rem;">TALK TO YOUR COACH NOW</a>
+                    <a href="signup.html" class="btn-gold-glow px-5 py-3" style="font-size:0.9rem;">TALK TO YOUR COACH NOW <i class="bi bi-arrow-right ms-1"></i></a>
                 </div>
             </div>
 
-            <!-- Floating Dialogue Cards -->
-            <div class="floating-chat-bubble bubble-left tilt-card d-none d-lg-block" data-depth="0.1">
+            <!-- Floating Dialogue Cards (Sparta Titan HUD Framing) -->
+            <div class="floating-chat-bubble bubble-left sparta-spec-panel hud-corner-bracket tilt-card d-none d-lg-block" data-depth="0.1">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span style="width:8px;height:8px;border-radius:50%;background:#38bdf8;"></span>
-                    <span class="text-label" style="color:var(--blue-accent);font-size:0.75rem;">ATHLETE INQUIRY</span>
+                    <span class="spec-badge-cyan" style="font-size:0.65rem;padding:2px 8px;">ATHLETE INQUIRY</span>
+                    <span class="text-muted" style="font-size:0.7rem;">07:14 AM</span>
                 </div>
                 <div style="font-size:0.95rem;font-weight:600;color:#fff;">"What should I train today? My sleep was only 6.5 hours."</div>
             </div>
 
-            <div class="floating-chat-bubble bubble-right tilt-card d-none d-lg-block" data-depth="0.15">
+            <div class="floating-chat-bubble bubble-right sparta-spec-panel hud-corner-bracket tilt-card d-none d-lg-block" data-depth="0.15">
                 <div class="d-flex align-items-center gap-2 mb-2">
-                    <span style="width:8px;height:8px;border-radius:50%;background:#00e5a3;box-shadow:0 0 8px #00e5a3;"></span>
-                    <span class="text-label" style="color:#00e5a3;font-size:0.75rem;">AI COACH PROTOCOL</span>
+                    <span class="spec-badge-gold" style="font-size:0.65rem;padding:2px 8px;"><i class="bi bi-stars me-1"></i> AI COACH PROTOCOL</span>
+                    <span class="text-cyan fw-bold" style="font-size:0.7rem;">OPTIMIZED</span>
                 </div>
                 <div style="font-size:0.92rem;color:#e2e8f0;line-height:1.5;">
-                    "Readiness is at 74%. Switching today from Heavy Deadlifts to <strong>Submaximal Functional Hypertrophy</strong>. Caloric target adjusted +150 kcal."
+                    "Readiness is at 74%. Switching today from Heavy Barbell Squats to <strong>Submaximal Kinetic Hypertrophy</strong>. Caloric target adjusted +150 kcal."
                 </div>
             </div>
         </section>
@@ -205,10 +208,15 @@
         </div>
     </footer>
 
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
     <!-- Three.js + Custom 3D Engine & Motion FX -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/three-core.js"></script>
     <script src="js/motion-fx.js"></script>
+    <script src="js/subpage-motion.js"></script>
 
     <script>
     (function() {
@@ -223,12 +231,15 @@
 
         // Initialize 3D AI Core in Coach Hero
         if (window.Fitnexa3D) {
-            window.Fitnexa3D.createAICore('#coachAICoreCanvas', {
+            const coachCore = window.Fitnexa3D.createAICore('#coachAICoreCanvas', {
                 size: 500,
                 sphereRadius: 1.45,
                 particlesCount: 95,
                 cameraDistance: 5.2
             });
+            if (coachCore && coachCore.setState) {
+                coachCore.setState('THINKING');
+            }
         }
     })();
     </script>

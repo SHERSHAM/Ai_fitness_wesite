@@ -74,8 +74,8 @@
     WorkoutPlayer.prototype.renderUI = function() {
         this.container.innerHTML = `
             <div class="player-hud-grid">
-                <!-- Main Visual Stage with 3D Depth -->
-                <div class="player-stage-card glass-card-3d tilt-card depth-container">
+                <!-- Main Visual Stage with 3D Depth & Sparta Titan Framing -->
+                <div class="player-stage-card sparta-spec-panel hud-corner-bracket glass-card-3d tilt-card depth-container">
                     <div class="depth-atmospheric"></div>
                     <div class="player-image-container">
                         <img id="playerExImg" src="${this.workout.image || 'images/form-analysis.webp'}" alt="Exercise visual" class="player-visual-media">
@@ -83,20 +83,20 @@
 
                         <!-- Rest Overlay Modal with Animated Circular Ring -->
                         <div class="player-rest-overlay" id="playerRestOverlay" style="display: none;">
-                            <div class="rest-overlay-content text-center">
-                                <div class="text-label text-cyan mb-3"><i class="bi bi-heart-pulse-fill me-1"></i> RECOVERY INTERVAL</div>
+                            <div class="rest-overlay-content sparta-spec-panel p-4 text-center">
+                                <div class="spec-badge-cyan mb-3"><i class="bi bi-heart-pulse-fill me-1"></i> RECOVERY INTERVAL</div>
                                 <div class="position-relative d-inline-block mb-3" style="width: 150px; height: 150px;">
                                     <svg width="150" height="150" viewBox="0 0 150 150" style="transform: rotate(-90deg);">
                                         <circle cx="75" cy="75" r="64" stroke="rgba(255,255,255,0.08)" stroke-width="7" fill="none"></circle>
-                                        <circle id="restRingCircle" cx="75" cy="75" r="64" stroke="#00d4ff" stroke-width="7" fill="none" stroke-linecap="round" style="stroke-dasharray: 402; stroke-dashoffset: 0; transition: stroke-dashoffset 0.9s linear; filter: drop-shadow(0 0 8px #00d4ff);"></circle>
+                                        <circle id="restRingCircle" cx="75" cy="75" r="64" stroke="var(--gold-metallic)" stroke-width="7" fill="none" stroke-linecap="round" style="stroke-dasharray: 402; stroke-dashoffset: 0; transition: stroke-dashoffset 0.9s linear; filter: drop-shadow(0 0 10px rgba(212,175,55,0.6));"></circle>
                                     </svg>
                                     <div class="position-absolute top-50 start-50 translate-middle text-center" style="pointer-events: none;">
                                         <div class="rest-counter" id="restTimerDisplay" style="font-family:var(--font-heading); font-size:2.2rem; font-weight:900; line-height:1; color:#ffffff;">00:45</div>
-                                        <div style="font-size:0.65rem; color:#94a3b8; letter-spacing:1px; margin-top:4px;">REST</div>
+                                        <div style="font-size:0.65rem; color:var(--gold-light); letter-spacing:1px; margin-top:4px;">REST</div>
                                     </div>
                                 </div>
                                 <p class="text-muted mb-4" style="max-width:320px; margin:0 auto 1.5rem;">Focus on diaphragmatic breathing. Lower heart rate.</p>
-                                <button class="btn-primary-glow btn-sm px-4" id="btnSkipRest">Skip Rest <i class="bi bi-fast-forward-fill ms-1"></i></button>
+                                <button class="btn-gold-glow btn-sm px-4" id="btnSkipRest">Skip Rest <i class="bi bi-fast-forward-fill ms-1"></i></button>
                             </div>
                         </div>
 
@@ -104,7 +104,7 @@
                         <div class="player-hud-overlay">
                             <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
                                 <div>
-                                    <div class="player-exercise-counter" id="playerExCounter">EXERCISE 01 / 06</div>
+                                    <div class="spec-badge-gold mb-1" id="playerExCounter" style="font-size:0.65rem;padding:2px 8px;">EXERCISE 01 / 06</div>
                                     <h2 class="player-exercise-title" id="playerExTitle">BARBELL BENCH PRESS</h2>
                                     <div class="player-set-pill" id="playerSetInfo">SET 1 OF 4 &nbsp;·&nbsp; 8-10 REPS</div>
                                 </div>
@@ -149,7 +149,7 @@
                         </div>
                         <div class="player-actions-group">
                             <button class="player-btn-circle" id="btnPrevEx" title="Previous Exercise"><i class="bi bi-chevron-left"></i></button>
-                            <button class="player-btn-primary" id="btnCompleteSet">
+                            <button class="player-btn-primary" id="btnCompleteSet" style="background:var(--gold-gradient);color:#02050a;font-weight:800;border:none;">
                                 <span id="btnSetText">Complete Set 1</span> <i class="bi bi-check2-circle ms-1"></i>
                             </button>
                             <button class="player-btn-circle" id="btnPause" title="Pause / Play"><i class="bi bi-pause-fill" id="pauseIcon"></i></button>
@@ -162,10 +162,10 @@
                 </div>
 
                 <!-- Right Sidebar: Exercise Checklist -->
-                <div class="player-checklist-card glass-card">
+                <div class="player-checklist-card sparta-spec-panel glass-card">
                     <div class="checklist-header">
                         <h4 class="checklist-title">Session Flow</h4>
-                        <span class="text-label" id="flowProgress">1 / ${this.workout.exercises.length}</span>
+                        <span class="spec-badge-cyan" id="flowProgress" style="font-size:0.65rem;">1 / ${this.workout.exercises.length}</span>
                     </div>
                     <div class="checklist-items-scroll" id="checklistItems">
                         ${this.renderChecklist()}
@@ -175,27 +175,28 @@
 
             <!-- Finish Summary Modal -->
             <div class="modal-backdrop-custom" id="finishModal" style="display: none;">
-                <div class="modal-dialog-custom glass-card text-center p-4 p-md-5">
-                    <div class="celebration-badge mb-3"><i class="bi bi-trophy-fill"></i></div>
-                    <h2 class="heading-massive mb-2">SESSION CRUSHED!</h2>
+                <div class="modal-dialog-custom sparta-spec-panel hud-corner-bracket glass-card text-center p-4 p-md-5">
+                    <div class="celebration-badge mb-3"><i class="bi bi-trophy-fill text-warning"></i></div>
+                    <div class="spec-badge-gold mb-2 mx-auto" style="width:fit-content;"><i class="bi bi-check2-all me-1"></i> PROTOCOL COMPLETE</div>
+                    <h2 class="heading-massive mb-2 mt-2">SESSION CRUSHED!</h2>
                     <p class="text-muted mb-4">Outstanding execution. Your performance metrics have been securely logged to your profile.</p>
 
                     <div class="summary-stats-grid mb-4">
-                        <div class="stat-box">
+                        <div class="stat-box sparta-spec-panel">
                             <div class="sb-val" id="summaryDuration">35:00</div>
                             <div class="sb-lbl">Total Time</div>
                         </div>
-                        <div class="stat-box">
-                            <div class="sb-val" id="summaryCalories">380</div>
+                        <div class="stat-box sparta-spec-panel">
+                            <div class="sb-val" id="summaryCalories" style="color:var(--gold-metallic);">380</div>
                             <div class="sb-lbl">Calories Burned</div>
                         </div>
-                        <div class="stat-box">
-                            <div class="sb-val" id="summaryForm">95%</div>
+                        <div class="stat-box sparta-spec-panel">
+                            <div class="sb-val" id="summaryForm" style="color:var(--blue-neon);">95%</div>
                             <div class="sb-lbl">Form Precision</div>
                         </div>
                     </div>
 
-                    <button class="btn-primary-glow w-100" id="btnReturnDashboard">
+                    <button class="btn-gold-glow w-100" id="btnReturnDashboard">
                         ENTER DASHBOARD <i class="bi bi-arrow-right ms-2"></i>
                     </button>
                 </div>

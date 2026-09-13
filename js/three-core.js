@@ -307,6 +307,60 @@
                     coreGroup.rotation.y = r;
                 },
 
+                currentState: 'IDLE',
+
+                /**
+                 * Set AI Core Behavioral State (IDLE, LISTENING, THINKING, ANALYZING, TRAINING, RECOVERING, SUCCESS)
+                 */
+                setState: function(stateName) {
+                    const s = (stateName || 'IDLE').toUpperCase();
+                    this.currentState = s;
+                    switch(s) {
+                        case 'LISTENING':
+                            innerMat.color.setHex(0x00f0ff);
+                            pointLight.color.setHex(0x00d4ff);
+                            pointLight.intensity = 3.0;
+                            this.pulse(0.35);
+                            break;
+                        case 'THINKING':
+                            innerMat.color.setHex(0x7dd3fc);
+                            pointLight.color.setHex(0xffffff);
+                            pointLight.intensity = 3.8;
+                            this.pulse(0.65);
+                            break;
+                        case 'ANALYZING':
+                            innerMat.color.setHex(0x00e5a3);
+                            pointLight.color.setHex(0x00f0ff);
+                            pointLight.intensity = 4.2;
+                            this.pulse(0.85);
+                            break;
+                        case 'TRAINING':
+                            innerMat.color.setHex(0x1e90ff);
+                            pointLight.color.setHex(0xd4af37);
+                            pointLight.intensity = 3.5;
+                            this.pulse(0.5);
+                            break;
+                        case 'RECOVERING':
+                            innerMat.color.setHex(0x10b981);
+                            pointLight.color.setHex(0x059669);
+                            pointLight.intensity = 2.0;
+                            this.pulse(0.2);
+                            break;
+                        case 'SUCCESS':
+                            innerMat.color.setHex(0xd4af37);
+                            pointLight.color.setHex(0xf4e298);
+                            pointLight.intensity = 4.5;
+                            this.pulse(1.0);
+                            break;
+                        case 'IDLE':
+                        default:
+                            innerMat.color.setHex(opts.colorInner);
+                            pointLight.color.setHex(opts.colorCore);
+                            pointLight.intensity = 2.5;
+                            break;
+                    }
+                },
+
                 destroy: function() {
                     observer.disconnect();
                     window.removeEventListener('resize', onResize);

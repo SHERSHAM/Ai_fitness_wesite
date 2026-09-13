@@ -34,9 +34,10 @@
 
         <!-- Right: Form -->
         <div class="auth-form-side">
-            <div class="auth-form-container">
+            <div class="auth-form-container sparta-spec-panel hud-corner-bracket p-4 p-md-5">
                 <a href="index.html" class="auth-logo d-lg-none mb-4 d-block">FITNEXA <span>AI</span></a>
-                <h2 class="auth-title">Welcome Back</h2>
+                <div class="spec-badge-gold mb-2" style="width:fit-content;font-size:0.68rem;"><i class="bi bi-shield-lock-fill me-1"></i> SECURE ATHLETE PORTAL</div>
+                <h2 class="auth-title mt-2">Welcome Back</h2>
                 <p class="auth-subtitle">Log in to your fitness command center.</p>
 
                 <div id="loginError" class="auth-error" style="display:none;"></div>
@@ -56,7 +57,7 @@
                         </label>
                         <a href="forgot-password.html" class="auth-link">Forgot password?</a>
                     </div>
-                    <button type="submit" class="btn-primary-glow w-100" id="loginBtn">
+                    <button type="submit" class="btn-gold-glow w-100" id="loginBtn">
                         LOG IN <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
                     </button>
                 </form>
@@ -64,16 +65,16 @@
                 <div class="auth-divider"><span>or</span></div>
 
                 <div class="auth-demo-section">
-                    <p class="text-label mb-3" style="color:var(--blue-accent);">QUICK DEMO ACCESS</p>
-                    <button class="btn-outline-glow w-100 mb-2" id="demoAlex" style="padding:12px 20px;font-size:0.8rem;">
-                        <i class="bi bi-person-fill me-2"></i> Alex Mercer — Strength
+                    <p class="text-label mb-3" style="color:var(--gold-metallic);"><i class="bi bi-person-badge me-1"></i> QUICK DEMO ACCESS</p>
+                    <button class="btn-sparta-outline w-100 mb-2" id="demoAlex" style="padding:12px 20px;font-size:0.8rem;">
+                        <i class="bi bi-person-fill me-2 text-warning"></i> Alex Mercer — Strength Focus
                     </button>
-                    <button class="btn-outline-glow w-100" id="demoSarah" style="padding:12px 20px;font-size:0.8rem;">
-                        <i class="bi bi-person-fill me-2"></i> Sarah Connor — Fat Loss
+                    <button class="btn-sparta-outline w-100" id="demoSarah" style="padding:12px 20px;font-size:0.8rem;">
+                        <i class="bi bi-person-fill me-2 text-info"></i> Sarah Connor — Fat Loss Focus
                     </button>
                 </div>
 
-                <p class="auth-footer-text">
+                <p class="auth-footer-text mt-4">
                     Don't have an account? <a href="signup.html" class="auth-link">Create one</a>
                 </p>
             </div>
@@ -147,11 +148,13 @@
                     if (window.authAICore) {
                         window.authAICore.pulse(0.6);
                         window.authAICore.setIntensity(1.6);
+                        if (window.authAICore.setState) window.authAICore.setState('LISTENING');
                     }
                 });
                 input.addEventListener('blur', function() {
                     if (window.authAICore) {
                         window.authAICore.setIntensity(1.0);
+                        if (window.authAICore.setState) window.authAICore.setState('IDLE');
                     }
                 });
             });

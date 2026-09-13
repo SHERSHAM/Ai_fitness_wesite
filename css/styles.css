@@ -21,6 +21,22 @@
   --blue-accent: #3AAFFF;
   --blue-neon: #00D4FF;
 
+  /* Restrained Metallic Gold (Sparta Titan & Luxora inspiration) */
+  --gold-metallic: #D4AF37;
+  --gold-light: #F4E298;
+  --gold-dark: #9A7B1C;
+  --gold-border: rgba(212, 175, 55, 0.32);
+  --gold-border-subtle: rgba(212, 175, 55, 0.14);
+  --gold-glow: rgba(212, 175, 55, 0.18);
+  --gold-gradient: linear-gradient(135deg, #F5D77F 0%, #D4AF37 50%, #9A7B1C 100%);
+  --gold-gradient-subtle: linear-gradient(135deg, rgba(245, 215, 127, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+
+  /* Technical Graphite & Titanium */
+  --titanium-border: rgba(255, 255, 255, 0.08);
+  --titanium-border-hover: rgba(0, 212, 255, 0.35);
+  --spec-panel-bg: rgba(6, 11, 20, 0.82);
+  --spec-panel-border: rgba(255, 255, 255, 0.07);
+
   /* Text */
   --text-white: #FFFFFF;
   --text-off-white: #E0E4EA;
@@ -2146,4 +2162,388 @@ body.page-transitioning {
   opacity: 0;
   transform: scale(1.01);
 }
+
+/* ============================================================
+   SPARTA TITAN DESIGN SYSTEM — TECHNICAL SPECIFICATION FRAMING
+   ============================================================ */
+.sparta-spec-panel {
+  position: relative;
+  background: var(--spec-panel-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--spec-panel-border);
+  border-radius: 12px;
+  padding: 32px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.sparta-spec-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-border), var(--blue-neon), transparent);
+  opacity: 0.6;
+}
+
+.sparta-spec-panel:hover {
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.12);
+  transform: translateY(-3px);
+}
+
+/* Corner Notches for Technical Feel */
+.hud-corner-bracket {
+  position: relative;
+}
+.hud-corner-bracket::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 10px;
+  height: 10px;
+  border-top: 1.5px solid var(--gold-metallic);
+  border-right: 1.5px solid var(--gold-metallic);
+  opacity: 0.7;
+}
+
+/* Technical Specification Badges */
+.spec-badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold-light);
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid var(--gold-border);
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+
+.spec-badge-cyan {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--blue-neon);
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.28);
+  padding: 5px 12px;
+  border-radius: 4px;
+}
+
+/* Telemetry Grid Clusters */
+.sparta-telemetry-cluster {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 16px;
+}
+
+.sparta-telemetry-item {
+  background: rgba(2, 5, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+.sparta-telemetry-item:hover {
+  border-color: var(--gold-border);
+  background: rgba(212, 175, 55, 0.04);
+}
+
+.sparta-telemetry-icon {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+  color: var(--gold-metallic);
+}
+
+.sparta-telemetry-val {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.sparta-telemetry-lbl {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Metallic Gold Buttons */
+.btn-gold-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--gold-gradient);
+  color: #040812;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btn-gold-glow:hover {
+  color: #000000;
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.55);
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.btn-sparta-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 13px 28px;
+  border-radius: 6px;
+  border: 1px solid var(--gold-border);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-sparta-outline:hover {
+  border-color: var(--gold-metallic);
+  background: rgba(212, 175, 55, 0.08);
+  color: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   LUXORA MOTORS DESIGN SYSTEM — LUXURY EDITORIAL ARCHITECTURE
+   ============================================================ */
+.luxora-hero-img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.luxora-hero-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2, 5, 10, 0.1) 0%, rgba(2, 5, 10, 0.4) 50%, #02050A 100%);
+  pointer-events: none;
+}
+
+.luxora-stats-ribbon {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(4, 8, 18, 0.5);
+  padding: 26px 0;
+}
+
+.luxora-stat-col {
+  text-align: center;
+}
+
+.luxora-stat-num {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.luxora-stat-lbl {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.luxora-card {
+  background: rgba(8, 14, 26, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 32px 28px;
+  transition: all 0.3s ease;
+}
+
+.luxora-card:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  background: rgba(12, 20, 36, 0.75);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+.luxora-card-icon {
+  font-size: 1.6rem;
+  color: var(--gold-metallic);
+  margin-bottom: 18px;
+}
+
+/* ============================================================
+   EOSAI DESIGN SYSTEM — SPATIAL DEPTH & SCROLL TRACK
+   ============================================================ */
+.eosai-scroll-track {
+  position: fixed;
+  left: 32px;
+  bottom: 40px;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.eosai-track-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(180deg, transparent, rgba(0, 212, 255, 0.8), transparent);
+  animation: eosaiBeacon 2.4s ease-in-out infinite;
+}
+
+.eosai-track-lbl {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+@keyframes eosaiBeacon {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+  50% { opacity: 1; transform: scaleY(1.1); filter: drop-shadow(0 0 6px #00d4ff); }
+}
+
+/* ============================================================
+   UPGRADED NAVIGATION BAR — DARK GLASS & METALLIC ACCENT
+   ============================================================ */
+.fitnexa-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 18px 0;
+  background: transparent;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-bottom: 1px solid transparent;
+}
+
+.fitnexa-nav.scrolled {
+  background: rgba(2, 5, 10, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.nav-logo {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-logo span {
+  color: var(--blue-neon);
+}
+
+.nav-logo::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--gold-metallic);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--gold-metallic);
+}
+
+.nav-links a {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-off-white);
+  padding: 8px 14px;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #ffffff;
+}
+
+.nav-links a.active::after,
+.nav-links a:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-metallic), var(--blue-neon));
+  border-radius: 2px;
+}
+
+.nav-cta-btn {
+  background: var(--gold-gradient);
+  color: #040812 !important;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 6px;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+}
+
+.nav-cta-btn:hover {
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.5);
+  transform: translateY(-1px);
+}
+
 

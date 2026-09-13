@@ -33,9 +33,10 @@
         </div>
 
         <div class="auth-form-side">
-            <div class="auth-form-container">
+            <div class="auth-form-container sparta-spec-panel hud-corner-bracket p-4 p-md-5">
                 <a href="index.html" class="auth-logo d-lg-none mb-4 d-block">FITNEXA <span>AI</span></a>
-                <h2 class="auth-title">Create Your Account</h2>
+                <div class="spec-badge-gold mb-2" style="width:fit-content;font-size:0.68rem;"><i class="bi bi-person-plus-fill me-1"></i> ATHLETE ENROLLMENT</div>
+                <h2 class="auth-title mt-2">Create Your Account</h2>
                 <p class="auth-subtitle">Start your AI-powered fitness evolution.</p>
 
                 <div id="signupError" class="auth-error" style="display:none;"></div>
@@ -57,12 +58,12 @@
                         <label for="signupConfirm" class="form-label-custom">Confirm Password</label>
                         <input type="password" id="signupConfirm" class="form-input-custom" placeholder="Re-enter password" required autocomplete="new-password">
                     </div>
-                    <button type="submit" class="btn-primary-glow w-100 mt-2" id="signupBtn">
+                    <button type="submit" class="btn-gold-glow w-100 mt-2" id="signupBtn">
                         CREATE ACCOUNT <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
                     </button>
                 </form>
 
-                <p class="auth-footer-text">
+                <p class="auth-footer-text mt-4">
                     Already have an account? <a href="login.html" class="auth-link">Log in</a>
                 </p>
             </div>
@@ -134,11 +135,13 @@
                     if (window.signupAICore) {
                         window.signupAICore.pulse(0.6);
                         window.signupAICore.setIntensity(1.6);
+                        if (window.signupAICore.setState) window.signupAICore.setState('LISTENING');
                     }
                 });
                 input.addEventListener('blur', function() {
                     if (window.signupAICore) {
                         window.signupAICore.setIntensity(1.0);
+                        if (window.signupAICore.setState) window.signupAICore.setState('IDLE');
                     }
                 });
             });

@@ -112,11 +112,14 @@
         <!-- Hero with 3D AI Core -->
         <section class="public-hero-simple text-center pt-5 pb-3 depth-container">
             <div class="depth-atmospheric"></div>
-            <div class="depth-3d-canvas" id="contactAICoreCanvas" style="opacity:0.65;max-height:380px;"></div>
+            <div class="depth-3d-canvas" id="contactAICoreCanvas" style="opacity:0.75;max-height:380px;"></div>
 
             <div class="container depth-typography">
-                <div class="public-hero-eyebrow">DIRECT COMMUNICATION</div>
-                <h1 class="heading-massive" style="font-size:clamp(2.8rem, 7vw, 6rem);">LET'S BUILD<br><span style="color:var(--blue-electric);">A STRONGER FUTURE.</span></h1>
+                <div class="d-inline-flex align-items-center gap-2 mb-3">
+                    <span class="spec-badge-gold"><i class="bi bi-broadcast me-1"></i> DIRECT TELEMETRY CHANNEL</span>
+                    <span class="spec-badge-cyan d-none d-md-inline-block"><i class="bi bi-shield-check me-1"></i> ENCRYPTED 256-BIT</span>
+                </div>
+                <h1 class="heading-massive" style="font-size:clamp(2.8rem, 7vw, 6rem);">LET'S BUILD<br><span style="color:var(--blue-electric);">YOUR NEXT LEVEL.</span></h1>
                 <p class="text-body mt-3 mx-auto" style="max-width:580px;">Have questions regarding your AI training engine, custom team deployments, or technical support? Our dedicated engineering and coaching specialists are ready.</p>
             </div>
         </section>
@@ -127,7 +130,8 @@
                 <div class="row g-5">
                     <!-- Left: Contact Details -->
                     <div class="col-12 col-lg-5">
-                        <h2 class="heading-md mb-4">DIRECT CHANNELS</h2>
+                        <div class="spec-badge-cyan mb-3">TELEMETRY ACCESS POINTS</div>
+                        <h2 class="heading-md mb-4" style="letter-spacing:0.04em;">DIRECT CHANNELS</h2>
 
                         <div class="contact-info-card">
                             <div class="contact-icon-box"><i class="bi bi-headset"></i></div>
@@ -258,9 +262,14 @@
         </div>
     </footer>
 
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/three-core.js"></script>
     <script src="js/motion-fx.js"></script>
+    <script src="js/subpage-motion.js"></script>
     <script>
     (function() {
         const nav = document.getElementById('mainNav');
@@ -304,7 +313,10 @@
 
                 submitBtn.innerHTML = 'DISPATCHING...';
                 submitBtn.disabled = true;
-                if (window.contactAICore) window.contactAICore.pulse(0.8);
+                if (window.contactAICore) {
+                    window.contactAICore.pulse(0.8);
+                    if (window.contactAICore.setState) window.contactAICore.setState('SUCCESS');
+                }
                 setTimeout(function() {
                     form.classList.add('d-none');
                     success.classList.remove('d-none');
@@ -336,11 +348,13 @@
                     if (window.contactAICore) {
                         window.contactAICore.pulse(0.5);
                         window.contactAICore.setIntensity(1.6);
+                        if (window.contactAICore.setState) window.contactAICore.setState('LISTENING');
                     }
                 });
                 input.addEventListener('blur', function() {
                     if (window.contactAICore) {
                         window.contactAICore.setIntensity(1.0);
+                        if (window.contactAICore.setState) window.contactAICore.setState('IDLE');
                     }
                 });
             });
