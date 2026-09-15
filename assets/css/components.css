@@ -1,0 +1,585 @@
+/**
+ * FITNEXA AI — Components Stylesheet
+ * Buttons, HUD Cards, Biometric Bars, Circular Gauges, Feature Strips, Programs & Navigation.
+ */
+
+/* ==========================================================================
+   1. BUTTONS & CTAS
+   ========================================================================== */
+.btn-fitnexa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Primary Accent: Electric Lime Pill */
+.btn-accent {
+  background-color: var(--accent-lime);
+  color: #0B0C0E !important;
+  box-shadow: 0 0 20px rgba(198, 255, 61, 0.3);
+}
+
+.btn-accent:hover {
+  background-color: var(--accent-lime-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(198, 255, 61, 0.5);
+  color: #0B0C0E !important;
+}
+
+.btn-accent:active {
+  transform: translateY(0);
+}
+
+/* Secondary Frosted Glass Button */
+.btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  color: #FFFFFF !important;
+}
+
+/* AI Violet Button */
+.btn-violet {
+  background-color: var(--accent-violet);
+  color: #FFFFFF !important;
+  box-shadow: 0 0 20px rgba(124, 92, 255, 0.3);
+}
+
+.btn-violet:hover {
+  background-color: var(--accent-violet-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(124, 92, 255, 0.5);
+}
+
+/* Size Variants */
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+}
+
+.btn-lg {
+  padding: 15px 34px;
+  font-size: 1.05rem;
+}
+
+/* Icon inside button */
+.btn-fitnexa i, .btn-fitnexa svg {
+  transition: transform var(--transition-fast);
+}
+
+.btn-fitnexa:hover i, .btn-fitnexa:hover svg {
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   2. EYEBROW TAGS & BADGES
+   ========================================================================== */
+.eyebrow-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent-lime);
+  margin-bottom: 14px;
+}
+
+.eyebrow-tag.violet {
+  color: var(--accent-violet);
+}
+
+.eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   3. GLASS PANELS & HUD CARDS
+   ========================================================================== */
+.glass-panel {
+  background: var(--bg-surface-glass);
+  border: var(--border-hairline);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition-normal), transform var(--transition-normal);
+}
+
+.glass-panel:hover {
+  border-color: var(--border-hover);
+}
+
+/* Subtle corner light reflection */
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  pointer-events: none;
+}
+
+/* Floating Biometric Telemetry HUD Card */
+.hud-telemetry-card {
+  background: rgba(16, 18, 22, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(198, 255, 61, 0.08);
+  position: relative;
+  z-index: 10;
+}
+
+.hud-grid {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.hud-body-wireframe {
+  width: 80px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hud-body-wireframe svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 8px rgba(198, 255, 61, 0.3));
+}
+
+.hud-metrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.telemetry-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.telemetry-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.telemetry-val {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.telemetry-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.telemetry-bar-fill {
+  height: 100%;
+  background: var(--accent-lime);
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(198, 255, 61, 0.6);
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Circular Gauge */
+.circular-gauge-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gauge-svg-wrap {
+  width: 68px;
+  height: 68px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.gauge-svg-wrap svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.gauge-bg-circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 6;
+}
+
+.gauge-fill-circle {
+  fill: none;
+  stroke: var(--accent-lime);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  filter: drop-shadow(0 0 6px rgba(198, 255, 61, 0.5));
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gauge-number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.gauge-meta-title {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.gauge-bars-visualizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+  margin-top: 6px;
+}
+
+.v-bar {
+  width: 3px;
+  background: var(--accent-lime);
+  border-radius: 1px;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   4. STATS COUNTER STRIP
+   ========================================================================== */
+.stats-strip {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.stat-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   5. FEATURE SPEC CARDS (Beyond Limits strip)
+   ========================================================================== */
+.spec-card {
+  background: rgba(20, 21, 24, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transition: all var(--transition-normal);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.spec-card:hover {
+  border-color: rgba(198, 255, 61, 0.35);
+  transform: translate3d(0, -4px, 0);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(198, 255, 61, 0.1);
+}
+
+.spec-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(198, 255, 61, 0.1);
+  color: var(--accent-lime);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(198, 255, 61, 0.2);
+}
+
+.spec-icon-box.violet {
+  background: rgba(124, 92, 255, 0.12);
+  color: var(--accent-violet);
+  border-color: rgba(124, 92, 255, 0.25);
+}
+
+.spec-text h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.spec-text p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+  line-height: 1.35;
+}
+
+/* ==========================================================================
+   6. PROGRAM CARDS
+   ========================================================================== */
+.program-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  height: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-smooth);
+  cursor: pointer;
+  display: block;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.program-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+  filter: brightness(0.65) contrast(1.1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.program-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(11, 12, 14, 0.85) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 20px;
+  z-index: 2;
+}
+
+.program-card:hover {
+  border-color: var(--accent-lime);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(198, 255, 61, 0.2);
+}
+
+.program-card:hover .program-card-img {
+  transform: scale(1.08);
+  filter: brightness(0.8) contrast(1.15);
+}
+
+.program-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.program-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-lime);
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+}
+
+.program-card:hover .program-arrow {
+  background: var(--accent-lime);
+  color: #0B0C0E;
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   7. SCROLL INDICATOR
+   ========================================================================== */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.scroll-line {
+  width: 1.5px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-lime);
+  animation: scrollDown 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes scrollDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* ==========================================================================
+   8. PRELOADER OVERLAY
+   ========================================================================== */
+.fitnexa-preloader {
+  position: fixed;
+  inset: 0;
+  background-color: #0B0C0E;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.fitnexa-preloader.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-brand {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.preloader-brand span {
+  color: var(--accent-lime);
+  text-shadow: 0 0 25px var(--accent-lime);
+}
+
+.preloader-bar-track {
+  width: 200px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preloader-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--accent-lime);
+  box-shadow: 0 0 10px var(--accent-lime);
+  transition: width 0.4s ease;
+}

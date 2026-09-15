@@ -1,436 +1,453 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Onboarding — FITNEXA AI</title>
-    <meta name="description" content="Set up your personalized AI fitness profile.">
-    <meta name="theme-color" content="#02050A">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/responsive.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goal Onboarding — FITNEXA AI</title>
+  <meta name="description" content="Personalize your FITNEXA AI training profile.">
+  <meta name="theme-color" content="#0B0C0E">
+
+  <!-- Google Fonts: Outfit, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.3 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- FITNEXA Stylesheets -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages/auth.css">
 </head>
-<body class="app-body" style="cursor:auto;">
-    <div class="onboarding-page">
-        <div class="onboarding-header">
-            <a href="index.html" class="auth-logo">FITNEXA <span>AI</span></a>
-            <div class="onboarding-progress-bar">
-                <div class="onboarding-progress-fill" id="progressFill" style="width:12.5%"></div>
-            </div>
-            <div class="onboarding-step-label" id="stepLabel">01 / 08</div>
-        </div>
+<body>
 
-        <!-- 3D AI Core Ambient Canvas -->
-        <div class="depth-3d-canvas" id="onboardingAICoreCanvas" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.25;pointer-events:none;z-index:0;width:500px;height:500px;"></div>
+  <div class="onboarding-container">
+    <!-- ==========================================================================
+         TOP STEPPED PROGRESS HEADER
+         ========================================================================== -->
+    <header class="onboarding-top-bar" id="onboardingHeader">
+      <a href="index.html" class="nav-brand-logo">
+        FITNEXA<span class="nav-brand-dot"></span>
+      </a>
 
-        <div class="onboarding-body" id="onboardingBody">
-            <!-- Steps are rendered dynamically by JS -->
-        </div>
+      <!-- Stepped Segmented Progress Bar -->
+      <div class="onboarding-progress-segments">
+        <div class="progress-segment active" id="seg1"></div>
+        <div class="progress-segment" id="seg2"></div>
+        <div class="progress-segment" id="seg3"></div>
+        <div class="progress-segment" id="seg4"></div>
+      </div>
 
-        <div class="onboarding-footer">
-            <button class="btn-outline-glow" id="btnBack" style="display:none;padding:12px 28px;">
-                <i class="bi bi-arrow-left me-2"></i> BACK
+      <div class="onboarding-step-indicator" id="stepCounterLabel">
+        Step 1 of 4
+      </div>
+    </header>
+
+    <!-- ==========================================================================
+         ONBOARDING WIZARD CONTENT
+         ========================================================================== -->
+    <main class="onboarding-content-wrap">
+      <div class="onboarding-card">
+
+        <!-- STEP 1: GOAL -->
+        <div class="onboarding-step-pane" id="stepPane1">
+          <h1 class="auth-heading">What's your goal?</h1>
+          <p class="auth-subheading">Select one primary goal to help us personalize your plan.</p>
+
+          <div class="card-options-grid">
+            <button type="button" class="select-card-btn selected" data-goal="fatloss">
+              <i class="bi bi-fire select-card-icon"></i>
+              <div>
+                <div class="select-card-title">Lose Fat</div>
+                <div class="select-card-desc">Get leaner and healthier</div>
+              </div>
             </button>
-            <div class="flex-grow-1"></div>
-            <button class="btn-primary-glow" id="btnNext" style="padding:12px 32px;">
-                NEXT <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
-            </button>
-        </div>
-    </div>
 
-    <!-- AI Plan Generation Screen -->
-    <div class="onboarding-generating" id="generatingScreen" style="display:none;">
-        <div class="generating-content">
-            <div class="generating-rings">
-                <div class="gen-ring"></div>
-                <div class="gen-ring"></div>
-                <div class="gen-ring"></div>
-                <div class="gen-core">
-                    <i class="bi bi-stars" style="font-size:2rem;color:var(--blue-accent);"></i>
+            <button type="button" class="select-card-btn" data-goal="strength">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="select-card-icon"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
+              <div>
+                <div class="select-card-title">Build Muscle</div>
+                <div class="select-card-desc">Gain strength and size</div>
+              </div>
+            </button>
+
+            <button type="button" class="select-card-btn" data-goal="endurance">
+              <i class="bi bi-person-walking select-card-icon"></i>
+              <div>
+                <div class="select-card-title">Improve Endurance</div>
+                <div class="select-card-desc">Boost stamina and cardio</div>
+              </div>
+            </button>
+
+            <button type="button" class="select-card-btn" data-goal="general">
+              <i class="bi bi-heart-pulse-fill select-card-icon"></i>
+              <div>
+                <div class="select-card-title">General Fitness</div>
+                <div class="select-card-desc">Stay active and healthy</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: EXPERIENCE LEVEL -->
+        <div class="onboarding-step-pane" id="stepPane2" style="display: none;">
+          <h1 class="auth-heading">What's your experience level?</h1>
+          <p class="auth-subheading">This helps us set the right training intensity for you.</p>
+
+          <div class="card-options-grid cols-3">
+            <button type="button" class="select-card-btn selected" data-level="beginner">
+              <div class="exp-bar-visualizer">
+                <span style="height: 8px;"></span>
+                <span style="height: 14px; opacity: 0.2;"></span>
+                <span style="height: 20px; opacity: 0.2;"></span>
+              </div>
+              <div>
+                <div class="select-card-title">Beginner</div>
+                <div class="select-card-desc">New to fitness</div>
+              </div>
+            </button>
+
+            <button type="button" class="select-card-btn" data-level="intermediate">
+              <div class="exp-bar-visualizer">
+                <span style="height: 8px;"></span>
+                <span style="height: 14px;"></span>
+                <span style="height: 20px; opacity: 0.2;"></span>
+              </div>
+              <div>
+                <div class="select-card-title">Intermediate</div>
+                <div class="select-card-desc">Some experience</div>
+              </div>
+            </button>
+
+            <button type="button" class="select-card-btn" data-level="advanced">
+              <div class="exp-bar-visualizer">
+                <span style="height: 8px;"></span>
+                <span style="height: 14px;"></span>
+                <span style="height: 20px;"></span>
+              </div>
+              <div>
+                <div class="select-card-title">Advanced</div>
+                <div class="select-card-desc">Very experienced</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: EQUIPMENT -->
+        <div class="onboarding-step-pane" id="stepPane3" style="display: none;">
+          <h1 class="auth-heading">What equipment do you have access to?</h1>
+          <p class="auth-subheading">You can select multiple options.</p>
+
+          <div class="card-options-grid stacked">
+            <button type="button" class="select-card-btn selected flex-row align-items-center" data-equip="full_gym">
+              <div class="d-flex align-items-center gap-3">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="select-card-icon mb-0"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
+                <div>
+                  <div class="select-card-title">Full Gym</div>
+                  <div class="select-card-desc">All equipment available</div>
                 </div>
-            </div>
-            <h2 class="generating-title">BUILDING YOUR PERSONAL PLAN...</h2>
-            <p class="generating-sub">Our AI is analyzing your preferences to create the perfect fitness program.</p>
-        </div>
-    </div>
-
-    <!-- Plan Ready Screen -->
-    <div class="onboarding-ready" id="readyScreen" style="display:none;">
-        <div class="ready-content">
-            <div class="ready-badge"><i class="bi bi-check-circle-fill"></i> YOUR PLAN IS READY</div>
-            <h2 class="ready-title">YOUR AI FITNESS PROFILE</h2>
-            <div class="ready-profile-grid" id="readyProfileGrid">
-                <!-- Filled by JS -->
-            </div>
-            <div class="ready-plan" id="readyPlan">
-                <h3 class="ready-plan-title">YOUR WEEKLY PLAN</h3>
-                <div class="ready-plan-grid" id="readyPlanGrid"></div>
-            </div>
-            <button class="btn-primary-glow mt-4" id="btnEnterDashboard" style="padding:18px 48px;font-size:1rem;">
-                ENTER YOUR DASHBOARD <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
+              </div>
+              <i class="bi bi-check-circle-fill text-lime fs-5"></i>
             </button>
+
+            <button type="button" class="select-card-btn flex-row align-items-center" data-equip="home">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-house-door-fill select-card-icon mb-0 fs-3"></i>
+                <div>
+                  <div class="select-card-title">Home Equipment</div>
+                  <div class="select-card-desc">Dumbbells, bands, etc.</div>
+                </div>
+              </div>
+              <i class="bi bi-circle text-muted fs-5"></i>
+            </button>
+
+            <button type="button" class="select-card-btn flex-row align-items-center" data-equip="bodyweight">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-person-arms-up select-card-icon mb-0 fs-3"></i>
+                <div>
+                  <div class="select-card-title">Bodyweight Only</div>
+                  <div class="select-card-desc">No equipment needed</div>
+                </div>
+              </div>
+              <i class="bi bi-circle text-muted fs-5"></i>
+            </button>
+          </div>
         </div>
-    </div>
 
-    <script src="js/data-store.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/three-core.js"></script>
-    <script src="js/motion-fx.js"></script>
-    <script src="js/app-motion.js"></script>
-    <script>
-    (function() {
-        'use strict';
+        <!-- STEP 4: BASICS -->
+        <div class="onboarding-step-pane" id="stepPane4" style="display: none;">
+          <h1 class="auth-heading">Tell us a bit about yourself</h1>
+          <p class="auth-subheading">This helps your AI coach personalize your plan and set accurate targets.</p>
 
-        if (!window.Auth || !window.Auth.requireAuth()) return;
-        const user = window.Auth.getCurrentUser();
-        if (!user) return;
+          <div class="form-group-custom">
+            <label for="athleteAge" class="form-label-custom">Age (optional)</label>
+            <div class="input-icon-wrap">
+              <i class="bi bi-calendar-event-fill input-leading-icon"></i>
+              <input type="number" id="athleteAge" class="form-input-custom" placeholder="e.g. 28" min="14" max="100">
+            </div>
+          </div>
 
-        const STEPS = [
-            {
-                title: 'What is your primary goal?',
-                subtitle: 'This helps us design your optimal training program.',
-                type: 'single',
-                key: 'primaryGoal',
-                options: [
-                    { label: 'Build Muscle', icon: 'bi-lightning-charge-fill' },
-                    { label: 'Lose Fat', icon: 'bi-fire' },
-                    { label: 'Build Strength', icon: 'bi-trophy-fill' },
-                    { label: 'Improve Endurance', icon: 'bi-heart-pulse-fill' },
-                    { label: 'Improve Fitness', icon: 'bi-activity' },
-                    { label: 'Improve Mobility', icon: 'bi-person-arms-up' },
-                    { label: 'Maintain Fitness', icon: 'bi-shield-check' }
-                ]
-            },
-            {
-                title: 'What is your current fitness level?',
-                subtitle: 'Be honest — we\'ll calibrate everything to match.',
-                type: 'single',
-                key: 'fitnessLevel',
-                options: [
-                    { label: 'Beginner', icon: 'bi-1-circle-fill', desc: 'New to structured training' },
-                    { label: 'Intermediate', icon: 'bi-2-circle-fill', desc: '6+ months consistent training' },
-                    { label: 'Advanced', icon: 'bi-3-circle-fill', desc: '2+ years serious training' }
-                ]
-            },
-            {
-                title: 'What type of training do you enjoy?',
-                subtitle: 'Select all that apply.',
-                type: 'multi',
-                key: 'preferredTraining',
-                options: [
-                    { label: 'Strength', icon: 'bi-trophy-fill' },
-                    { label: 'HIIT', icon: 'bi-lightning-fill' },
-                    { label: 'Running', icon: 'bi-speedometer2' },
-                    { label: 'Cycling', icon: 'bi-bicycle' },
-                    { label: 'Bodyweight', icon: 'bi-person-fill' },
-                    { label: 'Yoga', icon: 'bi-flower2' },
-                    { label: 'Mobility', icon: 'bi-arrows-angle-expand' },
-                    { label: 'Sports', icon: 'bi-dribbble' }
-                ]
-            },
-            {
-                title: 'How many days can you train each week?',
-                subtitle: 'We\'ll build your schedule around your availability.',
-                type: 'single',
-                key: 'trainingDays',
-                options: [
-                    { label: '2 days' }, { label: '3 days' }, { label: '4 days' },
-                    { label: '5 days' }, { label: '6 days' }, { label: '7 days' }
-                ]
-            },
-            {
-                title: 'How much time do you usually have?',
-                subtitle: 'Per training session.',
-                type: 'single',
-                key: 'sessionDuration',
-                options: [
-                    { label: '15–20 minutes' }, { label: '30 minutes' },
-                    { label: '45 minutes' }, { label: '60 minutes' }, { label: '90+ minutes' }
-                ]
-            },
-            {
-                title: 'What equipment do you have?',
-                subtitle: 'Select all available.',
-                type: 'multi',
-                key: 'equipment',
-                options: [
-                    { label: 'No equipment', icon: 'bi-x-circle' },
-                    { label: 'Dumbbells', icon: 'bi-gear-fill' },
-                    { label: 'Resistance bands', icon: 'bi-link-45deg' },
-                    { label: 'Home gym', icon: 'bi-house-fill' },
-                    { label: 'Full gym', icon: 'bi-building' },
-                    { label: 'Cardio equipment', icon: 'bi-heart-pulse-fill' }
-                ]
-            },
-            {
-                title: 'What is your preferred training environment?',
-                subtitle: 'Where do you train most often?',
-                type: 'single',
-                key: 'environment',
-                options: [
-                    { label: 'Home', icon: 'bi-house-fill' },
-                    { label: 'Gym', icon: 'bi-building' },
-                    { label: 'Outdoor', icon: 'bi-sun-fill' },
-                    { label: 'Mixed', icon: 'bi-shuffle' }
-                ]
-            },
-            {
-                title: 'Anything else we should consider?',
-                subtitle: 'Optional — share any preferences, constraints or focus areas.',
-                type: 'text',
-                key: 'notes',
-                placeholder: 'e.g., knee injury recovery, training for a marathon, prefer morning workouts...'
-            }
-        ];
+          <div class="row g-3">
+            <div class="col-6">
+              <div class="form-group-custom">
+                <label for="athleteHeight" class="form-label-custom">Height (cm)</label>
+                <div class="input-icon-wrap">
+                  <i class="bi bi-arrows-vertical input-leading-icon"></i>
+                  <input type="number" id="athleteHeight" class="form-input-custom" placeholder="e.g. 178">
+                </div>
+              </div>
+            </div>
 
-        let currentStep = 0;
-        const answers = {};
+            <div class="col-6">
+              <div class="form-group-custom">
+                <label for="athleteWeight" class="form-label-custom">Weight (kg)</label>
+                <div class="input-icon-wrap">
+                  <i class="bi bi-speedometer2 input-leading-icon"></i>
+                  <input type="number" id="athleteWeight" class="form-input-custom" placeholder="e.g. 76">
+                </div>
+              </div>
+            </div>
+          </div>
 
-        const body = document.getElementById('onboardingBody');
-        const progressFill = document.getElementById('progressFill');
-        const stepLabel = document.getElementById('stepLabel');
-        const btnBack = document.getElementById('btnBack');
-        const btnNext = document.getElementById('btnNext');
+          <div class="p-3 my-3 glass-panel d-flex align-items-center gap-3 text-secondary small">
+            <i class="bi bi-info-circle-fill text-lime fs-5 flex-shrink-0"></i>
+            <div>Helps us calculate your BMI, calorie needs and training load for better results.</div>
+          </div>
+        </div>
 
-        function renderStep(index) {
-            const step = STEPS[index];
-            progressFill.style.width = ((index + 1) / STEPS.length * 100) + '%';
-            stepLabel.textContent = (index + 1 < 10 ? '0' : '') + (index + 1) + ' / 08';
-            btnBack.style.display = index > 0 ? 'inline-flex' : 'none';
-            btnNext.innerHTML = index === STEPS.length - 1
-                ? 'FINISH <span class="btn-arrow"><i class="bi bi-check-lg"></i></span>'
-                : 'NEXT <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>';
+        <!-- STEP 5: FINAL GENERATING PLAN SCREEN -->
+        <div class="onboarding-step-pane" id="stepPaneFinal" style="display: none;">
+          <div class="ai-generating-screen">
+            <!-- Animated Neural Orb -->
+            <div class="neural-orb-container">
+              <img src="assets/images/neural-orb.jpg" alt="AI Neural Matrix" class="neural-orb-img">
+              <div class="neural-ring-spin"></div>
+            </div>
 
-            let html = '<div class="onboarding-step">';
-            html += '<h2 class="ob-question">' + step.title + '</h2>';
-            html += '<p class="ob-subtitle">' + step.subtitle + '</p>';
+            <h2 class="auth-heading fs-2">Building your AI plan...</h2>
+            <p class="auth-subheading">
+              Analyzing your goals, generating workouts, and customizing your nutrition plan.
+            </p>
 
-            if (step.type === 'text') {
-                html += '<textarea class="ob-textarea" id="obTextarea" placeholder="' + (step.placeholder || '') + '">' + (answers[step.key] || '') + '</textarea>';
-                if (step.key === 'notes') {
-                    html += '<p class="ob-disclaimer"><i class="bi bi-info-circle me-1"></i> Any medical or injury information shared is optional and will only be used for general wellness guidance. This is not a medical tool.</p>';
-                }
-            } else {
-                html += '<div class="ob-options-grid' + (step.options.length <= 3 ? ' ob-grid-3' : '') + '">';
-                step.options.forEach(function(opt) {
-                    const selected = step.type === 'multi'
-                        ? (answers[step.key] || []).includes(opt.label)
-                        : answers[step.key] === opt.label;
-                    html += '<button class="ob-option tilt-card' + (selected ? ' selected' : '') + '" data-value="' + opt.label + '">';
-                    if (opt.icon) html += '<i class="' + opt.icon + ' ob-option-icon"></i>';
-                    html += '<span class="ob-option-label">' + opt.label + '</span>';
-                    if (opt.desc) html += '<span class="ob-option-desc">' + opt.desc + '</span>';
-                    html += '</button>';
-                });
-                html += '</div>';
-            }
-            html += '</div>';
-            body.innerHTML = html;
+            <!-- Progress Track -->
+            <div class="progress my-4" style="height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px;">
+              <div class="progress-bar bg-lime" id="finalProgressBar" role="progressbar" style="width: 15%; transition: width 0.6s ease; background-color: var(--accent-lime); box-shadow: 0 0 10px var(--accent-lime);"></div>
+            </div>
+            <div class="text-muted small font-mono mb-4">This will just take a few seconds...</div>
 
-            // Re-init tilt on new options
-            if (window.MotionFX) window.MotionFX.initTilt();
+            <!-- Milestones Checklist -->
+            <div class="milestones-checklist">
+              <div class="milestone-pill" id="ms1">
+                <span class="milestone-dot"><i class="bi bi-check-lg"></i></span> Analyzing Goals
+              </div>
+              <div class="milestone-pill" id="ms2">
+                <span class="milestone-dot"><i class="bi bi-check-lg"></i></span> Generating Workouts
+              </div>
+              <div class="milestone-pill" id="ms3">
+                <span class="milestone-dot"><i class="bi bi-check-lg"></i></span> Optimizing Nutrition
+              </div>
+              <div class="milestone-pill" id="ms4">
+                <span class="milestone-dot"><i class="bi bi-check-lg"></i></span> Personalizing For You
+              </div>
+            </div>
+          </div>
+        </div>
 
-            // Attach selection handlers
-            if (step.type === 'single' || step.type === 'multi') {
-                body.querySelectorAll('.ob-option').forEach(function(btn) {
-                    btn.addEventListener('click', function() {
-                        if (window.onboardingAICore) window.onboardingAICore.pulse(0.45);
-                        const val = this.getAttribute('data-value');
-                        if (step.type === 'single') {
-                            answers[step.key] = val;
-                            body.querySelectorAll('.ob-option').forEach(function(b) { b.classList.remove('selected'); });
-                            this.classList.add('selected');
-                        } else {
-                            if (!answers[step.key]) answers[step.key] = [];
-                            const idx = answers[step.key].indexOf(val);
-                            if (idx > -1) {
-                                answers[step.key].splice(idx, 1);
-                                this.classList.remove('selected');
-                            } else {
-                                answers[step.key].push(val);
-                                this.classList.add('selected');
-                            }
-                        }
-                    });
-                });
-            }
-        }
+        <!-- Navigation Buttons Bar -->
+        <div class="d-flex justify-content-between align-items-center pt-4 border-top border-secondary border-opacity-25 mt-4" id="onboardingNavActions">
+          <button type="button" class="btn btn-link text-secondary text-decoration-none px-0" id="btnStepBack" style="visibility: hidden;">
+            <i class="bi bi-arrow-left"></i> Back
+          </button>
+          <button type="button" class="btn-fitnexa btn-accent btn-lg px-4" id="btnStepNext">
+            Next <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
 
-        btnNext.addEventListener('click', function() {
-            const step = STEPS[currentStep];
-            // Save text input
-            if (step.type === 'text') {
-                const ta = document.getElementById('obTextarea');
-                if (ta) answers[step.key] = ta.value.trim();
-            }
-            // Validate required
-            if (step.type === 'single' && !answers[step.key]) {
-                body.querySelector('.ob-question').style.color = '#ff4466';
-                setTimeout(function() { body.querySelector('.ob-question').style.color = ''; }, 1500);
-                return;
-            }
-            if (step.type === 'multi' && (!answers[step.key] || answers[step.key].length === 0)) {
-                body.querySelector('.ob-question').style.color = '#ff4466';
-                setTimeout(function() { body.querySelector('.ob-question').style.color = ''; }, 1500);
-                return;
-            }
+      </div>
+    </main>
+  </div>
 
-            if (currentStep < STEPS.length - 1) {
-                currentStep++;
-                renderStep(currentStep);
-            } else {
-                finishOnboarding();
-            }
+  <!-- GSAP 3.12.5 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Existing Auth Logic (Preserved Untouched) -->
+  <script src="assets/js/data-store.js"></script>
+  <script src="assets/js/auth.js"></script>
+
+  <!-- Onboarding Wizard Controller -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentStep = 1;
+      const totalSteps = 4;
+
+      // Onboarding Profile State
+      const profileData = {
+        goal: 'fatloss',
+        experience: 'beginner',
+        equipment: ['full_gym'],
+        age: 28,
+        height: 178,
+        weight: 76
+      };
+
+      const stepCounter = document.getElementById('stepCounterLabel');
+      const btnBack = document.getElementById('btnStepBack');
+      const btnNext = document.getElementById('btnStepNext');
+      const navActions = document.getElementById('onboardingNavActions');
+
+      // 1. Single Goal Select Cards
+      document.querySelectorAll('#stepPane1 .select-card-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#stepPane1 .select-card-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          profileData.goal = btn.getAttribute('data-goal');
         });
+      });
 
-        btnBack.addEventListener('click', function() {
-            if (currentStep > 0) {
-                currentStep--;
-                renderStep(currentStep);
-            }
+      // 2. Experience Level Select Cards
+      document.querySelectorAll('#stepPane2 .select-card-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#stepPane2 .select-card-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          profileData.experience = btn.getAttribute('data-level');
         });
+      });
 
-        function finishOnboarding() {
-            // Show generating screen
-            document.querySelector('.onboarding-page').style.display = 'none';
-            const genScreen = document.getElementById('generatingScreen');
-            genScreen.style.display = 'flex';
+      // 3. Equipment Multi-Select Cards
+      document.querySelectorAll('#stepPane3 .select-card-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('selected');
+          const icon = btn.querySelector('i:last-child');
+          if (btn.classList.contains('selected')) {
+            if (icon) icon.className = 'bi bi-check-circle-fill text-lime fs-5';
+          } else {
+            if (icon) icon.className = 'bi bi-circle text-muted fs-5';
+          }
 
-            if (window.onboardingAICore && window.onboardingAICore.setState) {
-                window.onboardingAICore.setState('ANALYZING');
-                window.onboardingAICore.setIntensity(1.8);
+          // Gather selected
+          profileData.equipment = [];
+          document.querySelectorAll('#stepPane3 .select-card-btn.selected').forEach(b => {
+            profileData.equipment.push(b.getAttribute('data-equip'));
+          });
+        });
+      });
+
+      // Navigation: Next
+      btnNext.addEventListener('click', () => {
+        if (currentStep < totalSteps) {
+          goToStep(currentStep + 1);
+        } else if (currentStep === totalSteps) {
+          // Read step 4 fields
+          const age = document.getElementById('athleteAge').value;
+          const height = document.getElementById('athleteHeight').value;
+          const weight = document.getElementById('athleteWeight').value;
+          if (age) profileData.age = parseInt(age);
+          if (height) profileData.height = parseInt(height);
+          if (weight) profileData.weight = parseInt(weight);
+
+          // Launch final "Building AI Plan" sequence
+          startBuildingPlan();
+        }
+      });
+
+      // Navigation: Back
+      btnBack.addEventListener('click', () => {
+        if (currentStep > 1) {
+          goToStep(currentStep - 1);
+        }
+      });
+
+      function goToStep(step) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const prevPane = document.getElementById('stepPane' + currentStep);
+        const nextPane = document.getElementById('stepPane' + step);
+
+        if (!nextPane || !prevPane) return;
+
+        // Transition panes
+        if (prefersReducedMotion || typeof gsap === 'undefined') {
+          prevPane.style.display = 'none';
+          nextPane.style.display = 'block';
+        } else {
+          gsap.to(prevPane, {
+            opacity: 0,
+            x: step > currentStep ? -30 : 30,
+            duration: 0.3,
+            onComplete: () => {
+              prevPane.style.display = 'none';
+              nextPane.style.display = 'block';
+              gsap.fromTo(nextPane,
+                { opacity: 0, x: step > currentStep ? 30 : -30 },
+                { opacity: 1, x: 0, duration: 0.35 }
+              );
             }
-
-            // Parse training days
-            let days = 4;
-            if (answers.trainingDays) {
-                const m = answers.trainingDays.match(/(\d+)/);
-                if (m) days = parseInt(m[1], 10);
-            }
-
-            // Save to DataStore
-            const onboardingData = {
-                primaryGoal: answers.primaryGoal || 'Build Muscle',
-                fitnessLevel: answers.fitnessLevel || 'Intermediate',
-                preferredTraining: answers.preferredTraining || ['Strength'],
-                trainingDays: days,
-                sessionDuration: answers.sessionDuration || '45 minutes',
-                equipment: answers.equipment || ['Full gym'],
-                environment: answers.environment || 'Gym',
-                notes: answers.notes || ''
-            };
-
-            window.DataStore.saveOnboarding(user.id, onboardingData);
-
-            // Multi-stage cinematic AI generation progression
-            const titleEl = genScreen.querySelector('.generating-title');
-            const subEl = genScreen.querySelector('.generating-sub');
-            if (titleEl) titleEl.innerText = "ANALYZING YOUR PROFILE...";
-
-            setTimeout(function() {
-                if (titleEl) titleEl.innerText = "BUILDING YOUR TRAINING SYSTEM...";
-                if (subEl) subEl.innerText = "Synthesizing hypertrophy curves, recovery targets, and weekly volume splits.";
-                if (window.onboardingAICore && window.onboardingAICore.setState) {
-                    window.onboardingAICore.setState('THINKING');
-                }
-            }, 1000);
-
-            setTimeout(function() {
-                if (titleEl) titleEl.innerText = "YOUR PLAN IS READY.";
-                if (subEl) subEl.innerText = "Calibrated specifically to your biomechanics and athletic schedule.";
-            }, 2000);
-
-            setTimeout(function() {
-                genScreen.style.display = 'none';
-                showReadyScreen(onboardingData);
-            }, 2800);
+          });
         }
 
-        function showReadyScreen(data) {
-            const screen = document.getElementById('readyScreen');
-            screen.style.display = 'flex';
+        currentStep = step;
 
-            if (window.onboardingAICore && window.onboardingAICore.setState) {
-                window.onboardingAICore.setState('SUCCESS');
-                window.onboardingAICore.setIntensity(1.5);
+        // Update top segmented indicators
+        for (let i = 1; i <= totalSteps; i++) {
+          const seg = document.getElementById('seg' + i);
+          if (seg) {
+            if (i <= currentStep) {
+              seg.classList.add('active');
+            } else {
+              seg.classList.remove('active');
             }
-
-            // Profile summary
-            const grid = document.getElementById('readyProfileGrid');
-            const items = [
-                { label: 'PRIMARY GOAL', value: data.primaryGoal, icon: 'bi-bullseye' },
-                { label: 'FITNESS LEVEL', value: data.fitnessLevel, icon: 'bi-speedometer2' },
-                { label: 'TRAINING', value: data.trainingDays + ' Days / Week', icon: 'bi-calendar-check' },
-                { label: 'SESSION', value: data.sessionDuration, icon: 'bi-clock' },
-                { label: 'EQUIPMENT', value: (data.equipment || []).join(', '), icon: 'bi-gear-fill' },
-                { label: 'ENVIRONMENT', value: data.environment, icon: 'bi-geo-alt-fill' }
-            ];
-            grid.innerHTML = items.map(function(item) {
-                return '<div class="ready-item sparta-spec-panel tilt-card"><div class="ready-item-icon"><i class="bi ' + item.icon + '"></i></div><div class="ready-item-label">' + item.label + '</div><div class="ready-item-value">' + item.value + '</div></div>';
-            }).join('');
-
-            // Generate weekly plan
-            const planGrid = document.getElementById('readyPlanGrid');
-            const dayNames = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
-            const plans = generateWeeklyPlan(data);
-            planGrid.innerHTML = plans.map(function(day, i) {
-                return '<div class="plan-day tilt-card' + (day.rest ? ' rest-day' : '') + '"><div class="plan-day-name">' + dayNames[i] + '</div><div class="plan-day-workout">' + day.name + '</div></div>';
-            }).join('');
-
-            if (window.MotionFX) window.MotionFX.initTilt();
-
-            document.getElementById('btnEnterDashboard').addEventListener('click', function() {
-                window.location.href = 'dashboard.html';
-            });
+          }
         }
 
-        function generateWeeklyPlan(data) {
-            const days = data.trainingDays || 4;
-            const goal = data.primaryGoal || 'Build Muscle';
-            const plan = [];
-            const workoutNames = {
-                'Build Muscle': ['Upper Body Hypertrophy', 'Lower Body Hypertrophy', 'Push Day', 'Pull Day', 'Full Body', 'Arms & Shoulders', 'Legs & Core'],
-                'Lose Fat': ['HIIT Circuit', 'Metabolic Conditioning', 'Fat Burn Cardio', 'Total Body Shred', 'Core & Cardio', 'Sprint Intervals', 'Active Recovery'],
-                'Build Strength': ['Upper Body Power', 'Lower Body Power', 'Bench & Shoulders', 'Squat & Deadlift', 'Full Body Strength', 'Olympic Lifts', 'Mobility'],
-                'Improve Endurance': ['Tempo Run', 'Interval Training', 'Long Distance', 'Cross Training', 'Hill Sprints', 'Recovery Jog', 'Swim or Cycle'],
-                'Improve Fitness': ['Functional Circuit', 'Strength & Cardio', 'HIIT', 'Mobility Flow', 'Athletic Conditioning', 'Core Work', 'Active Recovery'],
-                'Improve Mobility': ['Full Body Stretch', 'Yoga Flow', 'Hip Mobility', 'Spine & Shoulders', 'Recovery Movement', 'Dynamic Flexibility', 'Deep Stretch'],
-                'Maintain Fitness': ['Full Body', 'Cardio', 'Upper Body', 'Lower Body', 'HIIT', 'Yoga', 'Active Recovery']
-            };
-            const names = workoutNames[goal] || workoutNames['Build Muscle'];
-            let workoutIdx = 0;
-            const restPattern = days <= 3 ? [1,0,1,0,1,0,0] : days <= 4 ? [1,0,1,0,1,1,0] : days <= 5 ? [1,1,0,1,1,1,0] : [1,1,1,0,1,1,1];
-            for (let i = 0; i < 7; i++) {
-                if (restPattern[i] && workoutIdx < days) {
-                    plan.push({ name: names[workoutIdx % names.length], rest: false });
-                    workoutIdx++;
-                } else {
-                    plan.push({ name: 'Rest Day', rest: true });
-                }
+        stepCounter.innerText = `Step ${currentStep} of ${totalSteps}`;
+        btnBack.style.visibility = currentStep > 1 ? 'visible' : 'hidden';
+        btnNext.innerHTML = currentStep === totalSteps ? 'Complete <i class="bi bi-check-lg"></i>' : 'Next <i class="bi bi-arrow-right"></i>';
+      }
+
+      function startBuildingPlan() {
+        const pane4 = document.getElementById('stepPane4');
+        const finalPane = document.getElementById('stepPaneFinal');
+        navActions.style.display = 'none';
+        document.getElementById('onboardingHeader').style.opacity = '0.4';
+
+        pane4.style.display = 'none';
+        finalPane.style.display = 'block';
+
+        if (typeof gsap !== 'undefined') {
+          gsap.fromTo(finalPane, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.5 });
+        }
+
+        const bar = document.getElementById('finalProgressBar');
+        const ms1 = document.getElementById('ms1');
+        const ms2 = document.getElementById('ms2');
+        const ms3 = document.getElementById('ms3');
+        const ms4 = document.getElementById('ms4');
+
+        // Milestone progression sequence
+        setTimeout(() => { bar.style.width = '35%'; ms1.classList.add('completed'); }, 600);
+        setTimeout(() => { bar.style.width = '65%'; ms2.classList.add('completed'); }, 1400);
+        setTimeout(() => { bar.style.width = '88%'; ms3.classList.add('completed'); }, 2200);
+        setTimeout(() => {
+          bar.style.width = '100%';
+          ms4.classList.add('completed');
+
+          // Save profile to existing data store if user is logged in
+          if (window.Auth && window.DataStore) {
+            const user = window.Auth.getCurrentUser();
+            if (user) {
+              user.profile = Object.assign(user.profile || {}, profileData);
+              window.DataStore.updateUser(user);
             }
-            return plan;
-        }
+          }
 
-        // Initialize 3D AI Core in Onboarding background
-        if (window.Fitnexa3D) {
-            window.onboardingAICore = window.Fitnexa3D.createAICore('#onboardingAICoreCanvas', {
-                size: 450,
-                sphereRadius: 1.4,
-                particlesCount: 75,
-                cameraDistance: 5.2
-            });
-        }
-
-        renderStep(0);
-    })();
-    </script>
+          // Cross-fade redirect to dashboard
+          setTimeout(() => {
+            window.location.href = 'dashboard/index.html';
+          }, 800);
+        }, 3000);
+      }
+    });
+  </script>
 </body>
 </html>

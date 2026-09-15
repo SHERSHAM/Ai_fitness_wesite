@@ -1,152 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account — FITNEXA AI</title>
-    <meta name="description" content="Create your FITNEXA AI account. Start your AI-powered fitness journey today.">
-    <meta name="theme-color" content="#02050A">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/responsive.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up — FITNEXA AI</title>
+  <meta name="description" content="Create your FITNEXA AI athlete account. Start personalized training in under a minute.">
+  <meta name="theme-color" content="#0B0C0E">
+
+  <!-- Google Fonts: Outfit, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.3 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- FITNEXA Stylesheets -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages/auth.css">
 </head>
-<body class="app-body" style="cursor:auto;">
-    <div class="auth-page">
-        <!-- Left: Branding with 3D AI Core -->
-        <div class="auth-branding d-none d-lg-flex depth-container">
-            <div class="auth-brand-bg">
-                <img src="images/cta-athlete.webp" alt="Athlete" loading="eager">
-                <div class="auth-brand-overlay"></div>
-            </div>
-            <div class="depth-atmospheric"></div>
-            <div class="depth-3d-canvas" id="signupAICoreCanvas" style="opacity:0.85;"></div>
-            <div class="auth-brand-content depth-typography">
-                <a href="index.html" class="auth-logo">FITNEXA <span>AI</span></a>
-                <h1 class="auth-brand-headline">BECOME<br><span>STRONGER.</span></h1>
-                <p class="auth-brand-sub">Join thousands of athletes training smarter with AI-powered coaching.</p>
-            </div>
+<body>
+
+  <div class="auth-split-wrapper">
+    <!-- ==========================================================================
+         LEFT FORM PANEL
+         ========================================================================== -->
+    <div class="auth-form-column">
+      <!-- Brand Logo Header -->
+      <a href="index.html" class="auth-brand-nav">
+        <div>
+          <div class="auth-brand-title">FITNEXA<span class="text-lime">.</span></div>
+          <div class="auth-brand-tagline">Train Smarter. Be Stronger.</div>
+        </div>
+      </a>
+
+      <!-- Form Container -->
+      <div class="auth-form-container">
+        <h1 class="auth-heading">Start training smarter.</h1>
+        <p class="auth-subheading">Your AI coach is ready in under a minute.</p>
+
+        <!-- Global Alert Banner -->
+        <div id="signupError" class="auth-alert-banner">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <span id="signupErrorText">Please fill in all required fields</span>
         </div>
 
-        <div class="auth-form-side">
-            <div class="auth-form-container sparta-spec-panel hud-corner-bracket p-4 p-md-5">
-                <a href="index.html" class="auth-logo d-lg-none mb-4 d-block">FITNEXA <span>AI</span></a>
-                <div class="spec-badge-gold mb-2" style="width:fit-content;font-size:0.68rem;"><i class="bi bi-person-plus-fill me-1"></i> ATHLETE ENROLLMENT</div>
-                <h2 class="auth-title mt-2">Create Your Account</h2>
-                <p class="auth-subtitle">Start your AI-powered fitness evolution.</p>
-
-                <div id="signupError" class="auth-error" style="display:none;"></div>
-
-                <form id="signupForm" class="auth-form" novalidate>
-                    <div class="form-group">
-                        <label for="signupName" class="form-label-custom">Full Name</label>
-                        <input type="text" id="signupName" class="form-input-custom" placeholder="John Doe" required autocomplete="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="signupEmail" class="form-label-custom">Email Address</label>
-                        <input type="email" id="signupEmail" class="form-input-custom" placeholder="you@email.com" required autocomplete="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="signupPassword" class="form-label-custom">Password</label>
-                        <input type="password" id="signupPassword" class="form-input-custom" placeholder="At least 6 characters" required autocomplete="new-password">
-                    </div>
-                    <div class="form-group">
-                        <label for="signupConfirm" class="form-label-custom">Confirm Password</label>
-                        <input type="password" id="signupConfirm" class="form-input-custom" placeholder="Re-enter password" required autocomplete="new-password">
-                    </div>
-                    <button type="submit" class="btn-gold-glow w-100 mt-2" id="signupBtn">
-                        CREATE ACCOUNT <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
-                    </button>
-                </form>
-
-                <p class="auth-footer-text mt-4">
-                    Already have an account? <a href="login.html" class="auth-link">Log in</a>
-                </p>
+        <form id="signupForm" novalidate>
+          <!-- Full Name Field -->
+          <div class="form-group-custom">
+            <label for="signupName" class="form-label-custom">Full Name</label>
+            <div class="input-icon-wrap">
+              <i class="bi bi-person-fill input-leading-icon"></i>
+              <input type="text" id="signupName" class="form-input-custom" placeholder="Marcus Kane" required autocomplete="name">
             </div>
+            <div class="form-field-error" id="nameError"></div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group-custom">
+            <label for="signupEmail" class="form-label-custom">Email address</label>
+            <div class="input-icon-wrap">
+              <i class="bi bi-envelope-fill input-leading-icon"></i>
+              <input type="email" id="signupEmail" class="form-input-custom" placeholder="name@example.com" required autocomplete="email">
+            </div>
+            <div class="form-field-error" id="emailError"></div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group-custom">
+            <label for="signupPassword" class="form-label-custom">Password</label>
+            <div class="input-icon-wrap">
+              <i class="bi bi-lock-fill input-leading-icon"></i>
+              <input type="password" id="signupPassword" class="form-input-custom" placeholder="Create a password" required autocomplete="new-password">
+              <button type="button" class="password-toggle-btn" data-target="signupPassword" aria-label="Show password">
+                <i class="bi bi-eye-fill"></i>
+              </button>
+            </div>
+            <!-- Live Password Strength Meter (4 Segments) -->
+            <div class="password-strength-wrap">
+              <div class="strength-meter-label">
+                <span>Password strength: <strong id="strengthLabel" class="text-white">None</strong></span>
+              </div>
+              <div class="strength-segments-row">
+                <div class="strength-segment" id="sSeg1"></div>
+                <div class="strength-segment" id="sSeg2"></div>
+                <div class="strength-segment" id="sSeg3"></div>
+                <div class="strength-segment" id="sSeg4"></div>
+              </div>
+            </div>
+            <div class="form-field-error" id="passwordError"></div>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div class="form-group-custom">
+            <label for="signupConfirmPassword" class="form-label-custom">Confirm password</label>
+            <div class="input-icon-wrap">
+              <i class="bi bi-shield-lock-fill input-leading-icon"></i>
+              <input type="password" id="signupConfirmPassword" class="form-input-custom" placeholder="Confirm password" required autocomplete="new-password">
+              <button type="button" class="password-toggle-btn" data-target="signupConfirmPassword" aria-label="Show password">
+                <i class="bi bi-eye-fill"></i>
+              </button>
+            </div>
+            <div class="form-field-error" id="confirmError"></div>
+          </div>
+
+          <!-- Terms Checkbox -->
+          <div class="mb-4">
+            <label class="custom-checkbox-row">
+              <input type="checkbox" id="termsCheckbox" checked>
+              <span class="custom-checkbox-box"><i class="bi bi-check-lg"></i></span>
+              <span>I agree to the <a href="#" class="text-lime text-decoration-none">Terms & Privacy Policy</a></span>
+            </label>
+          </div>
+
+          <!-- Submit CTA -->
+          <button type="submit" class="btn-fitnexa btn-accent w-100 py-3 mb-3" id="signupBtn">
+            Create Account <i class="bi bi-arrow-right"></i>
+          </button>
+        </form>
+
+        <!-- Social Divider -->
+        <div class="auth-divider-line">or continue with</div>
+
+        <!-- Social Buttons -->
+        <div class="social-btns-grid">
+          <button type="button" class="btn-social-outline">
+            <i class="bi bi-google"></i> Continue with Google
+          </button>
+          <button type="button" class="btn-social-outline">
+            <i class="bi bi-apple"></i> Continue with Apple
+          </button>
         </div>
+
+        <!-- Login Prompt Link -->
+        <div class="text-center mt-4 small text-secondary">
+          Already have an account? <a href="login.html" class="text-lime fw-bold">Log in</a>
+        </div>
+      </div>
     </div>
 
-    <script src="js/data-store.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/three-core.js"></script>
-    <script src="js/motion-fx.js"></script>
-    <script src="js/app-motion.js"></script>
-    <script>
-    (function() {
-        'use strict';
-        if (window.Auth && window.Auth.redirectIfAuth('dashboard.html')) return;
+    <!-- ==========================================================================
+         RIGHT VISUAL PANEL
+         ========================================================================== -->
+    <div class="auth-visual-column d-none d-lg-flex">
+      <img src="assets/images/signup-athlete.jpg" alt="Athletic Excellence" class="auth-visual-bg">
+      <div class="auth-visual-overlay"></div>
 
-        const form = document.getElementById('signupForm');
-        const errorBox = document.getElementById('signupError');
+      <div class="auth-visual-content">
+        <!-- Brand Quote -->
+        <div class="auth-quote-text">
+          Stronger<br>Fitter<br>Happier<br><span class="auth-quote-accent">With AI.</span>
+        </div>
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            errorBox.style.display = 'none';
+        <!-- Floating Glass Stat Card -->
+        <div class="auth-stat-card">
+          <div class="auth-stat-icon">
+            <i class="bi bi-bar-chart-line-fill"></i>
+          </div>
+          <div>
+            <div class="text-muted small font-mono">Join</div>
+            <div class="auth-stat-num">148,520+</div>
+            <div class="auth-stat-lbl">athletes training with FITNEXA</div>
+          </div>
+        </div>
 
-            const name = document.getElementById('signupName').value.trim();
-            const email = document.getElementById('signupEmail').value.trim();
-            const password = document.getElementById('signupPassword').value;
-            const confirm = document.getElementById('signupConfirm').value;
+        <!-- Bottom Taglines -->
+        <div class="auth-footer-taglines mt-2">
+          <span>YOUR GOALS</span>
+          <span>•</span>
+          <span>OUR AI</span>
+          <span>•</span>
+          <span>A STRONGER YOU</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            if (!name || !email || !password || !confirm) {
-                errorBox.textContent = 'Please fill in all fields.';
-                errorBox.style.display = 'block';
-                return;
-            }
-            if (password !== confirm) {
-                errorBox.textContent = 'Passwords do not match.';
-                errorBox.style.display = 'block';
-                return;
-            }
-            if (password.length < 6) {
-                errorBox.textContent = 'Password must be at least 6 characters.';
-                errorBox.style.display = 'block';
-                return;
-            }
+  <!-- GSAP 3.12.5 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Existing Auth Logic (Preserved Untouched) -->
+  <script src="assets/js/data-store.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <!-- Presentation & Animation Layer -->
+  <script src="assets/js/auth-ui.js"></script>
+  <script src="assets/js/animations/auth.js"></script>
 
-            const result = window.Auth.signup(name, email, password);
-            if (result.success) {
-                window.location.href = 'onboarding.html';
-            } else {
-                errorBox.textContent = result.message;
-                errorBox.style.display = 'block';
-            }
-        });
+  <!-- Signup Form Handler (Using Existing Auth Engine) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('signupForm');
+      const nameInput = document.getElementById('signupName');
+      const emailInput = document.getElementById('signupEmail');
+      const passInput = document.getElementById('signupPassword');
+      const confirmInput = document.getElementById('signupConfirmPassword');
+      const signupBtn = document.getElementById('signupBtn');
+      const errorBanner = document.getElementById('signupError');
+      const errorText = document.getElementById('signupErrorText');
 
-        // Initialize 3D AI Core in left branding
-        if (window.Fitnexa3D) {
-            window.signupAICore = window.Fitnexa3D.createAICore('#signupAICoreCanvas', {
-                size: 420,
-                sphereRadius: 1.35,
-                particlesCount: 85,
-                cameraDistance: 5.0
-            });
+      if (!form) return;
 
-            // React to input focus
-            document.querySelectorAll('.form-input-custom').forEach(input => {
-                input.addEventListener('focus', function() {
-                    if (window.signupAICore) {
-                        window.signupAICore.pulse(0.6);
-                        window.signupAICore.setIntensity(1.6);
-                        if (window.signupAICore.setState) window.signupAICore.setState('LISTENING');
-                    }
-                });
-                input.addEventListener('blur', function() {
-                    if (window.signupAICore) {
-                        window.signupAICore.setIntensity(1.0);
-                        if (window.signupAICore.setState) window.signupAICore.setState('IDLE');
-                    }
-                });
-            });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        errorBanner.style.display = 'none';
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passInput.value.trim();
+        const confirmPass = confirmInput.value.trim();
+
+        if (!name) {
+          window.triggerErrorShake(nameInput);
+          document.getElementById('nameError').innerText = 'Please enter your full name.';
+          return;
+        } else {
+          document.getElementById('nameError').innerText = '';
         }
-    })();
-    </script>
+
+        if (!email || !email.includes('@')) {
+          window.triggerErrorShake(emailInput);
+          document.getElementById('emailError').innerText = 'Please enter a valid email address.';
+          return;
+        } else {
+          document.getElementById('emailError').innerText = '';
+        }
+
+        if (!password || password.length < 6) {
+          window.triggerErrorShake(passInput);
+          document.getElementById('passwordError').innerText = 'Password must be at least 6 characters.';
+          return;
+        } else {
+          document.getElementById('passwordError').innerText = '';
+        }
+
+        if (password !== confirmPass) {
+          window.triggerErrorShake(confirmInput);
+          document.getElementById('confirmError').innerText = 'Passwords do not match.';
+          return;
+        } else {
+          document.getElementById('confirmError').innerText = '';
+        }
+
+        window.setButtonLoading(signupBtn, 'Creating Account...');
+
+        setTimeout(() => {
+          if (window.Auth) {
+            const res = window.Auth.signup(name, email, password);
+            if (res && res.success) {
+              // Immediately route to personalized onboarding wizard
+              window.location.href = 'onboarding.html';
+            } else {
+              window.resetButtonLoading(signupBtn);
+              errorBanner.style.display = 'flex';
+              errorText.innerText = res ? res.message : 'Registration error. Try a different email.';
+              window.triggerErrorShake(form);
+            }
+          } else {
+            window.location.href = 'onboarding.html';
+          }
+        }, 700);
+      });
+    });
+  </script>
 </body>
 </html>

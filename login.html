@@ -1,165 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login — FITNEXA AI</title>
-    <meta name="description" content="Log in to your FITNEXA AI account. Access your personalized workouts, AI coaching, and progress tracking.">
-    <meta name="theme-color" content="#02050A">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/responsive.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — FITNEXA AI</title>
+  <meta name="description" content="Log in to your FITNEXA AI personal training command center.">
+  <meta name="theme-color" content="#0B0C0E">
+
+  <!-- Google Fonts: Outfit, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.3 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- FITNEXA Stylesheets -->
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages/auth.css">
 </head>
-<body class="app-body" style="cursor:auto;">
-    <div class="auth-page">
-        <!-- Left: Branding with 3D AI Core -->
-        <div class="auth-branding d-none d-lg-flex depth-container">
-            <div class="auth-brand-bg">
-                <img src="images/hero-athlete.webp" alt="Athlete" loading="eager">
-                <div class="auth-brand-overlay"></div>
-            </div>
-            <div class="depth-atmospheric"></div>
-            <div class="depth-3d-canvas" id="authAICoreCanvas" style="opacity:0.85;"></div>
-            <div class="auth-brand-content depth-typography">
-                <a href="index.html" class="auth-logo">FITNEXA <span>AI</span></a>
-                <h1 class="auth-brand-headline">TRAIN<br><span>SMARTER.</span></h1>
-                <p class="auth-brand-sub">Your AI-powered personal trainer that adapts to your goals, performance and recovery.</p>
-            </div>
+<body>
+
+  <div class="auth-split-wrapper">
+    <!-- ==========================================================================
+         LEFT FORM PANEL
+         ========================================================================== -->
+    <div class="auth-form-column">
+      <!-- Brand Logo Header -->
+      <a href="index.html" class="auth-brand-nav">
+        <div>
+          <div class="auth-brand-title">FITNEXA<span class="text-lime">.</span></div>
+          <div class="auth-brand-tagline">Train Smarter. Be Stronger.</div>
+        </div>
+      </a>
+
+      <!-- Form Container -->
+      <div class="auth-form-container">
+        <h1 class="auth-heading">Welcome back.</h1>
+        <p class="auth-subheading">Log in to continue your training.</p>
+
+        <!-- Global Alert Banner -->
+        <div id="loginError" class="auth-alert-banner">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <span id="loginErrorText">Invalid email or password</span>
         </div>
 
-        <!-- Right: Form -->
-        <div class="auth-form-side">
-            <div class="auth-form-container sparta-spec-panel hud-corner-bracket p-4 p-md-5">
-                <a href="index.html" class="auth-logo d-lg-none mb-4 d-block">FITNEXA <span>AI</span></a>
-                <div class="spec-badge-gold mb-2" style="width:fit-content;font-size:0.68rem;"><i class="bi bi-shield-lock-fill me-1"></i> SECURE ATHLETE PORTAL</div>
-                <h2 class="auth-title mt-2">Welcome Back</h2>
-                <p class="auth-subtitle">Log in to your fitness command center.</p>
-
-                <div id="loginError" class="auth-error" style="display:none;"></div>
-
-                <form id="loginForm" class="auth-form" novalidate>
-                    <div class="form-group">
-                        <label for="loginEmail" class="form-label-custom">Email Address</label>
-                        <input type="email" id="loginEmail" class="form-input-custom" placeholder="you@email.com" required autocomplete="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword" class="form-label-custom">Password</label>
-                        <input type="password" id="loginPassword" class="form-input-custom" placeholder="••••••••" required autocomplete="current-password">
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <label class="form-check-custom">
-                            <input type="checkbox" id="rememberMe"> <span>Remember me</span>
-                        </label>
-                        <a href="forgot-password.html" class="auth-link">Forgot password?</a>
-                    </div>
-                    <button type="submit" class="btn-gold-glow w-100" id="loginBtn">
-                        LOG IN <span class="btn-arrow"><i class="bi bi-arrow-right"></i></span>
-                    </button>
-                </form>
-
-                <div class="auth-divider"><span>or</span></div>
-
-                <div class="auth-demo-section">
-                    <p class="text-label mb-3" style="color:var(--gold-metallic);"><i class="bi bi-person-badge me-1"></i> QUICK DEMO ACCESS</p>
-                    <button class="btn-sparta-outline w-100 mb-2" id="demoAlex" style="padding:12px 20px;font-size:0.8rem;">
-                        <i class="bi bi-person-fill me-2 text-warning"></i> Alex Mercer — Strength Focus
-                    </button>
-                    <button class="btn-sparta-outline w-100" id="demoSarah" style="padding:12px 20px;font-size:0.8rem;">
-                        <i class="bi bi-person-fill me-2 text-info"></i> Sarah Connor — Fat Loss Focus
-                    </button>
-                </div>
-
-                <p class="auth-footer-text mt-4">
-                    Don't have an account? <a href="signup.html" class="auth-link">Create one</a>
-                </p>
+        <form id="loginForm" novalidate>
+          <!-- Email Field -->
+          <div class="form-group-custom">
+            <label for="loginEmail" class="form-label-custom">Email address</label>
+            <div class="input-icon-wrap">
+              <i class="bi bi-envelope-fill input-leading-icon"></i>
+              <input type="email" id="loginEmail" class="form-input-custom" placeholder="Email address" required autocomplete="email">
             </div>
+            <div class="form-field-error" id="emailError"></div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group-custom">
+            <label for="loginPassword" class="form-label-custom">Password</label>
+            <div class="input-icon-wrap">
+              <i class="bi bi-lock-fill input-leading-icon"></i>
+              <input type="password" id="loginPassword" class="form-input-custom" placeholder="Password" required autocomplete="current-password">
+              <button type="button" class="password-toggle-btn" data-target="loginPassword" aria-label="Show password">
+                <i class="bi bi-eye-fill"></i>
+              </button>
+            </div>
+            <div class="form-field-error" id="passwordError"></div>
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <label class="custom-checkbox-row">
+              <input type="checkbox" id="rememberMe">
+              <span class="custom-checkbox-box"><i class="bi bi-check-lg"></i></span>
+              <span>Remember me</span>
+            </label>
+            <a href="forgot-password.html" class="text-muted small hover-lime">Forgot password?</a>
+          </div>
+
+          <!-- Submit CTA -->
+          <button type="submit" class="btn-fitnexa btn-accent w-100 py-3 mb-3" id="loginBtn">
+            Log In <i class="bi bi-arrow-right"></i>
+          </button>
+        </form>
+
+        <!-- Social Divider -->
+        <div class="auth-divider-line">or continue with</div>
+
+        <!-- Social Buttons -->
+        <div class="social-btns-grid">
+          <button type="button" class="btn-social-outline" id="demoAlex">
+            <i class="bi bi-google"></i> Continue with Google
+          </button>
+          <button type="button" class="btn-social-outline" id="demoSarah">
+            <i class="bi bi-apple"></i> Continue with Apple
+          </button>
         </div>
+
+        <!-- Signup Prompt Link -->
+        <div class="text-center mt-4 small text-secondary">
+          Don't have an account? <a href="signup.html" class="text-lime fw-bold">Sign up</a>
+        </div>
+      </div>
     </div>
 
-    <script src="js/data-store.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="js/three-core.js"></script>
-    <script src="js/motion-fx.js"></script>
-    <script src="js/app-motion.js"></script>
-    <script>
-    (function() {
-        'use strict';
-        // Redirect if already logged in
-        if (window.Auth && window.Auth.redirectIfAuth('dashboard.html')) return;
+    <!-- ==========================================================================
+         RIGHT VISUAL PANEL
+         ========================================================================== -->
+    <div class="auth-visual-column d-none d-lg-flex">
+      <img src="assets/images/workout-muscle.jpg" alt="FITNEXA Athlete Training" class="auth-visual-bg">
+      <div class="auth-visual-overlay"></div>
 
-        const form = document.getElementById('loginForm');
-        const errorBox = document.getElementById('loginError');
+      <div class="auth-visual-content">
+        <!-- Brand Quote -->
+        <div class="auth-quote-text">
+          "Discipline today<br><span class="auth-quote-accent">A stronger tomorrow.</span>"
+        </div>
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            errorBox.style.display = 'none';
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
+        <!-- Floating Glass Stat Card -->
+        <div class="auth-stat-card">
+          <div class="auth-stat-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <div>
+            <div class="auth-stat-num">10K+</div>
+            <div class="auth-stat-lbl">People already transforming with FITNEXA</div>
+          </div>
+        </div>
 
-            if (!email || !password) {
-                errorBox.textContent = 'Please enter your email and password.';
-                errorBox.style.display = 'block';
-                return;
-            }
+        <!-- Bottom Taglines -->
+        <div class="auth-footer-taglines mt-2">
+          <span>AI PLANS</span>
+          <span>•</span>
+          <span>REAL COACHES</span>
+          <span>•</span>
+          <span>REAL RESULTS</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            const result = window.Auth.login(email, password);
-            if (result.success) {
-                const user = result.user;
-                // Check if onboarding is needed (new users with no workout history and default profile)
-                const params = new URLSearchParams(window.location.search);
-                const returnUrl = params.get('returnUrl');
-                window.location.href = returnUrl ? decodeURIComponent(returnUrl) : 'dashboard.html';
-            } else {
-                errorBox.textContent = result.message;
-                errorBox.style.display = 'block';
-            }
-        });
+  <!-- GSAP 3.12.5 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Existing Auth Logic (Preserved Untouched) -->
+  <script src="assets/js/data-store.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <!-- Presentation & Animation Layer -->
+  <script src="assets/js/auth-ui.js"></script>
+  <script src="assets/js/animations/auth.js"></script>
 
-        // Demo login buttons
-        document.getElementById('demoAlex').addEventListener('click', function() {
-            window.Auth.setCurrentUser('user_alex_mercer');
-            window.location.href = 'dashboard.html';
-        });
-        document.getElementById('demoSarah').addEventListener('click', function() {
-            window.Auth.setCurrentUser('user_sarah_connor');
-            window.location.href = 'dashboard.html';
-        });
+  <!-- Login Form Handler (Using Existing Auth Engine) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      // Only auto-redirect if not explicitly viewing the page
+      if (window.Auth && window.Auth.isLoggedIn() && urlParams.has('autoredirect')) {
+        window.location.href = 'dashboard/index.html';
+        return;
+      }
 
-        // Initialize 3D AI Core in left branding
-        if (window.Fitnexa3D) {
-            window.authAICore = window.Fitnexa3D.createAICore('#authAICoreCanvas', {
-                size: 420,
-                sphereRadius: 1.35,
-                particlesCount: 85,
-                cameraDistance: 5.0
-            });
+      const form = document.getElementById('loginForm');
+      const emailInput = document.getElementById('loginEmail');
+      const passInput = document.getElementById('loginPassword');
+      const loginBtn = document.getElementById('loginBtn');
+      const errorBanner = document.getElementById('loginError');
+      const errorText = document.getElementById('loginErrorText');
 
-            // React to input focus
-            document.querySelectorAll('.form-input-custom').forEach(input => {
-                input.addEventListener('focus', function() {
-                    if (window.authAICore) {
-                        window.authAICore.pulse(0.6);
-                        window.authAICore.setIntensity(1.6);
-                        if (window.authAICore.setState) window.authAICore.setState('LISTENING');
-                    }
-                });
-                input.addEventListener('blur', function() {
-                    if (window.authAICore) {
-                        window.authAICore.setIntensity(1.0);
-                        if (window.authAICore.setState) window.authAICore.setState('IDLE');
-                    }
-                });
-            });
+      if (!form) return;
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        errorBanner.style.display = 'none';
+
+        const email = emailInput.value.trim();
+        const password = passInput.value.trim();
+
+        if (!email) {
+          window.triggerErrorShake(emailInput);
+          document.getElementById('emailError').innerText = 'Please enter your email address.';
+          return;
+        } else {
+          document.getElementById('emailError').innerText = '';
         }
-    })();
-    </script>
+
+        if (!password) {
+          window.triggerErrorShake(passInput);
+          document.getElementById('passwordError').innerText = 'Please enter your password.';
+          return;
+        } else {
+          document.getElementById('passwordError').innerText = '';
+        }
+
+        window.setButtonLoading(loginBtn, 'Authenticating...');
+
+        setTimeout(() => {
+          if (window.Auth) {
+            const res = window.Auth.login(email, password);
+            if (res && res.success) {
+              window.location.href = 'dashboard/index.html';
+            } else {
+              window.resetButtonLoading(loginBtn);
+              errorBanner.style.display = 'flex';
+              errorText.innerText = res ? res.message : 'Invalid credentials. Try Alex Mercer demo.';
+              window.triggerErrorShake(form);
+            }
+          } else {
+            window.location.href = 'dashboard/index.html';
+          }
+        }, 600);
+      });
+    });
+  </script>
 </body>
 </html>

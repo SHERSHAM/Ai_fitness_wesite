@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Dashboard — FITNEXA AI</title>
+  <meta name="description" content="Personal AI athletic telemetry and training protocol dashboard.">
+  <meta name="theme-color" content="#0B0C0E">
+
+  <!-- Google Fonts: Outfit, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5.3.3 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- FITNEXA Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/dashboard.css">
+</head>
+<body>
+
+  <div class="dash-wrapper">
+    <!-- ========================================================================
+         TOP COMMAND BAR (All links interactive)
+         ======================================================================== -->
+    <header class="dash-topbar">
+      <div class="d-flex align-items-center gap-4">
+        <a href="../index.html" class="auth-brand-nav mb-0 text-decoration-none">
+          <div class="auth-brand-title">FITNEXA<span class="text-lime">.</span></div>
+        </a>
+
+        <nav class="dash-nav-links" id="mainNavLinks">
+          <a href="#dashboard" class="dash-nav-link active" data-tab="dashboard">Dashboard</a>
+          <a href="#workouts" class="dash-nav-link" data-tab="workouts">Workouts</a>
+          <a href="#nutrition" class="dash-nav-link" data-tab="nutrition">Nutrition</a>
+          <a href="#analytics" class="dash-nav-link" data-tab="analytics">Analytics</a>
+          <a href="#aicoach" class="dash-nav-link" data-tab="aicoach">AI Coach</a>
+        </nav>
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <!-- Streak Indicator -->
+        <div class="dash-streak-badge">
+          <i class="bi bi-fire text-warning"></i>
+          <span id="streakDisplay">0 Day Streak</span>
+        </div>
+
+        <!-- User Profile Pill -->
+        <div class="dash-user-pill">
+          <div class="dash-user-avatar" id="avatarInitial">A</div>
+          <div>
+            <div class="fw-bold small text-white" id="userDisplayName">Athlete</div>
+            <div class="text-muted font-mono" style="font-size: 0.68rem;" id="userStatusLabel">Pro AI Member</div>
+          </div>
+          <button type="button" class="btn btn-link text-secondary p-0 ms-2 hover-lime" id="logoutBtn" title="Log out">
+            <i class="bi bi-box-arrow-right fs-5"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========================================================================
+         MAIN CONTENT TABS
+         ======================================================================== -->
+    <main class="dash-main-content">
+
+      <!-- ======================================================================
+           TAB 1: MAIN DASHBOARD VIEW
+           ====================================================================== -->
+      <div class="dash-tab-pane active" id="paneDashboard">
+        <!-- Greeting Header -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+          <div>
+            <h1 class="dash-greeting-heading" id="greetingTitle">Good morning, Athlete.</h1>
+            <div class="dash-greeting-date" id="currentDateStr">CALIBRATING PROTOCOL ACTIVE</div>
+          </div>
+          <div class="d-flex gap-2">
+            <a href="../onboarding.html" class="btn-fitnexa btn-outline-lime btn-sm text-decoration-none" id="btnRetunePlan">
+              <i class="bi bi-sliders me-1"></i> Retune Plan
+            </a>
+          </div>
+        </div>
+
+        <!-- 1. Today's Protocol Highlight Card -->
+        <section class="dash-today-card mb-4" id="todayHeroCard">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="dash-badge-protocol">
+              <i class="bi bi-lightning-charge-fill"></i> ACTIVE PROTOCOL // TODAY
+            </span>
+            <span class="badge bg-dark border border-secondary border-opacity-50 text-secondary font-mono" id="todayGoalBadge">
+              AI OPTIMIZED FOR YOUR GOAL
+            </span>
+          </div>
+
+          <h2 class="dash-workout-title" id="todayWorkoutName">Upper Body Power</h2>
+
+          <div class="dash-chips-row">
+            <span class="dash-chip"><i class="bi bi-clock text-warning"></i> <strong id="todayDuration">45</strong> MIN</span>
+            <span class="dash-chip"><i class="bi bi-list-check text-info"></i> <strong id="todayExercises">6</strong> EXERCISES</span>
+            <span class="dash-chip"><i class="bi bi-fire text-danger"></i> <strong id="todayCalories">420</strong> KCAL</span>
+            <span class="dash-chip"><i class="bi bi-shield-check text-lime"></i> READINESS <strong class="text-lime" id="todayReadiness">OPTIMAL</strong></span>
+          </div>
+
+          <div class="d-flex gap-3 flex-wrap">
+            <button type="button" class="btn-fitnexa btn-accent px-4 py-3" id="btnStartWorkout">
+              <i class="bi bi-play-fill me-1"></i> Start Workout
+            </button>
+            <button type="button" class="btn-fitnexa btn-outline-lime px-4 py-3" id="btnPreviewRoutine">
+              <i class="bi bi-eye me-1"></i> Preview Routine
+            </button>
+          </div>
+        </section>
+
+        <!-- 2. Biometric Metrics Grid (6 KPI Cards - Clean 0 for new account) -->
+        <section class="dash-metrics-grid mb-4">
+          <div class="metric-glass-card">
+            <i class="bi bi-graph-up-arrow metric-card-icon"></i>
+            <div>
+              <div class="metric-card-val text-lime" id="statProgress">0%</div>
+              <div class="metric-card-lbl">Weekly Progress</div>
+            </div>
+          </div>
+
+          <div class="metric-glass-card">
+            <i class="bi bi-check2-circle metric-card-icon"></i>
+            <div>
+              <div class="metric-card-val" id="statWorkouts">0 / 4</div>
+              <div class="metric-card-lbl">Workouts Completed</div>
+            </div>
+          </div>
+
+          <div class="metric-glass-card">
+            <i class="bi bi-fire metric-card-icon text-warning"></i>
+            <div>
+              <div class="metric-card-val" id="statCalories">0</div>
+              <div class="metric-card-lbl">Calories Burned</div>
+            </div>
+          </div>
+
+          <div class="metric-glass-card">
+            <i class="bi bi-calendar-week metric-card-icon"></i>
+            <div>
+              <div class="metric-card-val" id="statActiveDays">0</div>
+              <div class="metric-card-lbl">Active Days</div>
+            </div>
+          </div>
+
+          <div class="metric-glass-card">
+            <i class="bi bi-stopwatch metric-card-icon"></i>
+            <div>
+              <div class="metric-card-val" id="statHours">0.0h</div>
+              <div class="metric-card-lbl">Hours Trained</div>
+            </div>
+          </div>
+
+          <div class="metric-glass-card">
+            <i class="bi bi-trophy-fill metric-card-icon" style="color: #FF8F50;"></i>
+            <div>
+              <div class="metric-card-val" id="statStreak">0 Days</div>
+              <div class="metric-card-lbl">Current Streak</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Performance Chart & AI Recommendation -->
+        <div class="row g-4">
+          <div class="col-12 col-lg-8">
+            <div class="dash-panel h-100">
+              <div class="dash-panel-header">
+                <span class="dash-panel-title">
+                  <i class="bi bi-activity"></i> VOLUME & PERFORMANCE MATRIX
+                </span>
+                <div class="d-flex gap-3 small font-mono">
+                  <span class="text-lime"><i class="bi bi-circle-fill me-1" style="font-size: 0.4rem;"></i> Strength Gain</span>
+                  <span class="text-info"><i class="bi bi-circle-fill me-1" style="font-size: 0.4rem;"></i> Endurance Gain</span>
+                </div>
+              </div>
+
+              <div id="chartContainer" style="position: relative;">
+                <svg viewBox="0 0 800 220" preserveAspectRatio="none" class="dash-chart-svg">
+                  <defs>
+                    <linearGradient id="limeGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(198, 255, 61, 0.35)"/>
+                      <stop offset="100%" stop-color="rgba(198, 255, 61, 0.0)"/>
+                    </linearGradient>
+                  </defs>
+                  <line x1="0" y1="55" x2="800" y2="55" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                  <line x1="0" y1="110" x2="800" y2="110" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                  <line x1="0" y1="165" x2="800" y2="165" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+                  <!-- Dynamic SVG Path filled by JS -->
+                  <path id="chartArea" d="M0,210 L800,210 Z" fill="url(#limeGrad)"/>
+                  <path id="chartLine" d="M0,210 L800,210" fill="none" stroke="var(--accent-lime)" stroke-width="3"/>
+                </svg>
+
+                <div id="emptyChartNotice" class="text-center py-4 text-secondary small font-mono">
+                  <i class="bi bi-reception-1 text-muted me-1"></i> Awaiting first logged session to render progression matrix.
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between text-muted small font-mono mt-2">
+                <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span><span>PEAK</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-4">
+            <!-- AI Coach Recommendation Card -->
+            <div class="dash-panel mb-4">
+              <div class="dash-panel-header">
+                <span class="dash-panel-title" style="color: var(--accent-violet);">
+                  <i class="bi bi-stars"></i> AI BIOMETRIC COACH
+                </span>
+                <span class="badge bg-success bg-opacity-25 text-lime border border-success border-opacity-50 font-mono small" id="coachReadinessBadge">
+                  OPTIMAL
+                </span>
+              </div>
+
+              <div class="ai-coach-msg-box" id="aiMessage">
+                "Welcome to Fitnexa AI! Your baseline profile is ready. Start your first session today to calibrate training intensity."
+              </div>
+
+              <button type="button" class="btn-fitnexa btn-accent w-100 py-2 mb-2" id="btnAcceptProtocol">
+                <i class="bi bi-check-circle me-1"></i> Accept Protocol
+              </button>
+              <button type="button" class="btn btn-outline-secondary w-100 py-2 small text-light border-opacity-25" id="btnChatCoach">
+                <i class="bi bi-chat-dots me-1"></i> Ask AI Coach
+              </button>
+            </div>
+
+            <!-- Recent Workouts Mini List -->
+            <div class="dash-panel">
+              <div class="dash-panel-header">
+                <span class="dash-panel-title">
+                  <i class="bi bi-clock-history"></i> RECENT PROTOCOLS
+                </span>
+                <a href="#workouts" class="small text-lime text-decoration-none" id="linkViewAllWorkouts">View All →</a>
+              </div>
+
+              <div id="recentWorkoutsList">
+                <div class="text-center py-4 text-secondary small font-mono" id="emptyWorkoutsNotice">
+                  <i class="bi bi-calendar-x fs-3 d-block mb-2 text-muted"></i>
+                  No workouts recorded yet.<br>Click "Start Workout" above to log your first session!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           TAB 2: WORKOUTS LIBRARY VIEW
+           ====================================================================== -->
+      <div class="dash-tab-pane" id="paneWorkouts">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+          <div>
+            <h1 class="dash-greeting-heading">Workout Catalog</h1>
+            <p class="text-secondary mb-0">Sports-science training protocols calibrated for your physiology.</p>
+          </div>
+          <div style="max-width: 320px; width: 100%;">
+            <div class="input-icon-wrap">
+              <i class="bi bi-search input-leading-icon"></i>
+              <input type="text" id="workoutSearchInput" class="form-input-custom" placeholder="Search exercises, goals...">
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Pills -->
+        <div class="filter-pills-row" id="workoutFilterPills">
+          <button type="button" class="filter-pill active" data-filter="all">All Protocols</button>
+          <button type="button" class="filter-pill" data-filter="Strength">Strength</button>
+          <button type="button" class="filter-pill" data-filter="Muscle Building">Muscle</button>
+          <button type="button" class="filter-pill" data-filter="Fat Loss">Fat Loss</button>
+          <button type="button" class="filter-pill" data-filter="HIIT">HIIT</button>
+          <button type="button" class="filter-pill" data-filter="Endurance">Endurance</button>
+          <button type="button" class="filter-pill" data-filter="Mobility">Mobility</button>
+        </div>
+
+        <!-- Catalog Grid -->
+        <div class="workouts-catalog-grid" id="workoutsCatalogGrid">
+          <!-- Dynamically populated from DataStore -->
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           TAB 3: NUTRITION PLAN VIEW
+           ====================================================================== -->
+      <div class="dash-tab-pane" id="paneNutrition">
+        <div class="mb-4">
+          <h1 class="dash-greeting-heading">Personalized Nutrition Plan</h1>
+          <p class="text-secondary mb-0">Daily calorie and macronutrient targets calibrated to your fitness goal.</p>
+        </div>
+
+        <!-- Macro Rings Overview -->
+        <div class="macro-rings-grid">
+          <div class="macro-ring-card">
+            <div class="text-muted small font-mono mb-2">CALORIE TARGET</div>
+            <div class="macro-val text-lime" id="nutriCalories">2,300</div>
+            <div class="text-secondary small">kcal / day</div>
+          </div>
+          <div class="macro-ring-card">
+            <div class="text-muted small font-mono mb-2">PROTEIN</div>
+            <div class="macro-val" style="color: #00D4FF;" id="nutriProtein">165g</div>
+            <div class="text-secondary small">Muscle Synthesis</div>
+          </div>
+          <div class="macro-ring-card">
+            <div class="text-muted small font-mono mb-2">CARBOHYDRATES</div>
+            <div class="macro-val" style="color: #FFAA2B;" id="nutriCarbs">240g</div>
+            <div class="text-secondary small">Glycogen Energy</div>
+          </div>
+          <div class="macro-ring-card">
+            <div class="text-muted small font-mono mb-2">HEALTHY FATS</div>
+            <div class="macro-val" style="color: #C084FC;" id="nutriFats">65g</div>
+            <div class="text-secondary small">Hormonal Health</div>
+          </div>
+        </div>
+
+        <!-- Meals Breakdown -->
+        <div class="dash-panel">
+          <div class="dash-panel-header">
+            <span class="dash-panel-title"><i class="bi bi-egg-fried"></i> RECOMMENDED DAILY MEAL BLUEPRINT</span>
+            <span class="badge bg-dark border border-secondary border-opacity-50 text-lime font-mono">100% BALANCED</span>
+          </div>
+
+          <div id="mealsListContainer">
+            <!-- Meal Items -->
+            <div class="meal-plan-card">
+              <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-dark text-lime border border-lime p-2 font-mono">BREAKFAST</span>
+                <div>
+                  <div class="fw-bold text-white">Power Oatmeal & Whey Protein Bowl</div>
+                  <div class="text-secondary small">Rolled oats, almond milk, blueberries, chia seeds & isolate</div>
+                </div>
+              </div>
+              <div class="text-end font-mono">
+                <span class="text-white fw-bold">480 kcal</span>
+                <div class="text-muted small">38g P • 58g C • 9g F</div>
+              </div>
+            </div>
+
+            <div class="meal-plan-card">
+              <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-dark text-lime border border-lime p-2 font-mono">LUNCH</span>
+                <div>
+                  <div class="fw-bold text-white">Grilled Chicken & Quinoa Harvest Bowl</div>
+                  <div class="text-secondary small">Chicken breast, avocado, baby spinach, roasted sweet potato</div>
+                </div>
+              </div>
+              <div class="text-end font-mono">
+                <span class="text-white fw-bold">660 kcal</span>
+                <div class="text-muted small">52g P • 64g C • 18g F</div>
+              </div>
+            </div>
+
+            <div class="meal-plan-card">
+              <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-dark text-lime border border-lime p-2 font-mono">DINNER</span>
+                <div>
+                  <div class="fw-bold text-white">Wild Salmon with Asparagus & Jasmine Rice</div>
+                  <div class="text-secondary small">Atlantic salmon, steamed green beans, virgin olive oil</div>
+                </div>
+              </div>
+              <div class="text-end font-mono">
+                <span class="text-white fw-bold">720 kcal</span>
+                <div class="text-muted small">48g P • 56g C • 24g F</div>
+              </div>
+            </div>
+
+            <div class="meal-plan-card">
+              <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-dark text-lime border border-lime p-2 font-mono">POST-WORKOUT</span>
+                <div>
+                  <div class="fw-bold text-white">Greek Yogurt & Honey Nut Parfait</div>
+                  <div class="text-secondary small">0% Fat greek yogurt, walnuts, honey, sliced banana</div>
+                </div>
+              </div>
+              <div class="text-end font-mono">
+                <span class="text-white fw-bold">340 kcal</span>
+                <div class="text-muted small">27g P • 36g C • 8g F</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           TAB 4: ANALYTICS VIEW
+           ====================================================================== -->
+      <div class="dash-tab-pane" id="paneAnalytics">
+        <div class="mb-4">
+          <h1 class="dash-greeting-heading">Biometric Performance Analytics</h1>
+          <p class="text-secondary mb-0">Real-time physiological trends, volume load, and recovery indexing.</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-12 col-md-6">
+            <div class="dash-panel h-100">
+              <div class="dash-panel-title mb-3"><i class="bi bi-shield-shaded"></i> ADAPTATION INDEX</div>
+              
+              <div class="mb-3">
+                <div class="d-flex justify-content-between small font-mono mb-1">
+                  <span>Strength Adaptation</span>
+                  <span class="text-lime" id="anaStrength">0%</span>
+                </div>
+                <div class="progress" style="height: 6px; background: rgba(255,255,255,0.08);">
+                  <div class="progress-bar bg-lime" id="barStrength" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex justify-content-between small font-mono mb-1">
+                  <span>Endurance Capacity</span>
+                  <span class="text-info" id="anaEndurance">0%</span>
+                </div>
+                <div class="progress" style="height: 6px; background: rgba(255,255,255,0.08);">
+                  <div class="progress-bar bg-info" id="barEndurance" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex justify-content-between small font-mono mb-1">
+                  <span>Consistency Score</span>
+                  <span class="text-warning" id="anaConsistency">0%</span>
+                </div>
+                <div class="progress" style="height: 6px; background: rgba(255,255,255,0.08);">
+                  <div class="progress-bar bg-warning" id="barConsistency" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="d-flex justify-content-between small font-mono mb-1">
+                  <span>Central Recovery Readiness</span>
+                  <span class="text-white" id="anaRecovery">90%</span>
+                </div>
+                <div class="progress" style="height: 6px; background: rgba(255,255,255,0.08);">
+                  <div class="progress-bar bg-light" id="barRecovery" style="width: 90%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="dash-panel h-100">
+              <div class="dash-panel-title mb-3"><i class="bi bi-calendar3"></i> WEEKLY TRAINING DISTRIBUTION</div>
+              <div class="p-3 glass-panel text-center py-5">
+                <div class="display-6 fw-bold text-lime mb-2" id="anaCompletedCount">0</div>
+                <div class="text-muted small font-mono uppercase">Sessions Logged This Week</div>
+                <p class="text-secondary small mt-3 mb-0" id="anaSummaryText">
+                  Complete workouts from the catalog to build your biometric telemetry.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           TAB 5: AI COACH VIEW (Interactive Live Chat)
+           ====================================================================== -->
+      <div class="dash-tab-pane" id="paneAicoach">
+        <div class="mb-4">
+          <h1 class="dash-greeting-heading">Fitnexa AI Coach Terminal</h1>
+          <p class="text-secondary mb-0">Real-time coaching, biomechanics correction, and adaptive programming.</p>
+        </div>
+
+        <div class="coach-chat-container">
+          <div class="coach-chat-header">
+            <div class="d-flex align-items-center gap-3">
+              <div class="dash-user-avatar" style="background: rgba(124, 92, 255, 0.2); color: var(--accent-violet); border-color: var(--accent-violet);">
+                <i class="bi bi-cpu-fill"></i>
+              </div>
+              <div>
+                <div class="fw-bold text-white small">FITNEXA AI Core</div>
+                <div class="text-lime font-mono" style="font-size: 0.7rem;"><i class="bi bi-circle-fill me-1" style="font-size: 0.4rem;"></i> ONLINE & CALIBRATING</div>
+              </div>
+            </div>
+            <div class="font-mono text-muted small">GPT-4o Sports Engine</div>
+          </div>
+
+          <!-- Chat Messages Container -->
+          <div class="coach-chat-messages" id="coachChatMessages">
+            <div class="chat-bubble ai">
+              Hello! I am your FITNEXA AI personal coach. I track your workouts, calibrate training intensity, and optimize your nutrition. How can I help you conquer today's training?
+            </div>
+          </div>
+
+          <!-- Quick Prompts Row -->
+          <div class="px-4 py-2 d-flex gap-2 flex-wrap border-top border-secondary border-opacity-25" style="background: rgba(14, 16, 20, 0.6);">
+            <button type="button" class="btn btn-sm btn-outline-secondary border-opacity-50 text-light quick-prompt-btn" data-msg="What should I eat before my workout today?">
+              Pre-workout nutrition?
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary border-opacity-50 text-light quick-prompt-btn" data-msg="How can I optimize my bench press and shoulder stability?">
+              Form tips?
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary border-opacity-50 text-light quick-prompt-btn" data-msg="Can you adapt my plan to prioritize fat loss?">
+              Prioritize fat loss?
+            </button>
+          </div>
+
+          <!-- Input Row -->
+          <form class="coach-chat-input-row" id="coachChatForm">
+            <input type="text" id="chatInputText" class="form-input-custom" placeholder="Ask your AI Coach about training, form, recovery, or meals..." required autocomplete="off">
+            <button type="submit" class="btn-fitnexa btn-accent px-4">
+              Send <i class="bi bi-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 1: ACTIVE WORKOUT SESSION (Live Tracker)
+       ======================================================================== -->
+  <div class="dash-modal-backdrop" id="workoutModal">
+    <div class="dash-modal-dialog">
+      <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary border-opacity-25 pb-3">
+        <div>
+          <span class="dash-badge-protocol mb-1"><i class="bi bi-record-circle text-danger me-1"></i> LIVE SESSION</span>
+          <h2 class="auth-heading fs-3 mb-0" id="sessionWorkoutTitle">Upper Body Power</h2>
+        </div>
+        <div class="text-end font-mono">
+          <div class="display-6 fw-bold text-lime" id="workoutTimerDisplay">00:00</div>
+          <div class="text-muted small">ELAPSED TIME</div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="dash-panel-title mb-3"><i class="bi bi-list-task"></i> EXERCISE PROTOCOL CHECKLIST</h3>
+        <div id="sessionExercisesList">
+          <!-- Exercise Check Items -->
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center gap-3 pt-3 border-top border-secondary border-opacity-25">
+        <button type="button" class="btn btn-outline-secondary text-light px-4 py-3" id="btnCancelWorkout">
+          Cancel Session
+        </button>
+        <button type="button" class="btn-fitnexa btn-accent px-4 py-3" id="btnFinishWorkout">
+          <i class="bi bi-check-circle-fill me-1"></i> Finish Workout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: PREVIEW ROUTINE (Details Breakdown)
+       ======================================================================== -->
+  <div class="dash-modal-backdrop" id="previewModal">
+    <div class="dash-modal-dialog">
+      <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary border-opacity-25 pb-3">
+        <div>
+          <span class="spec-badge-gold mb-1"><i class="bi bi-journal-text me-1"></i> ROUTINE BLUEPRINT</span>
+          <h2 class="auth-heading fs-3 mb-0" id="previewWorkoutTitle">Upper Body Power</h2>
+        </div>
+        <button type="button" class="btn-close btn-close-white" id="btnClosePreview" aria-label="Close"></button>
+      </div>
+
+      <div class="d-flex gap-3 mb-4 font-mono small text-secondary">
+        <span><i class="bi bi-clock text-warning"></i> <span id="previewDuration">45</span> Min</span>
+        <span>•</span>
+        <span><i class="bi bi-fire text-danger"></i> <span id="previewCalories">420</span> kcal</span>
+        <span>•</span>
+        <span><i class="bi bi-speedometer2 text-lime"></i> <span id="previewDifficulty">Intermediate</span></span>
+      </div>
+
+      <div id="previewExercisesList">
+        <!-- Filled by JS -->
+      </div>
+
+      <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-end">
+        <button type="button" class="btn-fitnexa btn-accent px-4 py-2" id="btnPreviewStartNow">
+          Start This Protocol <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Alert -->
+  <div class="dash-toast" id="dashToast">
+    <i class="bi bi-check-circle-fill text-lime fs-5"></i>
+    <span id="dashToastText">Notification text</span>
+  </div>
+
+  <!-- ========================================================================
+       SCRIPTS & DASHBOARD INTERACTIVITY LOGIC
+       ======================================================================== -->
+  <script src="../assets/js/data-store.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // ----------------------------------------------------------------------
+      // 1. Athlete User Resolution & Fresh Account Detection
+      // ----------------------------------------------------------------------
+      let user = null;
+      if (window.Auth && window.Auth.getCurrentUser) {
+        user = window.Auth.getCurrentUser();
+      }
+
+      // If no user exists (e.g. direct visit), create a clean fresh account
+      if (!user) {
+        user = {
+          id: 'guest_' + Date.now(),
+          fullName: 'Athlete',
+          email: 'athlete@fitnexa.ai',
+          profile: { fitnessGoal: 'Lose Fat', todayWorkoutId: 'upper-body-power', trainingDays: 4 },
+          dashboardStats: {
+            weeklyProgressPercent: 0,
+            workoutsCompleted: 0,
+            workoutsTarget: 4,
+            caloriesBurned: 0,
+            activeDays: 0,
+            hoursTrained: 0,
+            activeStreakDays: 0,
+            strengthGainPercent: 0,
+            enduranceGainPercent: 0,
+            consistencyPercent: 0
+          },
+          workoutHistory: []
+        };
+      }
+
+      // Ensure that if user has never logged a workout, all stats are strictly 0
+      if (!user.workoutHistory || user.workoutHistory.length === 0) {
+        if (!user.dashboardStats) user.dashboardStats = {};
+        user.dashboardStats.workoutsCompleted = 0;
+        user.dashboardStats.weeklyProgressPercent = 0;
+        user.dashboardStats.caloriesBurned = 0;
+        user.dashboardStats.activeDays = 0;
+        user.dashboardStats.hoursTrained = 0;
+        user.dashboardStats.activeStreakDays = 0;
+        user.dashboardStats.strengthGainPercent = 0;
+        user.dashboardStats.enduranceGainPercent = 0;
+        user.dashboardStats.consistencyPercent = 0;
+      }
+
+      // Populate Header & Profile
+      const firstName = user.fullName ? user.fullName.split(' ')[0] : 'Athlete';
+      document.getElementById('greetingTitle').innerText = `Good morning, ${firstName}.`;
+      document.getElementById('userDisplayName').innerText = user.fullName || 'Athlete';
+      document.getElementById('avatarInitial').innerText = (user.fullName || 'A').charAt(0).toUpperCase();
+
+      const dateOpts = { weekday: 'long', month: 'short', day: 'numeric' };
+      document.getElementById('currentDateStr').innerText = `${new Date().toLocaleDateString('en-US', dateOpts).toUpperCase()} • PROTOCOL ACTIVE`;
+
+      // ----------------------------------------------------------------------
+      // 2. Render Metrics & KPIs
+      // ----------------------------------------------------------------------
+      function updateDashboardStats() {
+        const ds = user.dashboardStats || {};
+        const completed = ds.workoutsCompleted !== undefined ? ds.workoutsCompleted : 0;
+        const target = ds.workoutsTarget || 4;
+        const progress = ds.weeklyProgressPercent !== undefined ? ds.weeklyProgressPercent : 0;
+        const calories = ds.caloriesBurned !== undefined ? ds.caloriesBurned : 0;
+        const days = ds.activeDays !== undefined ? ds.activeDays : 0;
+        const hours = ds.hoursTrained !== undefined ? ds.hoursTrained : 0;
+        const streak = ds.activeStreakDays !== undefined ? ds.activeStreakDays : 0;
+
+        document.getElementById('statProgress').innerText = `${progress}%`;
+        document.getElementById('statWorkouts').innerText = `${completed} / ${target}`;
+        document.getElementById('statCalories').innerText = calories.toLocaleString();
+        document.getElementById('statActiveDays').innerText = days;
+        document.getElementById('statHours').innerText = `${Number(hours).toFixed(1)}h`;
+        document.getElementById('statStreak').innerText = `${streak} Days`;
+        document.getElementById('streakDisplay').innerText = `${streak} Day Streak`;
+
+        // Analytics Pane
+        document.getElementById('anaStrength').innerText = `+${ds.strengthGainPercent || 0}%`;
+        document.getElementById('barStrength').style.width = `${Math.min(100, (ds.strengthGainPercent || 0) * 3)}%`;
+
+        document.getElementById('anaEndurance').innerText = `+${ds.enduranceGainPercent || 0}%`;
+        document.getElementById('barEndurance').style.width = `${Math.min(100, (ds.enduranceGainPercent || 0) * 3)}%`;
+
+        document.getElementById('anaConsistency').innerText = `${ds.consistencyPercent || 0}%`;
+        document.getElementById('barConsistency').style.width = `${ds.consistencyPercent || 0}%`;
+
+        document.getElementById('anaCompletedCount').innerText = completed;
+
+        // Render Recent Protocols List
+        renderRecentWorkouts();
+        // Render Chart
+        renderPerformanceChart();
+      }
+
+      function renderRecentWorkouts() {
+        const list = document.getElementById('recentWorkoutsList');
+        if (!user.workoutHistory || user.workoutHistory.length === 0) {
+          list.innerHTML = `
+            <div class="text-center py-4 text-secondary small font-mono" id="emptyWorkoutsNotice">
+              <i class="bi bi-calendar-x fs-3 d-block mb-2 text-muted"></i>
+              No workouts recorded yet.<br>Click "Start Workout" above to log your first session!
+            </div>`;
+          return;
+        }
+
+        list.innerHTML = user.workoutHistory.slice(0, 5).map(item => `
+          <div class="history-item">
+            <div>
+              <div class="history-name">${item.workoutName}</div>
+              <div class="history-date">${item.date} • ${item.duration}</div>
+            </div>
+            <div class="history-score-badge">${item.formScore || 95}% Form</div>
+          </div>
+        `).join('');
+      }
+
+      function renderPerformanceChart() {
+        const notice = document.getElementById('emptyChartNotice');
+        const chartArea = document.getElementById('chartArea');
+        const chartLine = document.getElementById('chartLine');
+
+        if (!user.workoutHistory || user.workoutHistory.length === 0) {
+          if (notice) notice.style.display = 'block';
+          if (chartArea) chartArea.setAttribute('d', 'M0,210 L800,210 Z');
+          if (chartLine) chartLine.setAttribute('d', 'M0,210 L800,210');
+        } else {
+          if (notice) notice.style.display = 'none';
+          // Render progression wave
+          if (chartArea) chartArea.setAttribute('d', 'M0,190 L114,145 L228,160 L342,110 L456,95 L570,60 L684,45 L800,30 L800,220 L0,220 Z');
+          if (chartLine) chartLine.setAttribute('d', 'M0,190 L114,145 L228,160 L342,110 L456,95 L570,60 L684,45 L800,30');
+        }
+      }
+
+      updateDashboardStats();
+
+      // ----------------------------------------------------------------------
+      // 3. Resolve Today's Workout
+      // ----------------------------------------------------------------------
+      let activeWorkout = null;
+      if (window.DataStore && window.DataStore.getWorkoutById) {
+        const workoutId = (user.profile && user.profile.todayWorkoutId) || 'upper-body-power';
+        activeWorkout = window.DataStore.getWorkoutById(workoutId);
+      }
+
+      if (!activeWorkout) {
+        activeWorkout = {
+          id: 'upper-body-power',
+          name: 'Upper Body Power',
+          duration: 45,
+          calories: 420,
+          difficulty: 'Intermediate',
+          exercises: [
+            { name: 'Barbell Bench Press', sets: 4, reps: '8-10', rest: '90s', formCue: 'Retract scapulae and pin shoulders.' },
+            { name: 'Incline Dumbbell Press', sets: 3, reps: '10-12', rest: '60s', formCue: 'Control the eccentric descent.' },
+            { name: 'Bent-Over Barbell Row', sets: 4, reps: '8-10', rest: '90s', formCue: 'Squeeze rhomboids at peak contraction.' },
+            { name: 'Overhead Dumbbell Press', sets: 3, reps: '10-12', rest: '60s', formCue: 'Brace core to protect lumbar spine.' },
+            { name: 'Dumbbell Lateral Raises', sets: 4, reps: '12-15', rest: '45s', formCue: 'Lead with elbows to 90 degrees.' },
+            { name: 'Tricep Rope Pushdowns', sets: 3, reps: '12-15', rest: '45s', formCue: 'Flare rope outward at bottom lockout.' }
+          ]
+        };
+      }
+
+      document.getElementById('todayWorkoutName').innerText = activeWorkout.name;
+      document.getElementById('todayDuration').innerText = activeWorkout.duration;
+      document.getElementById('todayExercises').innerText = activeWorkout.exercises ? activeWorkout.exercises.length : 6;
+      document.getElementById('todayCalories').innerText = activeWorkout.calories;
+
+      // ----------------------------------------------------------------------
+      // 4. Tab Navigation (All Navbar Elements Working)
+      // ----------------------------------------------------------------------
+      const navLinks = document.querySelectorAll('.dash-nav-link');
+      const tabPanes = document.querySelectorAll('.dash-tab-pane');
+
+      function switchTab(tabKey) {
+        navLinks.forEach(link => {
+          if (link.getAttribute('data-tab') === tabKey) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+
+        tabPanes.forEach(pane => {
+          const paneId = 'pane' + tabKey.charAt(0).toUpperCase() + tabKey.slice(1);
+          if (pane.id.toLowerCase() === paneId.toLowerCase()) {
+            pane.classList.add('active');
+          } else {
+            pane.classList.remove('active');
+          }
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetTab = link.getAttribute('data-tab');
+          switchTab(targetTab);
+        });
+      });
+
+      // Quick tab shortcut links
+      const linkViewAllWorkouts = document.getElementById('linkViewAllWorkouts');
+      if (linkViewAllWorkouts) {
+        linkViewAllWorkouts.addEventListener('click', (e) => {
+          e.preventDefault();
+          switchTab('workouts');
+        });
+      }
+
+      const btnChatCoach = document.getElementById('btnChatCoach');
+      if (btnChatCoach) {
+        btnChatCoach.addEventListener('click', () => {
+          switchTab('aicoach');
+        });
+      }
+
+      // ----------------------------------------------------------------------
+      // 5. Workouts Catalog Rendering & Filters
+      // ----------------------------------------------------------------------
+      const catalogGrid = document.getElementById('workoutsCatalogGrid');
+      const filterPills = document.querySelectorAll('.filter-pill');
+      const searchInput = document.getElementById('workoutSearchInput');
+
+      let allWorkouts = (window.DataStore && window.DataStore.getWorkouts) ? window.DataStore.getWorkouts() : [activeWorkout];
+
+      function renderCatalog(category = 'all', query = '') {
+        let list = allWorkouts;
+        if (category !== 'all') {
+          list = list.filter(w => (w.category && w.category.toLowerCase().includes(category.toLowerCase())) || (w.goal && w.goal.toLowerCase().includes(category.toLowerCase())));
+        }
+        if (query.trim()) {
+          const q = query.toLowerCase();
+          list = list.filter(w => w.name.toLowerCase().includes(q) || (w.category && w.category.toLowerCase().includes(q)));
+        }
+
+        if (list.length === 0) {
+          catalogGrid.innerHTML = `
+            <div class="col-12 text-center py-5 text-secondary">
+              <i class="bi bi-search fs-3 d-block mb-2"></i>
+              No protocols found matching "${query}". Try another keyword.
+            </div>`;
+          return;
+        }
+
+        catalogGrid.innerHTML = list.map(w => `
+          <div class="workout-catalog-card">
+            <div class="workout-card-img-wrap">
+              <img src="../assets/images/workout-muscle.jpg" alt="${w.name}" class="workout-card-img">
+              <span class="badge bg-dark bg-opacity-75 text-lime border border-lime position-absolute top-0 start-0 m-3 font-mono" style="font-size: 0.72rem;">
+                ${w.category || 'Strength'}
+              </span>
+            </div>
+            <div class="workout-card-body">
+              <div>
+                <h3 class="auth-heading fs-5 mb-2">${w.name}</h3>
+                <div class="d-flex gap-3 text-secondary small font-mono mb-3">
+                  <span><i class="bi bi-clock text-warning me-1"></i>${w.duration} min</span>
+                  <span><i class="bi bi-fire text-danger me-1"></i>${w.calories} kcal</span>
+                  <span><i class="bi bi-speedometer2 text-info me-1"></i>${w.difficulty}</span>
+                </div>
+              </div>
+              <button type="button" class="btn-fitnexa btn-accent w-100 py-2 mt-2 btn-launch-catalog" data-id="${w.id}">
+                Start Protocol <i class="bi bi-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        // Attach launch listeners
+        document.querySelectorAll('.btn-launch-catalog').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const wId = btn.getAttribute('data-id');
+            const found = allWorkouts.find(w => w.id === wId);
+            if (found) {
+              launchWorkoutSession(found);
+            }
+          });
+        });
+      }
+
+      renderCatalog();
+
+      filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          filterPills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          renderCatalog(pill.getAttribute('data-filter'), searchInput.value);
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const activeFilter = document.querySelector('.filter-pill.active').getAttribute('data-filter');
+          renderCatalog(activeFilter, searchInput.value);
+        });
+      }
+
+      // ----------------------------------------------------------------------
+      // 6. Interactive Active Workout Session Modal & Live Tracking
+      // ----------------------------------------------------------------------
+      const workoutModal = document.getElementById('workoutModal');
+      const btnStartWorkout = document.getElementById('btnStartWorkout');
+      const btnCancelWorkout = document.getElementById('btnCancelWorkout');
+      const btnFinishWorkout = document.getElementById('btnFinishWorkout');
+      const sessionExercisesList = document.getElementById('sessionExercisesList');
+      const timerDisplay = document.getElementById('workoutTimerDisplay');
+
+      let timerInterval = null;
+      let sessionSeconds = 0;
+      let currentSessionWorkout = activeWorkout;
+
+      function launchWorkoutSession(workout) {
+        currentSessionWorkout = workout || activeWorkout;
+        document.getElementById('sessionWorkoutTitle').innerText = currentSessionWorkout.name;
+
+        // Render checklist
+        const exList = currentSessionWorkout.exercises || [
+          { name: 'Core Activation', sets: 3, reps: '15 reps', formCue: 'Maintain brace.' },
+          { name: 'Primary Lift', sets: 4, reps: '8-10 reps', formCue: 'Explosive drive.' }
+        ];
+
+        sessionExercisesList.innerHTML = exList.map((ex, idx) => `
+          <div class="routine-exercise-item d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+              <input type="checkbox" class="form-check-input mt-0 fs-5 exercise-check" id="checkEx${idx}">
+              <label for="checkEx${idx}" class="text-white fw-bold mb-0">${ex.name}</label>
+            </div>
+            <div class="text-secondary small font-mono">${ex.sets} Sets × ${ex.reps}</div>
+          </div>
+        `).join('');
+
+        // Start Timer
+        sessionSeconds = 0;
+        timerDisplay.innerText = '00:00';
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          sessionSeconds++;
+          const mins = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+          const secs = String(sessionSeconds % 60).padStart(2, '0');
+          timerDisplay.innerText = `${mins}:${secs}`;
+        }, 1000);
+
+        workoutModal.style.display = 'flex';
+      }
+
+      if (btnStartWorkout) {
+        btnStartWorkout.addEventListener('click', () => {
+          launchWorkoutSession(activeWorkout);
+        });
+      }
+
+      if (btnCancelWorkout) {
+        btnCancelWorkout.addEventListener('click', () => {
+          clearInterval(timerInterval);
+          workoutModal.style.display = 'none';
+        });
+      }
+
+      // Finishing Workout -> Updates Live DataStore and Dashboard KPIs!
+      if (btnFinishWorkout) {
+        btnFinishWorkout.addEventListener('click', () => {
+          clearInterval(timerInterval);
+          workoutModal.style.display = 'none';
+
+          const earnedCalories = currentSessionWorkout.calories || 420;
+          const durationStr = `${Math.max(1, Math.round(sessionSeconds / 60))} min`;
+
+          if (window.DataStore && window.DataStore.recordSession && user.id) {
+            window.DataStore.recordSession(user.id, {
+              workoutId: currentSessionWorkout.id,
+              workoutName: currentSessionWorkout.name,
+              duration: durationStr,
+              calories: earnedCalories,
+              formScore: 96
+            });
+            user = window.DataStore.getUserById(user.id) || user;
+          } else {
+            // Local fallback simulation
+            if (!user.workoutHistory) user.workoutHistory = [];
+            user.workoutHistory.unshift({
+              workoutName: currentSessionWorkout.name,
+              date: 'Just now',
+              duration: durationStr,
+              calories: earnedCalories,
+              formScore: 96
+            });
+            user.dashboardStats.workoutsCompleted = (user.dashboardStats.workoutsCompleted || 0) + 1;
+            user.dashboardStats.caloriesBurned = (user.dashboardStats.caloriesBurned || 0) + earnedCalories;
+            user.dashboardStats.activeStreakDays = (user.dashboardStats.activeStreakDays || 0) + 1;
+            user.dashboardStats.activeDays = (user.dashboardStats.activeDays || 0) + 1;
+            user.dashboardStats.hoursTrained = (user.dashboardStats.hoursTrained || 0) + 0.8;
+            user.dashboardStats.weeklyProgressPercent = Math.min(100, Math.round((user.dashboardStats.workoutsCompleted / (user.dashboardStats.workoutsTarget || 4)) * 100));
+            user.dashboardStats.strengthGainPercent = (user.dashboardStats.strengthGainPercent || 0) + 6;
+            user.dashboardStats.enduranceGainPercent = (user.dashboardStats.enduranceGainPercent || 0) + 4;
+            user.dashboardStats.consistencyPercent = 94;
+          }
+
+          updateDashboardStats();
+          showToast(`Workout Completed! +${earnedCalories} kcal burned. Metrics updated.`);
+        });
+      }
+
+      // ----------------------------------------------------------------------
+      // 7. Preview Routine Modal
+      // ----------------------------------------------------------------------
+      const previewModal = document.getElementById('previewModal');
+      const btnPreviewRoutine = document.getElementById('btnPreviewRoutine');
+      const btnClosePreview = document.getElementById('btnClosePreview');
+      const btnPreviewStartNow = document.getElementById('btnPreviewStartNow');
+      const previewExercisesList = document.getElementById('previewExercisesList');
+
+      if (btnPreviewRoutine) {
+        btnPreviewRoutine.addEventListener('click', () => {
+          document.getElementById('previewWorkoutTitle').innerText = activeWorkout.name;
+          document.getElementById('previewDuration').innerText = activeWorkout.duration;
+          document.getElementById('previewCalories').innerText = activeWorkout.calories;
+          document.getElementById('previewDifficulty').innerText = activeWorkout.difficulty || 'Intermediate';
+
+          const exList = activeWorkout.exercises || [];
+          previewExercisesList.innerHTML = exList.map(ex => `
+            <div class="routine-exercise-item">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <div class="fw-bold text-white">${ex.name}</div>
+                <div class="text-lime font-mono small">${ex.sets} Sets × ${ex.reps}</div>
+              </div>
+              <div class="text-secondary small">
+                <span class="text-muted font-mono">Form cue:</span> ${ex.formCue || 'Focus on controlled eccentric cadence.'}
+              </div>
+            </div>
+          `).join('');
+
+          previewModal.style.display = 'flex';
+        });
+      }
+
+      if (btnClosePreview) {
+        btnClosePreview.addEventListener('click', () => {
+          previewModal.style.display = 'none';
+        });
+      }
+
+      if (btnPreviewStartNow) {
+        btnPreviewStartNow.addEventListener('click', () => {
+          previewModal.style.display = 'none';
+          launchWorkoutSession(activeWorkout);
+        });
+      }
+
+      // ----------------------------------------------------------------------
+      // 8. Accept Protocol Button
+      // ----------------------------------------------------------------------
+      const btnAcceptProtocol = document.getElementById('btnAcceptProtocol');
+      if (btnAcceptProtocol) {
+        btnAcceptProtocol.addEventListener('click', () => {
+          btnAcceptProtocol.innerHTML = '<i class="bi bi-check2 me-1"></i> Protocol Calibrated';
+          btnAcceptProtocol.style.opacity = '0.7';
+          showToast("AI Protocol calibrated & locked into your training schedule.");
+        });
+      }
+
+      // ----------------------------------------------------------------------
+      // 9. Interactive AI Coach Terminal Chat
+      // ----------------------------------------------------------------------
+      const coachChatForm = document.getElementById('coachChatForm');
+      const chatInputText = document.getElementById('chatInputText');
+      const coachChatMessages = document.getElementById('coachChatMessages');
+      const quickPromptBtns = document.querySelectorAll('.quick-prompt-btn');
+
+      function appendChatMessage(sender, text) {
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble ${sender}`;
+        bubble.innerText = text;
+        coachChatMessages.appendChild(bubble);
+        coachChatMessages.scrollTop = coachChatMessages.scrollHeight;
+      }
+
+      function sendCoachMessage(text) {
+        appendChatMessage('user', text);
+
+        setTimeout(() => {
+          let reply = "I have calibrated your request into your biometric profile.";
+          const q = text.toLowerCase();
+          if (q.includes('eat') || q.includes('nutrition') || q.includes('meal')) {
+            reply = "For today's high-intensity session, ingest 30-40g of fast-absorbing complex carbohydrates (e.g. rolled oats or sliced banana with honey) 60 minutes prior, paired with 25g whey protein for amino acid pool saturation.";
+          } else if (q.includes('form') || q.includes('bench') || q.includes('squat')) {
+            reply = "Ensure optimal scapular retraction and depress your lats before initiating the eccentric phase. Drive through the heels while keeping elbows tucked at roughly 45 degrees to protect anterior shoulder capsules.";
+          } else if (q.includes('fat loss') || q.includes('burn') || q.includes('cardio')) {
+            reply = "Calibrated! I have bumped your target heart rate zone to Zone 2/3 and adjusted your post-workout protocol to HIIT Metabolic Blaze to sustain maximal EPOC expenditure.";
+          } else {
+            reply = `Understood! I am monitoring your recovery readiness (currently ${user.recovery ? user.recovery.score : 90}%). Focus on progressive overload and maintain tight core bracing throughout today's exercises.`;
+          }
+          appendChatMessage('ai', reply);
+        }, 500);
+      }
+
+      if (coachChatForm) {
+        coachChatForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const msg = chatInputText.value.trim();
+          if (!msg) return;
+          chatInputText.value = '';
+          sendCoachMessage(msg);
+        });
+      }
+
+      quickPromptBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const msg = btn.getAttribute('data-msg');
+          sendCoachMessage(msg);
+        });
+      });
+
+      // ----------------------------------------------------------------------
+      // 10. Toast Notification Helper
+      // ----------------------------------------------------------------------
+      const dashToast = document.getElementById('dashToast');
+      const dashToastText = document.getElementById('dashToastText');
+      let toastTimeout = null;
+
+      function showToast(text) {
+        dashToastText.innerText = text;
+        dashToast.style.display = 'flex';
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          dashToast.style.display = 'none';
+        }, 3500);
+      }
+
+      // ----------------------------------------------------------------------
+      // 11. Logout Button
+      // ----------------------------------------------------------------------
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          if (window.Auth && window.Auth.logout) {
+            window.Auth.logout();
+          } else {
+            localStorage.removeItem('fitnexa_current_user_id');
+            window.location.href = '../login.html';
+          }
+        });
+      }
+
+      // Check URL hash on initial load (e.g. #workouts, #nutrition)
+      const hash = window.location.hash.replace('#', '');
+      if (hash && ['dashboard', 'workouts', 'nutrition', 'analytics', 'aicoach'].includes(hash)) {
+        switchTab(hash);
+      }
+    });
+  </script>
+</body>
+</html>
