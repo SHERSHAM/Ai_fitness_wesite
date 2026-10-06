@@ -48,6 +48,12 @@
           <span id="signupErrorText">Please fill in all required fields</span>
         </div>
 
+        <!-- Success Banner -->
+        <div id="signupSuccess" class="auth-alert-banner" style="display:none; background: rgba(198,255,61,0.1); border-color: rgba(198,255,61,0.3); color: #C6FF3D;">
+          <i class="bi bi-check-circle-fill"></i>
+          <span id="signupSuccessText">Account created!</span>
+        </div>
+
         <form id="signupForm" novalidate>
           <!-- Full Name Field -->
           <div class="form-group-custom">
@@ -127,10 +133,10 @@
 
         <!-- Social Buttons -->
         <div class="social-btns-grid">
-          <button type="button" class="btn-social-outline">
+          <button type="button" class="btn-social-outline" id="btnGoogleSignup">
             <i class="bi bi-google"></i> Continue with Google
           </button>
-          <button type="button" class="btn-social-outline">
+          <button type="button" class="btn-social-outline" id="btnAppleSignup">
             <i class="bi bi-apple"></i> Continue with Apple
           </button>
         </div>
@@ -155,18 +161,6 @@
           Stronger<br>Fitter<br>Happier<br><span class="auth-quote-accent">With AI.</span>
         </div>
 
-        <!-- Floating Glass Stat Card -->
-        <div class="auth-stat-card">
-          <div class="auth-stat-icon">
-            <i class="bi bi-bar-chart-line-fill"></i>
-          </div>
-          <div>
-            <div class="text-muted small font-mono">Join</div>
-            <div class="auth-stat-num">148,520+</div>
-            <div class="auth-stat-lbl">athletes training with FITNEXA</div>
-          </div>
-        </div>
-
         <!-- Bottom Taglines -->
         <div class="auth-footer-taglines mt-2">
           <span>YOUR GOALS</span>
@@ -181,16 +175,28 @@
 
   <!-- GSAP 3.12.5 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <!-- Existing Auth Logic (Preserved Untouched) -->
-  <script src="assets/js/data-store.js"></script>
+  <!-- Supabase JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- Supabase Config -->
+  <script src="assets/js/supabase-config.js"></script>
+  <!-- Auth Logic (Supabase Edition) -->
   <script src="assets/js/auth.js"></script>
   <!-- Presentation & Animation Layer -->
   <script src="assets/js/auth-ui.js"></script>
   <script src="assets/js/animations/auth.js"></script>
 
-  <!-- Signup Form Handler (Using Existing Auth Engine) -->
+  <!-- Signup Form Handler (Using Supabase Auth) -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check if already logged in
+      if (window.Auth) {
+        const session = await window.Auth.initSession();
+        if (session) {
+          window.location.href = 'dashboard/index.html';
+          return;
+        }
+      }
+
       const form = document.getElementById('signupForm');
       const nameInput = document.getElementById('signupName');
       const emailInput = document.getElementById('signupEmail');
@@ -199,12 +205,15 @@
       const signupBtn = document.getElementById('signupBtn');
       const errorBanner = document.getElementById('signupError');
       const errorText = document.getElementById('signupErrorText');
+      const successBanner = document.getElementById('signupSuccess');
+      const successText = document.getElementById('signupSuccessText');
 
       if (!form) return;
 
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         errorBanner.style.display = 'none';
+        successBanner.style.display = 'none';
 
         const name = nameInput.value.trim();
         const email = emailInput.value.trim();
@@ -212,7 +221,7 @@
         const confirmPass = confirmInput.value.trim();
 
         if (!name) {
-          window.triggerErrorShake(nameInput);
+          if (window.triggerErrorShake) window.triggerErrorShake(nameInput);
           document.getElementById('nameError').innerText = 'Please enter your full name.';
           return;
         } else {
@@ -220,7 +229,7 @@
         }
 
         if (!email || !email.includes('@')) {
-          window.triggerErrorShake(emailInput);
+          if (window.triggerErrorShake) window.triggerErrorShake(emailInput);
           document.getElementById('emailError').innerText = 'Please enter a valid email address.';
           return;
         } else {
@@ -228,7 +237,7 @@
         }
 
         if (!password || password.length < 6) {
-          window.triggerErrorShake(passInput);
+          if (window.triggerErrorShake) window.triggerErrorShake(passInput);
           document.getElementById('passwordError').innerText = 'Password must be at least 6 characters.';
           return;
         } else {
@@ -236,32 +245,65 @@
         }
 
         if (password !== confirmPass) {
-          window.triggerErrorShake(confirmInput);
+          if (window.triggerErrorShake) window.triggerErrorShake(confirmInput);
           document.getElementById('confirmError').innerText = 'Passwords do not match.';
           return;
         } else {
           document.getElementById('confirmError').innerText = '';
         }
 
-        window.setButtonLoading(signupBtn, 'Creating Account...');
+        if (window.setButtonLoading) window.setButtonLoading(signupBtn, 'Creating Account...');
 
-        setTimeout(() => {
-          if (window.Auth) {
-            const res = window.Auth.signup(name, email, password);
-            if (res && res.success) {
-              // Immediately route to personalized onboarding wizard
-              window.location.href = 'onboarding.html';
+        try {
+          const res = await window.Auth.signup(name, email, password);
+          if (res && res.success) {
+            // Check if email confirmation is required
+            if (res.user && !res.session) {
+              // Email confirmation required
+              successBanner.style.display = 'flex';
+              successText.innerText = 'Account created! Please check your email to confirm your account, then log in.';
+              if (window.resetButtonLoading) window.resetButtonLoading(signupBtn);
             } else {
-              window.resetButtonLoading(signupBtn);
-              errorBanner.style.display = 'flex';
-              errorText.innerText = res ? res.message : 'Registration error. Try a different email.';
-              window.triggerErrorShake(form);
+              // Auto-confirmed, redirect to onboarding
+              successBanner.style.display = 'flex';
+              successText.innerText = 'Account created! Redirecting...';
+              setTimeout(() => {
+                window.location.href = 'onboarding.html';
+              }, 500);
             }
           } else {
-            window.location.href = 'onboarding.html';
+            if (window.resetButtonLoading) window.resetButtonLoading(signupBtn);
+            errorBanner.style.display = 'flex';
+            errorText.innerText = res ? res.message : 'Registration error. Try a different email.';
+            if (window.triggerErrorShake) window.triggerErrorShake(form);
           }
-        }, 700);
+        } catch (err) {
+          if (window.resetButtonLoading) window.resetButtonLoading(signupBtn);
+          errorBanner.style.display = 'flex';
+          errorText.innerText = 'Network error. Please check your connection.';
+          if (window.triggerErrorShake) window.triggerErrorShake(form);
+        }
       });
+
+      // Google Signup
+      const btnGoogle = document.getElementById('btnGoogleSignup');
+      if (btnGoogle) {
+        btnGoogle.addEventListener('click', async () => {
+          if (window.Auth && window.Auth.loginWithGoogle) {
+            await window.Auth.loginWithGoogle();
+          }
+        });
+      }
+
+      // Apple Signup
+      const btnApple = document.getElementById('btnAppleSignup');
+      if (btnApple) {
+        btnApple.addEventListener('click', async () => {
+          if (window.Auth && window.Auth.loginWithApple) {
+            await window.Auth.loginWithApple();
+          }
+        });
+      }
     });
   </script>
 </body>

@@ -592,23 +592,40 @@
        SCRIPTS & DASHBOARD INTERACTIVITY LOGIC
        ======================================================================== -->
   <script src="../assets/js/data-store.js"></script>
+  <!-- Supabase JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../assets/js/supabase-config.js"></script>
   <script src="../assets/js/auth.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
+      // ----------------------------------------------------------------------
+      // 0. Auth Guard — Require Login via Supabase
+      // ----------------------------------------------------------------------
+      let supaUser = null;
+      if (window.Auth) {
+        const session = await window.Auth.initSession();
+        if (!session) {
+          window.location.href = '../login.html';
+          return;
+        }
+        supaUser = session.user;
+      }
+
       // ----------------------------------------------------------------------
       // 1. Athlete User Resolution & Fresh Account Detection
       // ----------------------------------------------------------------------
       let user = null;
-      if (window.Auth && window.Auth.getCurrentUser) {
-        user = window.Auth.getCurrentUser();
+      if (window.DataStore && supaUser) {
+        user = window.DataStore.getUserByEmail(supaUser.email);
       }
 
-      // If no user exists (e.g. direct visit), create a clean fresh account
+      // If no user exists in DataStore, create a clean fresh account
       if (!user) {
+        const displayName = (supaUser && supaUser.user_metadata && supaUser.user_metadata.full_name) || (supaUser ? supaUser.email.split('@')[0] : 'Athlete');
         user = {
-          id: 'guest_' + Date.now(),
-          fullName: 'Athlete',
-          email: 'athlete@fitnexa.ai',
+          id: supaUser ? supaUser.id : 'guest_' + Date.now(),
+          fullName: displayName,
+          email: supaUser ? supaUser.email : 'athlete@fitnexa.ai',
           profile: { fitnessGoal: 'Lose Fat', todayWorkoutId: 'upper-body-power', trainingDays: 4 },
           dashboardStats: {
             weeklyProgressPercent: 0,
@@ -1127,13 +1144,11 @@
       // ----------------------------------------------------------------------
       // 11. Logout Button
       // ----------------------------------------------------------------------
-      const logoutBtn = document.getElementById('logoutBtn');
       if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
+        logoutBtn.addEventListener('click', async () => {
           if (window.Auth && window.Auth.logout) {
-            window.Auth.logout();
+            await window.Auth.logout();
           } else {
-            localStorage.removeItem('fitnexa_current_user_id');
             window.location.href = '../login.html';
           }
         });

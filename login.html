@@ -48,6 +48,12 @@
           <span id="loginErrorText">Invalid email or password</span>
         </div>
 
+        <!-- Success Banner -->
+        <div id="loginSuccess" class="auth-alert-banner" style="display:none; background: rgba(198,255,61,0.1); border-color: rgba(198,255,61,0.3); color: #C6FF3D;">
+          <i class="bi bi-check-circle-fill"></i>
+          <span id="loginSuccessText">Success!</span>
+        </div>
+
         <form id="loginForm" novalidate>
           <!-- Email Field -->
           <div class="form-group-custom">
@@ -93,10 +99,10 @@
 
         <!-- Social Buttons -->
         <div class="social-btns-grid">
-          <button type="button" class="btn-social-outline" id="demoAlex">
+          <button type="button" class="btn-social-outline" id="btnGoogleLogin">
             <i class="bi bi-google"></i> Continue with Google
           </button>
-          <button type="button" class="btn-social-outline" id="demoSarah">
+          <button type="button" class="btn-social-outline" id="btnAppleLogin">
             <i class="bi bi-apple"></i> Continue with Apple
           </button>
         </div>
@@ -121,17 +127,6 @@
           "Discipline today<br><span class="auth-quote-accent">A stronger tomorrow.</span>"
         </div>
 
-        <!-- Floating Glass Stat Card -->
-        <div class="auth-stat-card">
-          <div class="auth-stat-icon">
-            <i class="bi bi-people-fill"></i>
-          </div>
-          <div>
-            <div class="auth-stat-num">10K+</div>
-            <div class="auth-stat-lbl">People already transforming with FITNEXA</div>
-          </div>
-        </div>
-
         <!-- Bottom Taglines -->
         <div class="auth-footer-taglines mt-2">
           <span>AI PLANS</span>
@@ -146,21 +141,26 @@
 
   <!-- GSAP 3.12.5 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <!-- Existing Auth Logic (Preserved Untouched) -->
-  <script src="assets/js/data-store.js"></script>
+  <!-- Supabase JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- Supabase Config -->
+  <script src="assets/js/supabase-config.js"></script>
+  <!-- Auth Logic (Supabase Edition) -->
   <script src="assets/js/auth.js"></script>
   <!-- Presentation & Animation Layer -->
   <script src="assets/js/auth-ui.js"></script>
   <script src="assets/js/animations/auth.js"></script>
 
-  <!-- Login Form Handler (Using Existing Auth Engine) -->
+  <!-- Login Form Handler (Using Supabase Auth) -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      // Only auto-redirect if not explicitly viewing the page
-      if (window.Auth && window.Auth.isLoggedIn() && urlParams.has('autoredirect')) {
-        window.location.href = 'dashboard/index.html';
-        return;
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check if already logged in — redirect to dashboard
+      if (window.Auth) {
+        const session = await window.Auth.initSession();
+        if (session) {
+          window.location.href = 'dashboard/index.html';
+          return;
+        }
       }
 
       const form = document.getElementById('loginForm');
@@ -169,18 +169,21 @@
       const loginBtn = document.getElementById('loginBtn');
       const errorBanner = document.getElementById('loginError');
       const errorText = document.getElementById('loginErrorText');
+      const successBanner = document.getElementById('loginSuccess');
+      const successText = document.getElementById('loginSuccessText');
 
       if (!form) return;
 
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         errorBanner.style.display = 'none';
+        successBanner.style.display = 'none';
 
         const email = emailInput.value.trim();
         const password = passInput.value.trim();
 
         if (!email) {
-          window.triggerErrorShake(emailInput);
+          if (window.triggerErrorShake) window.triggerErrorShake(emailInput);
           document.getElementById('emailError').innerText = 'Please enter your email address.';
           return;
         } else {
@@ -188,31 +191,56 @@
         }
 
         if (!password) {
-          window.triggerErrorShake(passInput);
+          if (window.triggerErrorShake) window.triggerErrorShake(passInput);
           document.getElementById('passwordError').innerText = 'Please enter your password.';
           return;
         } else {
           document.getElementById('passwordError').innerText = '';
         }
 
-        window.setButtonLoading(loginBtn, 'Authenticating...');
+        if (window.setButtonLoading) window.setButtonLoading(loginBtn, 'Authenticating...');
 
-        setTimeout(() => {
-          if (window.Auth) {
-            const res = window.Auth.login(email, password);
-            if (res && res.success) {
+        try {
+          const res = await window.Auth.login(email, password);
+          if (res && res.success) {
+            successBanner.style.display = 'flex';
+            successText.innerText = 'Login successful! Redirecting...';
+            setTimeout(() => {
               window.location.href = 'dashboard/index.html';
-            } else {
-              window.resetButtonLoading(loginBtn);
-              errorBanner.style.display = 'flex';
-              errorText.innerText = res ? res.message : 'Invalid credentials. Try Alex Mercer demo.';
-              window.triggerErrorShake(form);
-            }
+            }, 500);
           } else {
-            window.location.href = 'dashboard/index.html';
+            if (window.resetButtonLoading) window.resetButtonLoading(loginBtn);
+            errorBanner.style.display = 'flex';
+            errorText.innerText = res ? res.message : 'Invalid credentials. Please try again.';
+            if (window.triggerErrorShake) window.triggerErrorShake(form);
           }
-        }, 600);
+        } catch (err) {
+          if (window.resetButtonLoading) window.resetButtonLoading(loginBtn);
+          errorBanner.style.display = 'flex';
+          errorText.innerText = 'Network error. Please check your connection.';
+          if (window.triggerErrorShake) window.triggerErrorShake(form);
+        }
       });
+
+      // Google Login
+      const btnGoogle = document.getElementById('btnGoogleLogin');
+      if (btnGoogle) {
+        btnGoogle.addEventListener('click', async () => {
+          if (window.Auth && window.Auth.loginWithGoogle) {
+            await window.Auth.loginWithGoogle();
+          }
+        });
+      }
+
+      // Apple Login
+      const btnApple = document.getElementById('btnAppleLogin');
+      if (btnApple) {
+        btnApple.addEventListener('click', async () => {
+          if (window.Auth && window.Auth.loginWithApple) {
+            await window.Auth.loginWithApple();
+          }
+        });
+      }
     });
   </script>
 </body>

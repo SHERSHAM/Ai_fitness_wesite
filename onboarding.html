@@ -21,227 +21,892 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/pages/auth.css">
+
+  <style>
+    /* ── Onboarding Enhancements ────────────────────────── */
+    .onboarding-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-primary);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glow */
+    .onboarding-container::before {
+      content: '';
+      position: fixed;
+      top: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(198, 255, 61, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .onboarding-top-bar {
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 2;
+    }
+
+    .onboarding-content-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .onboarding-card {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .onboarding-step-pane {
+      animation: fadeSlideIn 0.4s ease forwards;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Gender Selection Cards ────────────────────────── */
+    .gender-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .gender-card {
+      background: rgba(20, 22, 26, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 32px 20px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      backdrop-filter: blur(12px);
+    }
+
+    .gender-card:hover {
+      border-color: rgba(198, 255, 61, 0.35);
+      transform: translateY(-3px);
+      background: rgba(25, 28, 34, 0.85);
+    }
+
+    .gender-card.selected {
+      border-color: var(--accent-lime);
+      background: rgba(24, 28, 32, 0.95);
+      box-shadow: 0 0 30px rgba(198, 255, 61, 0.2), inset 0 0 30px rgba(198, 255, 61, 0.03);
+      transform: scale(1.03);
+    }
+
+    .gender-card .gender-icon {
+      font-size: 2.8rem;
+      margin-bottom: 16px;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .gender-card.selected .gender-icon {
+      transform: scale(1.1);
+    }
+
+    .gender-card .gender-label {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .gender-card .gender-sub {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .gender-card .check-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-lime);
+      color: #0B0C0E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.3s ease;
+    }
+
+    .gender-card.selected .check-badge {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ── Age Selector (Visual Pill Buttons) ───────────── */
+    .age-range-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 28px 0;
+    }
+
+    .age-pill {
+      background: rgba(20, 22, 26, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 22px 16px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .age-pill:hover {
+      border-color: rgba(198, 255, 61, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .age-pill.selected {
+      border-color: var(--accent-lime);
+      background: rgba(24, 28, 32, 0.95);
+      box-shadow: 0 0 25px rgba(198, 255, 61, 0.18);
+    }
+
+    .age-pill .age-emoji {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .age-pill .age-range {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .age-pill .age-desc {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* ── Body Stats Input Row ─────────────────────────── */
+    .body-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .stat-input-card {
+      background: rgba(20, 22, 26, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-input-card:focus-within {
+      border-color: var(--accent-lime);
+      box-shadow: 0 0 20px rgba(198, 255, 61, 0.15);
+    }
+
+    .stat-input-card .stat-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .stat-input-card .stat-label {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stat-input-card input {
+      width: 100%;
+      background: rgba(15, 16, 20, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      text-align: center;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .stat-input-card input::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .stat-input-card input:focus {
+      border-color: var(--accent-lime);
+      box-shadow: 0 0 12px rgba(198, 255, 61, 0.2);
+    }
+
+    .stat-input-card .stat-unit {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-family: var(--font-mono);
+    }
+
+    /* ── Goal Cards (Redesigned) ──────────────────────── */
+    .goal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .goal-card {
+      background: rgba(20, 22, 26, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 28px 22px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.3s ease;
+      position: relative;
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .goal-card:hover {
+      border-color: rgba(198, 255, 61, 0.35);
+      transform: translateY(-2px);
+      background: rgba(25, 28, 34, 0.85);
+    }
+
+    .goal-card.selected {
+      border-color: var(--accent-lime);
+      background: rgba(24, 28, 32, 0.95);
+      box-shadow: 0 0 25px rgba(198, 255, 61, 0.18);
+    }
+
+    .goal-card .goal-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(198, 255, 61, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .goal-card.selected .goal-icon {
+      background: rgba(198, 255, 61, 0.2);
+      box-shadow: 0 0 15px rgba(198, 255, 61, 0.2);
+    }
+
+    .goal-card .goal-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+
+    .goal-card .goal-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* ── Experience Level Cards ────────────────────────── */
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .exp-card {
+      background: rgba(20, 22, 26, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 28px 18px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .exp-card:hover {
+      border-color: rgba(198, 255, 61, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .exp-card.selected {
+      border-color: var(--accent-lime);
+      background: rgba(24, 28, 32, 0.95);
+      box-shadow: 0 0 25px rgba(198, 255, 61, 0.18);
+    }
+
+    .exp-card .exp-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      justify-content: center;
+      height: 32px;
+      margin-bottom: 16px;
+    }
+
+    .exp-card .exp-bars span {
+      width: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .exp-card.selected .exp-bars span.active {
+      background: var(--accent-lime);
+      box-shadow: 0 0 8px var(--accent-lime);
+    }
+
+    .exp-card .exp-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+
+    .exp-card .exp-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* ── Workout Frequency Selector ───────────────────── */
+    .frequency-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 28px 0;
+    }
+
+    .freq-card {
+      background: rgba(20, 22, 26, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 22px 14px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .freq-card:hover {
+      border-color: rgba(198, 255, 61, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .freq-card.selected {
+      border-color: var(--accent-lime);
+      background: rgba(24, 28, 32, 0.95);
+      box-shadow: 0 0 25px rgba(198, 255, 61, 0.18);
+    }
+
+    .freq-card .freq-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent-lime);
+      line-height: 1;
+    }
+
+    .freq-card .freq-label {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-top: 8px;
+    }
+
+    .freq-card .freq-desc {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* ── Bottom Nav Bar ───────────────────────────────── */
+    .onboarding-nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      margin-top: 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-onboard-back {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 0;
+      transition: color 0.2s ease;
+    }
+
+    .btn-onboard-back:hover {
+      color: #FFFFFF;
+    }
+
+    .btn-onboard-next {
+      background: var(--accent-lime);
+      border: none;
+      color: #0B0C0E;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 14px 36px;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(198, 255, 61, 0.3);
+    }
+
+    .btn-onboard-next:hover {
+      background: var(--accent-lime-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(198, 255, 61, 0.45);
+    }
+
+    .btn-onboard-next:active {
+      transform: scale(0.97);
+    }
+
+    .btn-onboard-next.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    /* ── Info Banner ──────────────────────────────────── */
+    .info-hint {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: rgba(198, 255, 61, 0.05);
+      border: 1px solid rgba(198, 255, 61, 0.12);
+      border-radius: 14px;
+      margin-top: 8px;
+    }
+
+    .info-hint i {
+      color: var(--accent-lime);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .info-hint span {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* ── Progress Segments ────────────────────────────── */
+    .onboarding-progress-segments {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 360px;
+      width: 100%;
+    }
+
+    .progress-segment {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .progress-segment.active {
+      background: var(--accent-lime);
+      box-shadow: 0 0 10px var(--accent-lime);
+    }
+
+    /* ── Error Banner ─────────────────────────────────── */
+    .onboard-error-banner {
+      background: rgba(255, 94, 94, 0.12);
+      border: 1px solid rgba(255, 94, 94, 0.4);
+      border-radius: 12px;
+      color: #FFA5A5;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 767px) {
+      .gender-grid { grid-template-columns: 1fr; }
+      .age-range-grid { grid-template-columns: repeat(2, 1fr); }
+      .goal-grid { grid-template-columns: 1fr; }
+      .experience-grid { grid-template-columns: 1fr; }
+      .frequency-grid { grid-template-columns: repeat(2, 1fr); }
+      .body-stat-grid { grid-template-columns: 1fr; }
+      .onboarding-top-bar { padding: 18px 20px; }
+      .onboarding-content-wrap { padding: 24px 18px; }
+    }
+  </style>
 </head>
 <body>
 
   <div class="onboarding-container">
-    <!-- ==========================================================================
-         TOP STEPPED PROGRESS HEADER
-         ========================================================================== -->
+    <!-- ========================================================================
+         TOP PROGRESS HEADER
+         ======================================================================== -->
     <header class="onboarding-top-bar" id="onboardingHeader">
-      <a href="index.html" class="nav-brand-logo">
-        FITNEXA<span class="nav-brand-dot"></span>
+      <a href="index.html" class="nav-brand-logo" style="text-decoration:none; font-family: var(--font-display); font-size: 1.4rem; font-weight: 900; letter-spacing: 0.1em; color: #fff;">
+        FITNEXA<span style="color: var(--accent-lime);">.</span>
       </a>
 
-      <!-- Stepped Segmented Progress Bar -->
+      <!-- 6-Step Progress Bar -->
       <div class="onboarding-progress-segments">
         <div class="progress-segment active" id="seg1"></div>
         <div class="progress-segment" id="seg2"></div>
         <div class="progress-segment" id="seg3"></div>
         <div class="progress-segment" id="seg4"></div>
+        <div class="progress-segment" id="seg5"></div>
+        <div class="progress-segment" id="seg6"></div>
       </div>
 
-      <div class="onboarding-step-indicator" id="stepCounterLabel">
-        Step 1 of 4
+      <div class="onboarding-step-indicator" id="stepCounterLabel" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-secondary);">
+        Step 1 of 6
       </div>
     </header>
 
-    <!-- ==========================================================================
+    <!-- ========================================================================
          ONBOARDING WIZARD CONTENT
-         ========================================================================== -->
+         ======================================================================== -->
     <main class="onboarding-content-wrap">
       <div class="onboarding-card">
 
-        <!-- STEP 1: GOAL -->
+        <!-- Error Banner -->
+        <div class="onboard-error-banner" id="onboardError">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <span id="onboardErrorText">Please make a selection to continue.</span>
+        </div>
+
+        <!-- ════════════════════════════════════════════════════
+             STEP 1: GENDER
+             ════════════════════════════════════════════════════ -->
         <div class="onboarding-step-pane" id="stepPane1">
-          <h1 class="auth-heading">What's your goal?</h1>
-          <p class="auth-subheading">Select one primary goal to help us personalize your plan.</p>
+          <h1 class="auth-heading">What's your gender?</h1>
+          <p class="auth-subheading">This helps us tailor exercises and calorie targets for your body type.</p>
 
-          <div class="card-options-grid">
-            <button type="button" class="select-card-btn selected" data-goal="fatloss">
-              <i class="bi bi-fire select-card-icon"></i>
-              <div>
-                <div class="select-card-title">Lose Fat</div>
-                <div class="select-card-desc">Get leaner and healthier</div>
-              </div>
+          <div class="gender-grid">
+            <button type="button" class="gender-card" data-gender="male">
+              <span class="check-badge"><i class="bi bi-check-lg"></i></span>
+              <span class="gender-icon">🙋‍♂️</span>
+              <div class="gender-label">Male</div>
+              <div class="gender-sub">He / Him</div>
             </button>
 
-            <button type="button" class="select-card-btn" data-goal="strength">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="select-card-icon"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
-              <div>
-                <div class="select-card-title">Build Muscle</div>
-                <div class="select-card-desc">Gain strength and size</div>
-              </div>
+            <button type="button" class="gender-card" data-gender="female">
+              <span class="check-badge"><i class="bi bi-check-lg"></i></span>
+              <span class="gender-icon">🙋‍♀️</span>
+              <div class="gender-label">Female</div>
+              <div class="gender-sub">She / Her</div>
             </button>
 
-            <button type="button" class="select-card-btn" data-goal="endurance">
-              <i class="bi bi-person-walking select-card-icon"></i>
-              <div>
-                <div class="select-card-title">Improve Endurance</div>
-                <div class="select-card-desc">Boost stamina and cardio</div>
-              </div>
-            </button>
-
-            <button type="button" class="select-card-btn" data-goal="general">
-              <i class="bi bi-heart-pulse-fill select-card-icon"></i>
-              <div>
-                <div class="select-card-title">General Fitness</div>
-                <div class="select-card-desc">Stay active and healthy</div>
-              </div>
+            <button type="button" class="gender-card" data-gender="other">
+              <span class="check-badge"><i class="bi bi-check-lg"></i></span>
+              <span class="gender-icon">🧑</span>
+              <div class="gender-label">Other</div>
+              <div class="gender-sub">Prefer not to say</div>
             </button>
           </div>
         </div>
 
-        <!-- STEP 2: EXPERIENCE LEVEL -->
+        <!-- ════════════════════════════════════════════════════
+             STEP 2: AGE RANGE
+             ════════════════════════════════════════════════════ -->
         <div class="onboarding-step-pane" id="stepPane2" style="display: none;">
-          <h1 class="auth-heading">What's your experience level?</h1>
-          <p class="auth-subheading">This helps us set the right training intensity for you.</p>
+          <h1 class="auth-heading">How old are you?</h1>
+          <p class="auth-subheading">Your age helps us optimize workout intensity and recovery recommendations.</p>
 
-          <div class="card-options-grid cols-3">
-            <button type="button" class="select-card-btn selected" data-level="beginner">
-              <div class="exp-bar-visualizer">
-                <span style="height: 8px;"></span>
-                <span style="height: 14px; opacity: 0.2;"></span>
-                <span style="height: 20px; opacity: 0.2;"></span>
-              </div>
-              <div>
-                <div class="select-card-title">Beginner</div>
-                <div class="select-card-desc">New to fitness</div>
-              </div>
+          <div class="age-range-grid">
+            <button type="button" class="age-pill" data-age="16-20">
+              <span class="age-emoji">⚡</span>
+              <div class="age-range">16–20</div>
+              <div class="age-desc">Teen</div>
             </button>
 
-            <button type="button" class="select-card-btn" data-level="intermediate">
-              <div class="exp-bar-visualizer">
-                <span style="height: 8px;"></span>
-                <span style="height: 14px;"></span>
-                <span style="height: 20px; opacity: 0.2;"></span>
-              </div>
-              <div>
-                <div class="select-card-title">Intermediate</div>
-                <div class="select-card-desc">Some experience</div>
-              </div>
+            <button type="button" class="age-pill" data-age="21-29">
+              <span class="age-emoji">🔥</span>
+              <div class="age-range">21–29</div>
+              <div class="age-desc">Young Adult</div>
             </button>
 
-            <button type="button" class="select-card-btn" data-level="advanced">
-              <div class="exp-bar-visualizer">
-                <span style="height: 8px;"></span>
-                <span style="height: 14px;"></span>
-                <span style="height: 20px;"></span>
-              </div>
-              <div>
-                <div class="select-card-title">Advanced</div>
-                <div class="select-card-desc">Very experienced</div>
-              </div>
+            <button type="button" class="age-pill" data-age="30-39">
+              <span class="age-emoji">💪</span>
+              <div class="age-range">30–39</div>
+              <div class="age-desc">Prime</div>
+            </button>
+
+            <button type="button" class="age-pill" data-age="40-49">
+              <span class="age-emoji">🏋️</span>
+              <div class="age-range">40–49</div>
+              <div class="age-desc">Experienced</div>
+            </button>
+
+            <button type="button" class="age-pill" data-age="50-59">
+              <span class="age-emoji">🧘</span>
+              <div class="age-range">50–59</div>
+              <div class="age-desc">Seasoned</div>
+            </button>
+
+            <button type="button" class="age-pill" data-age="60+">
+              <span class="age-emoji">🌟</span>
+              <div class="age-range">60+</div>
+              <div class="age-desc">Golden</div>
             </button>
           </div>
         </div>
 
-        <!-- STEP 3: EQUIPMENT -->
+        <!-- ════════════════════════════════════════════════════
+             STEP 3: HEIGHT & WEIGHT
+             ════════════════════════════════════════════════════ -->
         <div class="onboarding-step-pane" id="stepPane3" style="display: none;">
-          <h1 class="auth-heading">What equipment do you have access to?</h1>
-          <p class="auth-subheading">You can select multiple options.</p>
+          <h1 class="auth-heading">Your body stats</h1>
+          <p class="auth-subheading">We use this to calculate your BMI, calorie needs, and training load.</p>
 
-          <div class="card-options-grid stacked">
-            <button type="button" class="select-card-btn selected flex-row align-items-center" data-equip="full_gym">
-              <div class="d-flex align-items-center gap-3">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="select-card-icon mb-0"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
-                <div>
-                  <div class="select-card-title">Full Gym</div>
-                  <div class="select-card-desc">All equipment available</div>
-                </div>
-              </div>
-              <i class="bi bi-check-circle-fill text-lime fs-5"></i>
-            </button>
+          <div class="body-stat-grid">
+            <div class="stat-input-card">
+              <span class="stat-icon">📏</span>
+              <div class="stat-label">Height</div>
+              <input type="number" id="inputHeight" placeholder="175" min="100" max="250">
+              <div class="stat-unit">centimeters (cm)</div>
+            </div>
 
-            <button type="button" class="select-card-btn flex-row align-items-center" data-equip="home">
-              <div class="d-flex align-items-center gap-3">
-                <i class="bi bi-house-door-fill select-card-icon mb-0 fs-3"></i>
-                <div>
-                  <div class="select-card-title">Home Equipment</div>
-                  <div class="select-card-desc">Dumbbells, bands, etc.</div>
-                </div>
-              </div>
-              <i class="bi bi-circle text-muted fs-5"></i>
-            </button>
+            <div class="stat-input-card">
+              <span class="stat-icon">⚖️</span>
+              <div class="stat-label">Weight</div>
+              <input type="number" id="inputWeight" placeholder="72" min="30" max="300">
+              <div class="stat-unit">kilograms (kg)</div>
+            </div>
+          </div>
 
-            <button type="button" class="select-card-btn flex-row align-items-center" data-equip="bodyweight">
-              <div class="d-flex align-items-center gap-3">
-                <i class="bi bi-person-arms-up select-card-icon mb-0 fs-3"></i>
-                <div>
-                  <div class="select-card-title">Bodyweight Only</div>
-                  <div class="select-card-desc">No equipment needed</div>
-                </div>
-              </div>
-              <i class="bi bi-circle text-muted fs-5"></i>
-            </button>
+          <div class="info-hint">
+            <i class="bi bi-shield-lock-fill"></i>
+            <span>Your data is private and only used by your AI coach to personalize your plan.</span>
           </div>
         </div>
 
-        <!-- STEP 4: BASICS -->
+        <!-- ════════════════════════════════════════════════════
+             STEP 4: FITNESS GOAL
+             ════════════════════════════════════════════════════ -->
         <div class="onboarding-step-pane" id="stepPane4" style="display: none;">
-          <h1 class="auth-heading">Tell us a bit about yourself</h1>
-          <p class="auth-subheading">This helps your AI coach personalize your plan and set accurate targets.</p>
+          <h1 class="auth-heading">What's your primary goal?</h1>
+          <p class="auth-subheading">This shapes your entire training and nutrition plan.</p>
 
-          <div class="form-group-custom">
-            <label for="athleteAge" class="form-label-custom">Age (optional)</label>
-            <div class="input-icon-wrap">
-              <i class="bi bi-calendar-event-fill input-leading-icon"></i>
-              <input type="number" id="athleteAge" class="form-input-custom" placeholder="e.g. 28" min="14" max="100">
-            </div>
-          </div>
-
-          <div class="row g-3">
-            <div class="col-6">
-              <div class="form-group-custom">
-                <label for="athleteHeight" class="form-label-custom">Height (cm)</label>
-                <div class="input-icon-wrap">
-                  <i class="bi bi-arrows-vertical input-leading-icon"></i>
-                  <input type="number" id="athleteHeight" class="form-input-custom" placeholder="e.g. 178">
-                </div>
+          <div class="goal-grid">
+            <button type="button" class="goal-card" data-goal="lose_weight">
+              <div class="goal-icon"><i class="bi bi-fire" style="color: var(--accent-lime); font-size: 1.4rem;"></i></div>
+              <div>
+                <div class="goal-title">Lose Weight</div>
+                <div class="goal-desc">Burn fat, get lean, and improve body composition</div>
               </div>
-            </div>
+            </button>
 
-            <div class="col-6">
-              <div class="form-group-custom">
-                <label for="athleteWeight" class="form-label-custom">Weight (kg)</label>
-                <div class="input-icon-wrap">
-                  <i class="bi bi-speedometer2 input-leading-icon"></i>
-                  <input type="number" id="athleteWeight" class="form-input-custom" placeholder="e.g. 76">
-                </div>
+            <button type="button" class="goal-card" data-goal="gain_muscle">
+              <div class="goal-icon"><i class="bi bi-lightning-charge-fill" style="color: var(--accent-lime); font-size: 1.4rem;"></i></div>
+              <div>
+                <div class="goal-title">Gain Muscle</div>
+                <div class="goal-desc">Build strength, size, and muscle definition</div>
               </div>
-            </div>
-          </div>
+            </button>
 
-          <div class="p-3 my-3 glass-panel d-flex align-items-center gap-3 text-secondary small">
-            <i class="bi bi-info-circle-fill text-lime fs-5 flex-shrink-0"></i>
-            <div>Helps us calculate your BMI, calorie needs and training load for better results.</div>
+            <button type="button" class="goal-card" data-goal="stay_fit">
+              <div class="goal-icon"><i class="bi bi-heart-pulse-fill" style="color: var(--accent-lime); font-size: 1.4rem;"></i></div>
+              <div>
+                <div class="goal-title">Stay Fit & Healthy</div>
+                <div class="goal-desc">Maintain fitness and overall well-being</div>
+              </div>
+            </button>
+
+            <button type="button" class="goal-card" data-goal="improve_endurance">
+              <div class="goal-icon"><i class="bi bi-person-walking" style="color: var(--accent-lime); font-size: 1.4rem;"></i></div>
+              <div>
+                <div class="goal-title">Improve Endurance</div>
+                <div class="goal-desc">Boost stamina, cardio, and athletic performance</div>
+              </div>
+            </button>
+
+            <button type="button" class="goal-card" data-goal="gain_weight">
+              <div class="goal-icon"><i class="bi bi-arrow-up-circle-fill" style="color: var(--accent-lime); font-size: 1.4rem;"></i></div>
+              <div>
+                <div class="goal-title">Gain Weight</div>
+                <div class="goal-desc">Healthy weight gain with proper nutrition</div>
+              </div>
+            </button>
+
+            <button type="button" class="goal-card" data-goal="flexibility">
+              <div class="goal-icon"><i class="bi bi-flower2" style="color: var(--accent-lime); font-size: 1.4rem;"></i></div>
+              <div>
+                <div class="goal-title">Flexibility & Mobility</div>
+                <div class="goal-desc">Improve range of motion and reduce stiffness</div>
+              </div>
+            </button>
           </div>
         </div>
 
-        <!-- STEP 5: FINAL GENERATING PLAN SCREEN -->
+        <!-- ════════════════════════════════════════════════════
+             STEP 5: EXPERIENCE LEVEL
+             ════════════════════════════════════════════════════ -->
+        <div class="onboarding-step-pane" id="stepPane5" style="display: none;">
+          <h1 class="auth-heading">Your fitness experience?</h1>
+          <p class="auth-subheading">We'll match the workout difficulty to your level.</p>
+
+          <div class="experience-grid">
+            <button type="button" class="exp-card" data-level="beginner">
+              <div class="exp-bars">
+                <span class="active" style="height: 10px;"></span>
+                <span style="height: 18px;"></span>
+                <span style="height: 26px;"></span>
+              </div>
+              <div class="exp-title">Beginner</div>
+              <div class="exp-desc">New to fitness or starting over</div>
+            </button>
+
+            <button type="button" class="exp-card" data-level="intermediate">
+              <div class="exp-bars">
+                <span class="active" style="height: 10px;"></span>
+                <span class="active" style="height: 18px;"></span>
+                <span style="height: 26px;"></span>
+              </div>
+              <div class="exp-title">Intermediate</div>
+              <div class="exp-desc">1–3 years of training</div>
+            </button>
+
+            <button type="button" class="exp-card" data-level="advanced">
+              <div class="exp-bars">
+                <span class="active" style="height: 10px;"></span>
+                <span class="active" style="height: 18px;"></span>
+                <span class="active" style="height: 26px;"></span>
+              </div>
+              <div class="exp-title">Advanced</div>
+              <div class="exp-desc">3+ years of dedicated training</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════════════
+             STEP 6: WORKOUT FREQUENCY
+             ════════════════════════════════════════════════════ -->
+        <div class="onboarding-step-pane" id="stepPane6" style="display: none;">
+          <h1 class="auth-heading">How often can you train?</h1>
+          <p class="auth-subheading">We'll build your weekly schedule around your availability.</p>
+
+          <div class="frequency-grid">
+            <button type="button" class="freq-card" data-freq="2">
+              <div class="freq-num">2</div>
+              <div class="freq-label">days/week</div>
+              <div class="freq-desc">Light routine</div>
+            </button>
+
+            <button type="button" class="freq-card" data-freq="3">
+              <div class="freq-num">3</div>
+              <div class="freq-label">days/week</div>
+              <div class="freq-desc">Balanced</div>
+            </button>
+
+            <button type="button" class="freq-card" data-freq="4-5">
+              <div class="freq-num">4–5</div>
+              <div class="freq-label">days/week</div>
+              <div class="freq-desc">Dedicated</div>
+            </button>
+
+            <button type="button" class="freq-card" data-freq="6-7">
+              <div class="freq-num">6–7</div>
+              <div class="freq-label">days/week</div>
+              <div class="freq-desc">Beast mode</div>
+            </button>
+          </div>
+
+          <div class="info-hint">
+            <i class="bi bi-stars"></i>
+            <span>Your AI coach will adapt your plan weekly based on your progress and recovery.</span>
+          </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════════════
+             FINAL: GENERATING PLAN SCREEN
+             ════════════════════════════════════════════════════ -->
         <div class="onboarding-step-pane" id="stepPaneFinal" style="display: none;">
           <div class="ai-generating-screen">
             <!-- Animated Neural Orb -->
             <div class="neural-orb-container">
-              <img src="assets/images/neural-orb.jpg" alt="AI Neural Matrix" class="neural-orb-img">
+              <img src="assets/images/neural-orb.jpg" alt="AI Neural Matrix" class="neural-orb-img"
+                   onerror="this.style.background='radial-gradient(circle, rgba(198,255,61,0.4), rgba(124,92,255,0.3), rgba(0,0,0,0.8))'; this.style.borderRadius='50%';">
               <div class="neural-ring-spin"></div>
             </div>
 
             <h2 class="auth-heading fs-2">Building your AI plan...</h2>
             <p class="auth-subheading">
-              Analyzing your goals, generating workouts, and customizing your nutrition plan.
+              Analyzing your profile, generating personalized workouts, and setting up your nutrition plan.
             </p>
 
             <!-- Progress Track -->
             <div class="progress my-4" style="height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px;">
-              <div class="progress-bar bg-lime" id="finalProgressBar" role="progressbar" style="width: 15%; transition: width 0.6s ease; background-color: var(--accent-lime); box-shadow: 0 0 10px var(--accent-lime);"></div>
+              <div class="progress-bar" id="finalProgressBar" role="progressbar" style="width: 10%; transition: width 0.7s ease; background-color: var(--accent-lime); box-shadow: 0 0 10px var(--accent-lime);"></div>
             </div>
-            <div class="text-muted small font-mono mb-4">This will just take a few seconds...</div>
+            <div class="text-muted small" style="font-family: var(--font-mono); margin-bottom: 24px;">This will just take a few seconds...</div>
 
             <!-- Milestones Checklist -->
             <div class="milestones-checklist">
               <div class="milestone-pill" id="ms1">
-                <span class="milestone-dot"><i class="bi bi-check-lg"></i></span> Analyzing Goals
+                <span class="milestone-dot"><i class="bi bi-check-lg"></i></span> Analyzing Profile
               </div>
               <div class="milestone-pill" id="ms2">
                 <span class="milestone-dot"><i class="bi bi-check-lg"></i></span> Generating Workouts
@@ -256,12 +921,12 @@
           </div>
         </div>
 
-        <!-- Navigation Buttons Bar -->
-        <div class="d-flex justify-content-between align-items-center pt-4 border-top border-secondary border-opacity-25 mt-4" id="onboardingNavActions">
-          <button type="button" class="btn btn-link text-secondary text-decoration-none px-0" id="btnStepBack" style="visibility: hidden;">
+        <!-- Navigation Bar -->
+        <div class="onboarding-nav-bar" id="onboardingNavActions">
+          <button type="button" class="btn-onboard-back" id="btnStepBack" style="visibility: hidden;">
             <i class="bi bi-arrow-left"></i> Back
           </button>
-          <button type="button" class="btn-fitnexa btn-accent btn-lg px-4" id="btnStepNext">
+          <button type="button" class="btn-onboard-next" id="btnStepNext">
             Next <i class="bi bi-arrow-right"></i>
           </button>
         </div>
@@ -272,146 +937,211 @@
 
   <!-- GSAP 3.12.5 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <!-- Existing Auth Logic (Preserved Untouched) -->
-  <script src="assets/js/data-store.js"></script>
+  <!-- Supabase JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- Supabase Config -->
+  <script src="assets/js/supabase-config.js"></script>
+  <!-- Auth Logic -->
   <script src="assets/js/auth.js"></script>
 
-  <!-- Onboarding Wizard Controller -->
+  <!-- Onboarding Wizard Controller (Saves to Supabase) -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let currentStep = 1;
-      const totalSteps = 4;
+    document.addEventListener('DOMContentLoaded', async () => {
+      // ── Auth Guard: Must be logged in ──────────────────
+      let currentUser = null;
+      if (window.Auth) {
+        const session = await window.Auth.initSession();
+        if (!session) {
+          window.location.href = 'login.html';
+          return;
+        }
+        currentUser = session.user;
+      }
 
-      // Onboarding Profile State
+      // ── State ──────────────────────────────────────────
+      let currentStep = 1;
+      const totalSteps = 6;
+
       const profileData = {
-        goal: 'fatloss',
-        experience: 'beginner',
-        equipment: ['full_gym'],
-        age: 28,
-        height: 178,
-        weight: 76
+        gender: null,
+        age_range: null,
+        height_cm: null,
+        weight_kg: null,
+        goal: null,
+        experience: null,
+        workout_frequency: null
       };
 
       const stepCounter = document.getElementById('stepCounterLabel');
       const btnBack = document.getElementById('btnStepBack');
       const btnNext = document.getElementById('btnStepNext');
       const navActions = document.getElementById('onboardingNavActions');
+      const errorBanner = document.getElementById('onboardError');
+      const errorText = document.getElementById('onboardErrorText');
 
-      // 1. Single Goal Select Cards
-      document.querySelectorAll('#stepPane1 .select-card-btn').forEach(btn => {
+      // ── Helper: Show Error ─────────────────────────────
+      function showError(msg) {
+        errorText.textContent = msg;
+        errorBanner.style.display = 'flex';
+        setTimeout(() => { errorBanner.style.display = 'none'; }, 4000);
+      }
+
+      function hideError() {
+        errorBanner.style.display = 'none';
+      }
+
+      // ── Step 1: Gender Select ──────────────────────────
+      document.querySelectorAll('.gender-card').forEach(btn => {
         btn.addEventListener('click', () => {
-          document.querySelectorAll('#stepPane1 .select-card-btn').forEach(b => b.classList.remove('selected'));
+          document.querySelectorAll('.gender-card').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          profileData.gender = btn.getAttribute('data-gender');
+          hideError();
+        });
+      });
+
+      // ── Step 2: Age Range Select ───────────────────────
+      document.querySelectorAll('.age-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.age-pill').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          profileData.age_range = btn.getAttribute('data-age');
+          hideError();
+        });
+      });
+
+      // ── Step 4: Goal Select ────────────────────────────
+      document.querySelectorAll('.goal-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.goal-card').forEach(b => b.classList.remove('selected'));
           btn.classList.add('selected');
           profileData.goal = btn.getAttribute('data-goal');
+          hideError();
         });
       });
 
-      // 2. Experience Level Select Cards
-      document.querySelectorAll('#stepPane2 .select-card-btn').forEach(btn => {
+      // ── Step 5: Experience Select ──────────────────────
+      document.querySelectorAll('.exp-card').forEach(btn => {
         btn.addEventListener('click', () => {
-          document.querySelectorAll('#stepPane2 .select-card-btn').forEach(b => b.classList.remove('selected'));
+          document.querySelectorAll('.exp-card').forEach(b => b.classList.remove('selected'));
           btn.classList.add('selected');
           profileData.experience = btn.getAttribute('data-level');
+          hideError();
         });
       });
 
-      // 3. Equipment Multi-Select Cards
-      document.querySelectorAll('#stepPane3 .select-card-btn').forEach(btn => {
+      // ── Step 6: Frequency Select ───────────────────────
+      document.querySelectorAll('.freq-card').forEach(btn => {
         btn.addEventListener('click', () => {
-          btn.classList.toggle('selected');
-          const icon = btn.querySelector('i:last-child');
-          if (btn.classList.contains('selected')) {
-            if (icon) icon.className = 'bi bi-check-circle-fill text-lime fs-5';
-          } else {
-            if (icon) icon.className = 'bi bi-circle text-muted fs-5';
-          }
-
-          // Gather selected
-          profileData.equipment = [];
-          document.querySelectorAll('#stepPane3 .select-card-btn.selected').forEach(b => {
-            profileData.equipment.push(b.getAttribute('data-equip'));
-          });
+          document.querySelectorAll('.freq-card').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          profileData.workout_frequency = btn.getAttribute('data-freq');
+          hideError();
         });
       });
 
-      // Navigation: Next
+      // ── Validation per step ────────────────────────────
+      function validateStep(step) {
+        switch(step) {
+          case 1:
+            if (!profileData.gender) { showError('Please select your gender to continue.'); return false; }
+            return true;
+          case 2:
+            if (!profileData.age_range) { showError('Please select your age range to continue.'); return false; }
+            return true;
+          case 3:
+            const h = document.getElementById('inputHeight').value;
+            const w = document.getElementById('inputWeight').value;
+            if (!h || !w) { showError('Please enter both your height and weight.'); return false; }
+            profileData.height_cm = parseInt(h);
+            profileData.weight_kg = parseInt(w);
+            return true;
+          case 4:
+            if (!profileData.goal) { showError('Please select your primary fitness goal.'); return false; }
+            return true;
+          case 5:
+            if (!profileData.experience) { showError('Please select your experience level.'); return false; }
+            return true;
+          case 6:
+            if (!profileData.workout_frequency) { showError('Please select how often you can train.'); return false; }
+            return true;
+          default:
+            return true;
+        }
+      }
+
+      // ── Navigation: Next ───────────────────────────────
       btnNext.addEventListener('click', () => {
+        if (!validateStep(currentStep)) return;
+
         if (currentStep < totalSteps) {
           goToStep(currentStep + 1);
         } else if (currentStep === totalSteps) {
-          // Read step 4 fields
-          const age = document.getElementById('athleteAge').value;
-          const height = document.getElementById('athleteHeight').value;
-          const weight = document.getElementById('athleteWeight').value;
-          if (age) profileData.age = parseInt(age);
-          if (height) profileData.height = parseInt(height);
-          if (weight) profileData.weight = parseInt(weight);
-
-          // Launch final "Building AI Plan" sequence
           startBuildingPlan();
         }
       });
 
-      // Navigation: Back
+      // ── Navigation: Back ───────────────────────────────
       btnBack.addEventListener('click', () => {
         if (currentStep > 1) {
           goToStep(currentStep - 1);
         }
       });
 
+      // ── Step Transition ────────────────────────────────
       function goToStep(step) {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        hideError();
         const prevPane = document.getElementById('stepPane' + currentStep);
         const nextPane = document.getElementById('stepPane' + step);
-
         if (!nextPane || !prevPane) return;
 
-        // Transition panes
-        if (prefersReducedMotion || typeof gsap === 'undefined') {
-          prevPane.style.display = 'none';
-          nextPane.style.display = 'block';
-        } else {
+        if (typeof gsap !== 'undefined') {
           gsap.to(prevPane, {
             opacity: 0,
             x: step > currentStep ? -30 : 30,
-            duration: 0.3,
+            duration: 0.25,
             onComplete: () => {
               prevPane.style.display = 'none';
+              prevPane.style.opacity = 1;
+              prevPane.style.transform = '';
               nextPane.style.display = 'block';
               gsap.fromTo(nextPane,
                 { opacity: 0, x: step > currentStep ? 30 : -30 },
-                { opacity: 1, x: 0, duration: 0.35 }
+                { opacity: 1, x: 0, duration: 0.3 }
               );
             }
           });
+        } else {
+          prevPane.style.display = 'none';
+          nextPane.style.display = 'block';
         }
 
         currentStep = step;
 
-        // Update top segmented indicators
+        // Update progress segments
         for (let i = 1; i <= totalSteps; i++) {
           const seg = document.getElementById('seg' + i);
           if (seg) {
-            if (i <= currentStep) {
-              seg.classList.add('active');
-            } else {
-              seg.classList.remove('active');
-            }
+            seg.classList.toggle('active', i <= currentStep);
           }
         }
 
-        stepCounter.innerText = `Step ${currentStep} of ${totalSteps}`;
+        stepCounter.textContent = `Step ${currentStep} of ${totalSteps}`;
         btnBack.style.visibility = currentStep > 1 ? 'visible' : 'hidden';
-        btnNext.innerHTML = currentStep === totalSteps ? 'Complete <i class="bi bi-check-lg"></i>' : 'Next <i class="bi bi-arrow-right"></i>';
+        btnNext.innerHTML = currentStep === totalSteps
+          ? 'Finish <i class="bi bi-check-lg"></i>'
+          : 'Next <i class="bi bi-arrow-right"></i>';
       }
 
-      function startBuildingPlan() {
-        const pane4 = document.getElementById('stepPane4');
+      // ── Final: Save to Supabase & Animate ──────────────
+      async function startBuildingPlan() {
+        const lastPane = document.getElementById('stepPane' + totalSteps);
         const finalPane = document.getElementById('stepPaneFinal');
         navActions.style.display = 'none';
         document.getElementById('onboardingHeader').style.opacity = '0.4';
+        document.getElementById('onboardingHeader').style.pointerEvents = 'none';
 
-        pane4.style.display = 'none';
+        lastPane.style.display = 'none';
         finalPane.style.display = 'block';
 
         if (typeof gsap !== 'undefined') {
@@ -424,28 +1154,56 @@
         const ms3 = document.getElementById('ms3');
         const ms4 = document.getElementById('ms4');
 
-        // Milestone progression sequence
-        setTimeout(() => { bar.style.width = '35%'; ms1.classList.add('completed'); }, 600);
-        setTimeout(() => { bar.style.width = '65%'; ms2.classList.add('completed'); }, 1400);
-        setTimeout(() => { bar.style.width = '88%'; ms3.classList.add('completed'); }, 2200);
+        // Milestone 1: Analyzing Profile
+        setTimeout(() => { bar.style.width = '30%'; ms1.classList.add('completed'); }, 600);
+
+        // Milestone 2: Save to Supabase
+        setTimeout(async () => {
+          bar.style.width = '55%';
+          ms2.classList.add('completed');
+
+          // ── SAVE TO SUPABASE ──────────────────────────
+          try {
+            if (window.supabaseClient && currentUser) {
+              const { error } = await window.supabaseClient
+                .from('profiles')
+                .upsert({
+                  id: currentUser.id,
+                  full_name: currentUser.user_metadata?.full_name || '',
+                  gender: profileData.gender,
+                  age_range: profileData.age_range,
+                  height_cm: profileData.height_cm,
+                  weight_kg: profileData.weight_kg,
+                  goal: profileData.goal,
+                  experience: profileData.experience,
+                  workout_frequency: profileData.workout_frequency,
+                  onboarding_completed: true,
+                  updated_at: new Date().toISOString()
+                });
+
+              if (error) {
+                console.error('[FITNEXA] Profile save error:', error.message);
+              } else {
+                console.log('[FITNEXA] ✅ Profile saved to Supabase.');
+              }
+            }
+          } catch (err) {
+            console.error('[FITNEXA] Profile save failed:', err.message);
+          }
+        }, 1400);
+
+        // Milestone 3
+        setTimeout(() => { bar.style.width = '82%'; ms3.classList.add('completed'); }, 2400);
+
+        // Milestone 4: Done → Redirect
         setTimeout(() => {
           bar.style.width = '100%';
           ms4.classList.add('completed');
 
-          // Save profile to existing data store if user is logged in
-          if (window.Auth && window.DataStore) {
-            const user = window.Auth.getCurrentUser();
-            if (user) {
-              user.profile = Object.assign(user.profile || {}, profileData);
-              window.DataStore.updateUser(user);
-            }
-          }
-
-          // Cross-fade redirect to dashboard
           setTimeout(() => {
             window.location.href = 'dashboard/index.html';
           }, 800);
-        }, 3000);
+        }, 3200);
       }
     });
   </script>

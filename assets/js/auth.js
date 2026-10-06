@@ -1,50 +1,68 @@
 /* ============================================================
-   FITNEXA AI — AUTHENTICATION & ROUTE GUARD
-   Session management, multi-user isolation & protected routes
+   FITNEXA AI — AUTHENTICATION & ROUTE GUARD (Supabase Edition)
+   Session management using Supabase Auth
    ============================================================ */
 
 (function(window) {
     'use strict';
 
-    const SESSION_KEY = 'fitnexa_current_user_id';
-
     const Auth = {
-        getCurrentUserId: function() {
-            return localStorage.getItem(SESSION_KEY);
+        // Get current session from Supabase
+        getCurrentUser: async function() {
+            if (!window.supabaseClient) return null;
+            const { data: { user }, error } = await window.supabaseClient.auth.getUser();
+            if (error || !user) return null;
+            return user;
         },
 
-        getCurrentUser: function() {
-            const userId = this.getCurrentUserId();
-            if (!userId) return null;
-            return window.DataStore ? window.DataStore.getUserById(userId) : null;
+        // Synchronous check using cached session
+        getCurrentUserSync: function() {
+            if (!window.supabaseClient) return null;
+            // This uses the cached session from the last getSession call
+            const session = this._cachedSession;
+            if (session && session.user) return session.user;
+            return null;
         },
 
         isLoggedIn: function() {
-            return !!this.getCurrentUser();
+            return !!this._cachedSession;
         },
 
-        setCurrentUser: function(userId) {
-            localStorage.setItem(SESSION_KEY, userId);
+        // Initialize session cache (call on page load)
+        initSession: async function() {
+            if (!window.supabaseClient) {
+                this._cachedSession = null;
+                return null;
+            }
+            const { data: { session }, error } = await window.supabaseClient.auth.getSession();
+            this._cachedSession = session;
+            return session;
         },
 
-        login: function(email, password) {
-            if (!window.DataStore) return { success: false, message: 'System initializing. Please refresh.' };
-
-            const user = window.DataStore.getUserByEmail(email);
-            if (!user) {
-                return { success: false, message: 'No account found with this email address.' };
+        // Login with email and password via Supabase
+        login: async function(email, password) {
+            if (!window.supabaseClient) {
+                return { success: false, message: 'Supabase is not configured. Please check supabase-config.js.' };
             }
 
-            if (user.password !== password) {
-                return { success: false, message: 'Incorrect password. Please verify credentials.' };
+            const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                return { success: false, message: error.message };
             }
 
-            this.setCurrentUser(user.id);
-            return { success: true, user: user };
+            this._cachedSession = data.session;
+            return { success: true, user: data.user, session: data.session };
         },
 
-        signup: function(fullName, email, password) {
-            if (!window.DataStore) return { success: false, message: 'System initializing. Please refresh.' };
+        // Signup with email, password, and fullName via Supabase
+        signup: async function(fullName, email, password) {
+            if (!window.supabaseClient) {
+                return { success: false, message: 'Supabase is not configured. Please check supabase-config.js.' };
+            }
 
             if (!fullName || fullName.trim().length < 2) {
                 return { success: false, message: 'Please provide your full name.' };
@@ -59,57 +77,100 @@
                 return { success: false, message: 'Password must be at least 6 characters long.' };
             }
 
-            const existingUser = window.DataStore.getUserByEmail(email);
-            if (existingUser) {
-                return { success: false, message: 'An account with this email already exists. Please log in.' };
-            }
-
-            const newUser = window.DataStore.createUser({
-                fullName: fullName.trim(),
+            const { data, error } = await window.supabaseClient.auth.signUp({
                 email: email.trim(),
-                password: password
+                password: password,
+                options: {
+                    data: {
+                        full_name: fullName.trim()
+                    }
+                }
             });
 
-            this.setCurrentUser(newUser.id);
-            return { success: true, user: newUser };
+            if (error) {
+                return { success: false, message: error.message };
+            }
+
+            this._cachedSession = data.session;
+            return { success: true, user: data.user, session: data.session };
         },
 
-        logout: function() {
-            localStorage.removeItem(SESSION_KEY);
-            window.location.href = 'login.html';
-        },
-
-        switchUser: function(userIdOrEmail) {
-            if (!window.DataStore) return;
-            let user = window.DataStore.getUserById(userIdOrEmail);
-            if (!user) {
-                user = window.DataStore.getUserByEmail(userIdOrEmail);
+        // Logout
+        logout: async function() {
+            if (window.supabaseClient) {
+                await window.supabaseClient.auth.signOut();
             }
-            if (user) {
-                this.setCurrentUser(user.id);
-                window.location.reload();
-            }
+            this._cachedSession = null;
+            window.location.href = window.location.pathname.includes('/dashboard/') ? '../login.html' : 'login.html';
         },
 
         // Protected route guard: call on protected pages
-        requireAuth: function() {
-            const user = this.getCurrentUser();
-            if (!user) {
-                const currentPage = encodeURIComponent(window.location.pathname.split('/').pop() || 'dashboard.html');
-                window.location.href = `login.html?returnUrl=${currentPage}`;
+        requireAuth: async function() {
+            const session = await this.initSession();
+            if (!session) {
+                const currentPage = encodeURIComponent(window.location.pathname.split('/').pop() || 'index.html');
+                const loginPath = window.location.pathname.includes('/dashboard/') ? '../login.html' : 'login.html';
+                window.location.href = `${loginPath}?returnUrl=${currentPage}`;
                 return false;
             }
             return true;
         },
 
         // Auth pages guard: redirect to dashboard if already authenticated
-        redirectIfAuth: function(destination = 'dashboard.html') {
-            if (this.isLoggedIn()) {
+        redirectIfAuth: async function(destination) {
+            destination = destination || (window.location.pathname.includes('/dashboard/') ? 'index.html' : 'dashboard/index.html');
+            const session = await this.initSession();
+            if (session) {
                 window.location.href = destination;
                 return true;
             }
             return false;
-        }
+        },
+
+        // Google OAuth Login
+        loginWithGoogle: async function() {
+            if (!window.supabaseClient) return;
+            const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin + '/dashboard/index.html'
+                }
+            });
+            if (error) {
+                console.error('Google login error:', error.message);
+            }
+        },
+
+        // Apple OAuth Login
+        loginWithApple: async function() {
+            if (!window.supabaseClient) return;
+            const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
+                provider: 'apple',
+                options: {
+                    redirectTo: window.location.origin + '/dashboard/index.html'
+                }
+            });
+            if (error) {
+                console.error('Apple login error:', error.message);
+            }
+        },
+
+        // Password reset
+        resetPassword: async function(email) {
+            if (!window.supabaseClient) {
+                return { success: false, message: 'Supabase is not configured.' };
+            }
+            const { error } = await window.supabaseClient.auth.resetPasswordForEmail(email, {
+                redirectTo: window.location.origin + '/login.html'
+            });
+            if (error) {
+                return { success: false, message: error.message };
+            }
+            return { success: true, message: 'Password reset email sent. Check your inbox.' };
+        },
+
+        // Internal session cache
+        _cachedSession: null
     };
 
     window.Auth = Auth;
