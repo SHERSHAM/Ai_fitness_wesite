@@ -7,56 +7,86 @@
    1. BUTTONS & CTAS
    ========================================================================== */
 .btn-fitnexa {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  padding: 11px 32px;
+  min-width: 160px;
+  height: 44px;
+  border-radius: var(--radius-md);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.95rem;
-  padding: 12px 28px;
-  border-radius: var(--radius-full);
-  transition: all var(--transition-fast);
-  cursor: pointer;
-  border: 1px solid transparent;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  color: #FFFFFF !important;
   text-decoration: none;
-  line-height: 1;
-  white-space: nowrap;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Primary Accent: Electric Lime Pill */
-.btn-accent {
-  background-color: var(--accent-lime);
-  color: #0B0C0E !important;
-  box-shadow: 0 0 20px rgba(198, 255, 61, 0.3);
-}
-
-.btn-accent:hover {
-  background-color: var(--accent-lime-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(198, 255, 61, 0.5);
-  color: #0B0C0E !important;
-}
-
-.btn-accent:active {
-  transform: translateY(0);
-}
-
-/* Secondary Frosted Glass Button */
-.btn-glass {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-primary) !important;
+  cursor: pointer;
+  background: rgba(18, 20, 26, 0.75);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
+    0 10px 24px -5px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.btn-glass:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
+/* Primary Accent: Electric Lime Frosted Matte Glass */
+.btn-accent,
+.btn-fitnexa.btn-accent {
+  background: 
+    radial-gradient(140% 160% at 50% 120%, rgba(198, 255, 61, 0.22) 0%, rgba(198, 255, 61, 0.04) 55%, transparent 80%),
+    linear-gradient(180deg, rgba(28, 32, 40, 0.8) 0%, rgba(14, 16, 21, 0.9) 100%);
+  border: 1px solid rgba(198, 255, 61, 0.35);
+  color: #FFFFFF !important;
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 6px 0 rgba(198, 255, 61, 0.12),
+    0 10px 28px -6px rgba(0, 0, 0, 0.8),
+    0 0 18px -2px rgba(198, 255, 61, 0.18);
+}
+
+.btn-accent:hover,
+.btn-fitnexa.btn-accent:hover {
   transform: translateY(-2px);
+  border-color: rgba(198, 255, 61, 0.6);
+  box-shadow: 
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 10px 0 rgba(198, 255, 61, 0.22),
+    0 14px 34px -6px rgba(0, 0, 0, 0.9),
+    0 0 24px 2px rgba(198, 255, 61, 0.3);
+  color: #FFFFFF !important;
+}
+
+/* Secondary Stealth Frosted Glass Button */
+.btn-glass,
+.btn-outline-lime,
+.btn-fitnexa.btn-glass,
+.btn-fitnexa.btn-outline-lime {
+  background: linear-gradient(180deg, rgba(26, 30, 38, 0.75) 0%, rgba(12, 14, 18, 0.88) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF !important;
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.7),
+    0 10px 28px -6px rgba(0, 0, 0, 0.8);
+}
+
+.btn-glass:hover,
+.btn-outline-lime:hover,
+.btn-fitnexa.btn-glass:hover,
+.btn-fitnexa.btn-outline-lime:hover {
+  transform: translateY(-2px);
+  border-color: rgba(198, 255, 61, 0.4);
+  background: linear-gradient(180deg, rgba(34, 40, 50, 0.85) 0%, rgba(16, 18, 24, 0.92) 100%);
+  box-shadow: 
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.22),
+    0 14px 34px -6px rgba(0, 0, 0, 0.9),
+    0 0 16px 0 rgba(198, 255, 61, 0.15);
   color: #FFFFFF !important;
 }
 
@@ -91,6 +121,164 @@
 
 .btn-fitnexa:hover i, .btn-fitnexa:hover svg {
   transform: translateX(3px);
+}
+
+/* ==========================================================================
+   ULTRA-PREMIUM SATIN MATTE GLASS BUTTONS (Sleek Elongated Rounded Bar)
+   ========================================================================== */
+.btn-matte-glass {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 36px;
+  min-width: 200px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  color: #FFFFFF !important;
+  text-decoration: none;
+  cursor: pointer;
+  background: rgba(18, 20, 26, 0.75);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
+    0 10px 24px -5px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  z-index: 1;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Primary: Electric Lime Infused Frosted Glass */
+.btn-matte-glass.btn-matte-lime {
+  background: 
+    radial-gradient(140% 160% at 50% 120%, rgba(198, 255, 61, 0.22) 0%, rgba(198, 255, 61, 0.04) 55%, transparent 80%),
+    linear-gradient(180deg, rgba(28, 32, 40, 0.8) 0%, rgba(14, 16, 21, 0.9) 100%);
+  border: 1px solid rgba(198, 255, 61, 0.35);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 6px 0 rgba(198, 255, 61, 0.12),
+    0 10px 28px -6px rgba(0, 0, 0, 0.8),
+    0 0 18px -2px rgba(198, 255, 61, 0.18);
+}
+
+/* Secondary: Stealth Obsidian Frosted Glass */
+.btn-matte-glass.btn-matte-dark {
+  background: 
+    linear-gradient(180deg, rgba(26, 30, 38, 0.75) 0%, rgba(12, 14, 18, 0.88) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.7),
+    0 10px 28px -6px rgba(0, 0, 0, 0.8);
+}
+
+/* Diffused Satin Top Shimmer */
+.btn-matte-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* Hover Sweep Flare */
+.btn-matte-glass::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: skewX(-25deg);
+  pointer-events: none;
+  transition: left 0.65s ease;
+}
+
+.btn-matte-glass:hover::after {
+  left: 150%;
+}
+
+.btn-matte-glass.btn-matte-lime:hover {
+  transform: translateY(-2px);
+  border-color: rgba(198, 255, 61, 0.6);
+  box-shadow: 
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 10px 0 rgba(198, 255, 61, 0.22),
+    0 14px 34px -6px rgba(0, 0, 0, 0.9),
+    0 0 24px 2px rgba(198, 255, 61, 0.3);
+}
+
+.btn-matte-glass.btn-matte-dark:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: linear-gradient(180deg, rgba(34, 40, 50, 0.85) 0%, rgba(16, 18, 24, 0.92) 100%);
+  box-shadow: 
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.22),
+    0 14px 34px -6px rgba(0, 0, 0, 0.9),
+    0 0 16px 0 rgba(255, 255, 255, 0.08);
+}
+
+.btn-matte-glass:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Glowing Pulse Dot */
+.btn-matte-glow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-lime);
+  box-shadow: 0 0 10px var(--accent-lime), 0 0 20px var(--accent-lime);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.7; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* Circular Frosted Icon Capsule */
+.btn-matte-icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.88rem;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
+}
+
+.btn-matte-lime .btn-matte-icon-box {
+  background: rgba(198, 255, 61, 0.18);
+  border-color: rgba(198, 255, 61, 0.4);
+  color: var(--accent-lime);
+}
+
+.btn-matte-glass:hover .btn-matte-icon-box {
+  transform: translateX(3px);
+}
+
+/* Compatibility alias for btn-droplet */
+.btn-droplet {
+  composes: btn-matte-glass btn-matte-lime;
 }
 
 /* ==========================================================================

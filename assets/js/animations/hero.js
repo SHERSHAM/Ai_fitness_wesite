@@ -56,11 +56,13 @@ function runHeroEntrance() {
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-  // 1. Eyebrow Tag
-  tl.fromTo('.hero-eyebrow',
-    { opacity: 0, y: -20 },
-    { opacity: 1, y: 0, duration: 0.7 }
-  );
+  // 1. Eyebrow Tag (if present)
+  if (document.querySelector('.hero-eyebrow')) {
+    tl.fromTo('.hero-eyebrow',
+      { opacity: 0, y: -20 },
+      { opacity: 1, y: 0, duration: 0.7 }
+    );
+  }
 
   // 2. Headline Split / Words reveal
   tl.fromTo('.hero-title .title-line',
@@ -77,7 +79,7 @@ function runHeroEntrance() {
   );
 
   // 4. CTA Buttons
-  tl.fromTo('.hero-cta-group .btn-fitnexa',
+  tl.fromTo('.hero-cta-group a',
     { opacity: 0, y: 25, scale: 0.96 },
     { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1 },
     '-=0.4'
@@ -96,12 +98,19 @@ function runHeroEntrance() {
     '-=0.3'
   );
 
-  // 6. Runner silhouette entrance
-  tl.fromTo('.hero-visual-col',
-    { opacity: 0, scale: 0.95 },
-    { opacity: 1, scale: 1, duration: 1 },
-    '-=0.8'
-  );
+  // 6. Hero background subtle entrance
+  if (document.querySelector('.hero-bg-img')) {
+    gsap.fromTo('.hero-bg-img',
+      { opacity: 0, scale: 1.04 },
+      { opacity: 1, scale: 1, duration: 1.4, ease: 'power2.out' }
+    );
+  } else if (document.querySelector('.hero-visual-col')) {
+    tl.fromTo('.hero-visual-col',
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: 1 },
+      '-=0.8'
+    );
+  }
 
   if (document.querySelector('.hud-telemetry-card')) {
     tl.fromTo('.hud-telemetry-card',

@@ -7,10 +7,10 @@
   <meta name="description" content="Cinematic AI-Powered Personal Fitness Platform. Experience real-time form correction, adaptive programming, and biometric readiness tracking.">
   <meta name="theme-color" content="#0B0C0E">
 
-  <!-- Google Fonts: Outfit, Inter, JetBrains Mono -->
+  <!-- Google Font: Outfit (Weights 300-900) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Bootstrap 5.3.3 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,8 +20,8 @@
   <!-- FITNEXA Master Stylesheets -->
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/components.css">
-  <link rel="stylesheet" href="assets/css/pages/home.css">
+  <link rel="stylesheet" href="assets/css/components.css?v=20261007_v5">
+  <link rel="stylesheet" href="assets/css/pages/home.css?v=20261007_v7">
 </head>
 <body>
 
@@ -65,22 +65,8 @@
           <span class="nav-brand-dot"></span>
         </a>
 
-        <!-- Menu Navigation Links -->
-        <ul class="nav-menu-links d-none d-lg-flex">
-          <li><a href="index.html" class="nav-link-item active">Home</a></li>
-          <li><a href="#programs-section" class="nav-link-item">Programs</a></li>
-          <li><a href="#pricing-section" class="nav-link-item">Pricing</a></li>
-          <li><a href="#deep-dive-section" class="nav-link-item">About</a></li>
-          <li><a href="#footer-section" class="nav-link-item">Contact</a></li>
-        </ul>
 
-        <!-- Nav Right CTAs -->
-        <div class="nav-actions">
-          <a href="login.html" class="nav-login-link d-none d-sm-inline-block">Login</a>
-          <a href="signup.html" class="btn-fitnexa btn-accent btn-sm">
-            Start Free Trial <i class="bi bi-arrow-right"></i>
-          </a>
-        </div>
+
       </div>
     </div>
   </nav>
@@ -89,16 +75,18 @@
        3. HERO SECTION (Matching Reference Image)
        ========================================================================== -->
   <section class="hero-section" id="heroSection">
-    <div class="container-fluid px-4 px-lg-5">
+    <!-- Full-Bleed Cinematic Athlete Background -->
+    <div class="hero-backdrop-container">
+      <img src="assets/images/hero-bg-athlete.jpg" alt="FITNEXA Athlete" class="hero-bg-img">
+      <div class="hero-backdrop-overlay"></div>
+    </div>
+
+    <div class="container-fluid px-4 px-lg-5 position-relative z-3">
       <div class="row align-items-center">
 
         <!-- Left Column: Copy, CTAs, and Stats -->
-        <div class="col-lg-6 z-3">
-          <!-- Eyebrow Tag -->
-          <div class="eyebrow-tag hero-eyebrow">
-            <span class="eyebrow-dot"></span>
-            AI-POWERED TRAINING
-          </div>
+        <div class="col-lg-7 col-xl-6">
+
 
           <!-- Bold Headline with Word Reveal -->
           <h1 class="hero-title">
@@ -113,501 +101,29 @@
 
           <!-- Action Buttons -->
           <div class="hero-cta-group">
-            <a href="signup.html" class="btn-fitnexa btn-accent btn-lg">
-              Start Free Trial <i class="bi bi-arrow-right"></i>
+            <a href="signup.html" class="btn-matte-glass btn-matte-lime">
+              Get Started
             </a>
-            <a href="#programs-section" class="btn-fitnexa btn-glass btn-lg">
-              <i class="bi bi-play-circle-fill text-lime"></i> Explore Programs
+            <a href="login.html" class="btn-matte-glass btn-matte-dark">
+              Sign In
             </a>
           </div>
 
-
         </div>
 
-        <!-- Center/Right Column: 3D Kinetic Canvas, Athletic Runner & Biometric HUD -->
-        <div class="col-lg-6 hero-visual-col">
-          <!-- Interactive Three.js Particle Vortex Canvas -->
-          <canvas id="heroVortexCanvas" class="hero-vortex-canvas"></canvas>
-
-          <!-- Runner Athletic Silhouette Image with Neon Lime Energy Vortex -->
-          <div class="hero-runner-wrapper">
-            <img src="assets/images/hero-runner.jpg" alt="FITNEXA Athletic Runner" class="hero-runner-img" fetchpriority="high" decoding="async">
-          </div>
-
-
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Centered Scroll Indicator -->
-    <div class="hero-scroll-indicator">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       4. SPEC STRIP SECTION ("BEYOND LIMITS" 4-CARD ROW)
-       ========================================================================== -->
-  <section class="spec-strip-section py-4">
-    <div class="container-fluid px-4 px-lg-5">
-      <div class="row g-3">
-        <!-- Spec Card 1 -->
-        <div class="col-md-6 col-lg-3">
-          <div class="spec-card">
-            <div class="spec-icon-box">
-              <i class="bi bi-cpu-fill"></i>
-            </div>
-            <div class="spec-text">
-              <h4>AI Workout Plans</h4>
-              <p>Personalized routines based on your biomechanics and goals</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Spec Card 2 -->
-        <div class="col-md-6 col-lg-3">
-          <div class="spec-card">
-            <div class="spec-icon-box violet">
-              <i class="bi bi-bar-chart-fill"></i>
-            </div>
-            <div class="spec-text">
-              <h4>Track Progress</h4>
-              <p>Visualize neuromuscular adaptation and strength over time</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Spec Card 3 -->
-        <div class="col-md-6 col-lg-3">
-          <div class="spec-card">
-            <div class="spec-icon-box">
-              <i class="bi bi-heart-pulse-fill"></i>
-            </div>
-            <div class="spec-text">
-              <h4>Stay Consistent</h4>
-              <p>Smart recovery alerts and streak motivation routines</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Spec Card 4 -->
-        <div class="col-md-6 col-lg-3">
-          <div class="spec-card">
-            <div class="spec-icon-box">
-              <i class="bi bi-person-check-fill"></i>
-            </div>
-            <div class="spec-text">
-              <h4>Expert Guidance</h4>
-              <p>Exercise science validated by top athletic physiologists</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
   <!-- ==========================================================================
-       5. PROGRAMS SECTION (Dynamic Carousel / 5 Cards)
-       ========================================================================== -->
-  <section class="programs-section py-5" id="programs-section">
-    <div class="container-fluid px-4 px-lg-5">
-      <div class="d-flex justify-content-between align-items-end mb-4">
-        <div>
-          <div class="eyebrow-tag">PROGRAMS</div>
-          <h2 class="h1 font-weight-bold">Programs for Every Goal</h2>
-        </div>
-        <a href="programs.html" class="text-lime fw-bold font-display d-inline-flex align-items-center gap-1">
-          Explore All <i class="bi bi-arrow-right"></i>
-        </a>
-      </div>
-
-      <div class="row g-3">
-        <!-- Strength -->
-        <div class="col-6 col-md-4 col-lg">
-          <a href="login.html" class="program-card" data-tilt>
-            <img src="assets/images/workout-strength.jpg" alt="Strength Program" class="program-card-img" loading="lazy" decoding="async">
-            <div class="program-card-overlay">
-              <span class="program-title">Strength</span>
-              <span class="program-arrow"><i class="bi bi-arrow-right"></i></span>
-            </div>
-          </a>
-        </div>
-
-        <!-- Fat Loss -->
-        <div class="col-6 col-md-4 col-lg">
-          <a href="login.html" class="program-card" data-tilt>
-            <img src="assets/images/workout-fatloss.jpg" alt="Fat Loss Program" class="program-card-img" loading="lazy" decoding="async">
-            <div class="program-card-overlay">
-              <span class="program-title">Fat Loss</span>
-              <span class="program-arrow"><i class="bi bi-arrow-right"></i></span>
-            </div>
-          </a>
-        </div>
-
-        <!-- Muscle Gain -->
-        <div class="col-6 col-md-4 col-lg">
-          <a href="login.html" class="program-card" data-tilt>
-            <img src="assets/images/workout-muscle.jpg" alt="Muscle Gain Program" class="program-card-img" loading="lazy" decoding="async">
-            <div class="program-card-overlay">
-              <span class="program-title">Muscle Gain</span>
-              <span class="program-arrow"><i class="bi bi-arrow-right"></i></span>
-            </div>
-          </a>
-        </div>
-
-        <!-- Flexibility -->
-        <div class="col-6 col-md-4 col-lg">
-          <a href="login.html" class="program-card" data-tilt>
-            <img src="assets/images/workout-mobility.jpg" alt="Flexibility Program" class="program-card-img" loading="lazy" decoding="async">
-            <div class="program-card-overlay">
-              <span class="program-title">Flexibility</span>
-              <span class="program-arrow"><i class="bi bi-arrow-right"></i></span>
-            </div>
-          </a>
-        </div>
-
-        <!-- General Fitness -->
-        <div class="col-6 col-md-4 col-lg">
-          <a href="login.html" class="program-card" data-tilt>
-            <img src="assets/images/workout-endurance.jpg" alt="General Fitness Program" class="program-card-img" loading="lazy" decoding="async">
-            <div class="program-card-overlay">
-              <span class="program-title">General Fitness</span>
-              <span class="program-arrow"><i class="bi bi-arrow-right"></i></span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ==========================================================================
-       7. FEATURE DEEP-DIVE (3-Panel Split)
-       ========================================================================== -->
-  <section class="features-deep-dive-section" id="deep-dive-section">
-    <div class="container-fluid px-4 px-lg-5">
-      <div class="text-center max-w-700 mx-auto mb-5">
-        <div class="eyebrow-tag">PERFORMANCE INTELLIGENCE</div>
-        <h2 class="display-5 font-weight-bold">Engineered for Human Excellence</h2>
-        <p class="text-secondary">Three pillars of algorithmic coaching that out-perform traditional personal training.</p>
-      </div>
-
-      <div class="row g-4">
-        <!-- Panel 1: Form Correction -->
-        <div class="col-lg-4">
-          <div class="deep-dive-card" data-tilt>
-            <div>
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="eyebrow-tag mb-0">COMPUTER VISION</span>
-                <span class="badge bg-dark text-lime border border-lime border-opacity-25 px-3 py-1 font-mono">LIVE AI</span>
-              </div>
-              <h3>Real-Time Form Correction</h3>
-              <p class="text-secondary small">
-                Client-side pose detection monitors 33 joint angles 60 times a second to prevent injury and maximize mechanical efficiency.
-              </p>
-
-              <!-- Form Dial -->
-              <div class="form-gauge-circle">
-                <svg viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="45" class="gauge-bg-circle"/>
-                  <circle cx="50" cy="50" r="45" class="gauge-fill-circle" id="formAccuracyGauge" style="stroke-dashoffset: 60;"/>
-                </svg>
-                <div class="gauge-number">96%</div>
-              </div>
-            </div>
-
-            <!-- Skeletal overlay pill -->
-            <div class="skeleton-hud-box">
-              <i class="bi bi-check-circle-fill text-lime fs-5"></i>
-              <div>
-                <div class="fw-bold small text-white">Barbell Path Balanced</div>
-                <div class="text-muted small">0.8° deviation (Elite Threshold)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel 2: Adaptive Programming -->
-        <div class="col-lg-4">
-          <div class="deep-dive-card" data-tilt>
-            <div>
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="eyebrow-tag mb-0">PROGRESSION ENGINE</span>
-                <span class="badge bg-dark text-lime border border-lime border-opacity-25 px-3 py-1 font-mono">DYNAMIC</span>
-              </div>
-              <h3>Adaptive Workout Engine</h3>
-              <p class="text-secondary small">
-                Tired today? Had poor sleep? The engine automatically dials down volume and increases warm-up protocols to match your CNS readiness.
-              </p>
-
-              <!-- SVG Line Chart Mockup -->
-              <div class="p-3 my-3 rounded-3 bg-dark border border-secondary border-opacity-25">
-                <div class="d-flex justify-content-between text-muted small font-mono mb-2">
-                  <span>WEEK 1</span>
-                  <span>WEEK 4</span>
-                  <span>WEEK 8</span>
-                </div>
-                <svg viewBox="0 0 260 90" fill="none" class="w-100">
-                  <path d="M5 80 Q 60 70, 100 50 T 180 30 T 255 10" stroke="#C6FF3D" stroke-width="3" fill="none"/>
-                  <path d="M5 80 Q 60 70, 100 50 T 180 30 T 255 10 L 255 90 L 5 90 Z" fill="url(#limeGrad)" opacity="0.2"/>
-                  <circle cx="100" cy="50" r="4" fill="#C6FF3D"/>
-                  <circle cx="255" cy="10" r="5" fill="#FFFFFF" stroke="#C6FF3D" stroke-width="2"/>
-                  <defs>
-                    <linearGradient id="limeGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#C6FF3D"/>
-                      <stop offset="100%" stop-color="#C6FF3D" stop-opacity="0"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-            </div>
-
-            <div class="skeleton-hud-box">
-              <i class="bi bi-graph-up-arrow text-lime fs-5"></i>
-              <div>
-                <div class="fw-bold small text-white">+18.4% Progressive Overload</div>
-                <div class="text-muted small">Automatic micro-adjustments weekly</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Panel 3: Recovery Intelligence -->
-        <div class="col-lg-4">
-          <div class="deep-dive-card" data-tilt>
-            <div>
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="eyebrow-tag mb-0">BIOMETRIC RECOVERY</span>
-                <span class="badge bg-dark text-lime border border-lime border-opacity-25 px-3 py-1 font-mono">SYNCED</span>
-              </div>
-              <h3>Sleep & Readiness Telemetry</h3>
-              <p class="text-secondary small">
-                Syncs with your wearable to correlate Heart Rate Variability (HRV), resting pulse, and sleep cycles with next-day training capacity.
-              </p>
-
-              <!-- Concentric Rings Mockup -->
-              <div class="text-center my-3">
-                <div class="display-6 fw-bold text-lime font-mono">88 / 100</div>
-                <div class="text-muted small font-display text-uppercase" style="letter-spacing: 0.1em;">OPTIMAL READINESS INDEX</div>
-              </div>
-            </div>
-
-            <div class="skeleton-hud-box">
-              <i class="bi bi-shield-check text-lime fs-5"></i>
-              <div>
-                <div class="fw-bold small text-white">Full CNS Recovery Achieved</div>
-                <div class="text-muted small">High intensity approved for today</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       8. GLOBAL COMMUNITY (3D Three.js Dotted Globe)
-       ========================================================================== -->
-  <section class="community-globe-section" id="community-globe-section">
-    <div class="container-fluid px-4 px-lg-5">
-      <div class="row align-items-center">
-        <div class="col-lg-5">
-          <div class="eyebrow-tag">GLOBAL NETWORK</div>
-          <h2 class="display-5 font-weight-bold mb-3">Join a Global Training Community</h2>
-          <p class="text-secondary mb-4">
-            Athletes, powerlifters, runners, and everyday fitness enthusiasts train with FITNEXA to reach their goals.
-          </p>
-
-          <a href="signup.html" class="btn-fitnexa btn-accent">
-            Connect Your Profile <i class="bi bi-arrow-right"></i>
-          </a>
-        </div>
-
-        <div class="col-lg-7">
-          <div class="globe-canvas-wrapper">
-            <canvas id="communityGlobeCanvas" class="community-globe-canvas"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       9. PRICING SECTION ("Choose Your Weapon")
-       ========================================================================== -->
-  <section class="pricing-section" id="pricing-section">
-    <div class="container-fluid px-4 px-lg-5">
-      <div class="text-center max-w-700 mx-auto mb-5">
-        <div class="eyebrow-tag">TRANSPARENT PRICING</div>
-        <h2 class="display-5 font-weight-bold">Choose Your Level</h2>
-        <p class="text-secondary">Flexible monthly or annual plans. Cancel anytime with 1-click.</p>
-      </div>
-
-      <div class="row g-4 justify-content-center">
-        <!-- Starter Plan -->
-        <div class="col-md-6 col-lg-4">
-          <div class="pricing-card" data-tilt>
-            <h4>Starter</h4>
-            <p class="text-muted small">Essential AI workouts & guidance</p>
-            <div class="pricing-price">$19<span class="fs-6 text-muted fw-normal"> / month</span></div>
-            <ul class="pricing-features-list">
-              <li><i class="bi bi-check2"></i> Personalized weekly training split</li>
-              <li><i class="bi bi-check2"></i> Basic AI chat assistance (50 queries/mo)</li>
-              <li><i class="bi bi-check2"></i> Workout exercise database with HD video</li>
-              <li><i class="bi bi-check2"></i> Basic progress & weight logs</li>
-            </ul>
-            <a href="signup.html?plan=starter" class="btn-fitnexa btn-glass w-100 mt-auto">Get Started</a>
-          </div>
-        </div>
-
-        <!-- Pro Plan (Most Popular) -->
-        <div class="col-md-6 col-lg-4">
-          <div class="pricing-card popular" data-tilt>
-            <span class="popular-badge">MOST POPULAR</span>
-            <h4 class="text-lime">Pro Athlete</h4>
-            <p class="text-muted small">Unlimited AI coaching & CV form check</p>
-            <div class="pricing-price">$39<span class="fs-6 text-muted fw-normal"> / month</span></div>
-            <ul class="pricing-features-list">
-              <li><i class="bi bi-check2-circle text-lime"></i> Everything in Starter</li>
-              <li><i class="bi bi-check2-circle text-lime"></i> <strong>Unlimited</strong> AI Chat Coach queries</li>
-              <li><i class="bi bi-check2-circle text-lime"></i> Real-time computer vision form checking</li>
-              <li><i class="bi bi-check2-circle text-lime"></i> Wearable sync (Apple Health, Garmin, Whoop)</li>
-              <li><i class="bi bi-check2-circle text-lime"></i> Personalized macro & nutrition meal plans</li>
-            </ul>
-            <a href="signup.html?plan=pro" class="btn-fitnexa btn-accent w-100 mt-auto">Start 14-Day Free Trial</a>
-          </div>
-        </div>
-
-        <!-- Elite Plan -->
-        <div class="col-md-6 col-lg-4">
-          <div class="pricing-card" data-tilt>
-            <h4>Elite Team</h4>
-            <p class="text-muted small">For competitive athletes & coaches</p>
-            <div class="pricing-price">$79<span class="fs-6 text-muted fw-normal"> / month</span></div>
-            <ul class="pricing-features-list">
-              <li><i class="bi bi-check2"></i> Everything in Pro Athlete</li>
-              <li><i class="bi bi-check2"></i> 1-on-1 human coach monthly review</li>
-              <li><i class="bi bi-check2"></i> Custom biomechanics telemetry export</li>
-              <li><i class="bi bi-check2"></i> Priority GPU pipeline for instant analysis</li>
-              <li><i class="bi bi-check2"></i> VIP athlete community channel</li>
-            </ul>
-            <a href="signup.html?plan=elite" class="btn-fitnexa btn-glass w-100 mt-auto">Contact Elite</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       10. FINAL CALL TO ACTION
-       ========================================================================== -->
-  <section class="py-5 text-center position-relative overflow-hidden">
-    <div class="container py-5">
-      <div class="max-w-700 mx-auto">
-        <div class="eyebrow-tag">READY TO TRANSFORM?</div>
-        <h2 class="display-4 font-weight-bold mb-4">Start Training With The Future of Fitness</h2>
-        <p class="text-secondary mb-5 fs-5">
-          Eliminate guesswork and achieve your personal best with FITNEXA AI-powered training.
-        </p>
-        <div class="d-flex justify-content-center gap-3 flex-wrap">
-          <a href="signup.html" class="btn-fitnexa btn-accent btn-lg">
-            Claim Your Free Trial <i class="bi bi-arrow-right"></i>
-          </a>
-          <a href="dashboard/index.html" class="btn-fitnexa btn-glass btn-lg">
-            Live Demo Dashboard
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       11. LUXURY FOOTER
-       ========================================================================== -->
-  <footer class="fitnexa-footer" id="footer-section">
-    <div class="container-fluid px-4 px-lg-5">
-      <div class="row g-4 mb-5">
-        <div class="col-lg-4">
-          <div class="nav-brand-logo mb-3">
-            FITNEXA <span class="nav-brand-dot"></span>
-          </div>
-          <p class="text-secondary small pe-lg-4">
-            The next generation of athletic conditioning. Combining computer vision, deep biomechanical modeling, and adaptive training routines for elite results.
-          </p>
-          <div class="d-flex gap-3 text-secondary mt-3">
-            <a href="#" class="text-secondary hover-lime fs-5"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" class="text-secondary hover-lime fs-5"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="text-secondary hover-lime fs-5"><i class="bi bi-youtube"></i></a>
-            <a href="#" class="text-secondary hover-lime fs-5"><i class="bi bi-discord"></i></a>
-          </div>
-        </div>
-
-        <div class="col-6 col-md-3 col-lg-2">
-          <h5 class="footer-col-title">Platform</h5>
-          <ul class="footer-links-list">
-            <li><a href="index.html">AI Coach</a></li>
-            <li><a href="programs.html">Programs</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="dashboard/index.html">Athlete Portal</a></li>
-          </ul>
-        </div>
-
-        <div class="col-6 col-md-3 col-lg-2">
-          <h5 class="footer-col-title">Science</h5>
-          <ul class="footer-links-list">
-            <li><a href="#">Pose Estimation</a></li>
-            <li><a href="#">HRV Modeling</a></li>
-            <li><a href="#">Physiology Engine</a></li>
-            <li><a href="#">Research Papers</a></li>
-          </ul>
-        </div>
-
-        <div class="col-6 col-md-3 col-lg-2">
-          <h5 class="footer-col-title">Company</h5>
-          <ul class="footer-links-list">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Press Kit</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </div>
-
-        <div class="col-6 col-md-3 col-lg-2">
-          <h5 class="footer-col-title">Legal</h5>
-          <ul class="footer-links-list">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-            <li><a href="#">Security</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-between align-items-center pt-4 border-top border-secondary border-opacity-25 small text-muted">
-        <div>&copy; 2026 FITNEXA Technologies Inc. All rights reserved.</div>
-        <div class="d-flex gap-4">
-          <span class="text-lime"><i class="bi bi-circle-fill fs-6"></i> All Neural Systems Operational</span>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ==========================================================================
-       SCRIPTS (Three.js, GSAP, ScrollTrigger, Bootstrap)
+       SCRIPTS (Three.js, GSAP, Bootstrap)
        ========================================================================== -->
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Three.js r128 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- GSAP 3.12.5 & ScrollTrigger -->
+  <!-- GSAP 3.12.5 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <!-- FITNEXA Animation & 3D Controllers -->
-  <script src="assets/js/three/heroScene.js?v=2"></script>
-  <script src="assets/js/three/globeScene.js?v=2"></script>
-  <script src="assets/js/animations/hero.js?v=2"></script>
-  <script src="assets/js/animations/scrollReveals.js?v=2"></script>
+  <!-- FITNEXA Hero Animations -->
+  <script src="assets/js/animations/hero.js?v=3"></script>
 </body>
 </html>
