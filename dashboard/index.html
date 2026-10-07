@@ -7,251 +7,313 @@
   <meta name="description" content="Personal AI athletic telemetry and training protocol dashboard.">
   <meta name="theme-color" content="#0B0C0E">
 
-  <!-- Google Fonts: Outfit, Inter, JetBrains Mono -->
+  <!-- Google Font: Outfit (Weights 300-900) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Bootstrap 5.3.3 CSS & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
   <!-- FITNEXA Stylesheets -->
-  <link rel="stylesheet" href="../assets/css/tokens.css">
-  <link rel="stylesheet" href="../assets/css/base.css">
-  <link rel="stylesheet" href="../assets/css/components.css">
-  <link rel="stylesheet" href="../assets/css/pages/dashboard.css">
+  <link rel="stylesheet" href="../assets/css/tokens.css?v=20261007_v10">
+  <link rel="stylesheet" href="../assets/css/base.css?v=20261007_v10">
+  <link rel="stylesheet" href="../assets/css/components.css?v=20261007_v10">
+  <link rel="stylesheet" href="../assets/css/pages/dashboard.css?v=20261007_v10">
 </head>
 <body>
 
-  <div class="dash-wrapper">
-    <!-- ========================================================================
-         TOP COMMAND BAR (All links interactive)
-         ======================================================================== -->
-    <header class="dash-topbar">
-      <div class="d-flex align-items-center gap-4">
-        <a href="../index.html" class="auth-brand-nav mb-0 text-decoration-none">
-          <div class="auth-brand-title">FITNEXA<span class="text-lime">.</span></div>
-        </a>
+  <!-- Ambient Light Fields & Subtle Mesh Grid (Matching Landing Page) -->
+  <div class="ambient-glow-wrapper">
+    <div class="ambient-glow-lime"></div>
+    <div class="ambient-glow-violet"></div>
+  </div>
+  <div class="tech-grid-bg"></div>
 
-        <nav class="dash-nav-links" id="mainNavLinks">
-          <a href="#dashboard" class="dash-nav-link active" data-tab="dashboard">Dashboard</a>
-          <a href="#workouts" class="dash-nav-link" data-tab="workouts">Workouts</a>
-          <a href="#nutrition" class="dash-nav-link" data-tab="nutrition">Nutrition</a>
-          <a href="#analytics" class="dash-nav-link" data-tab="analytics">Analytics</a>
-          <a href="#aicoach" class="dash-nav-link" data-tab="aicoach">AI Coach</a>
-        </nav>
-      </div>
+  <div class="dash-wrapper position-relative z-1">
+    <div class="dash-app-layout">
 
-      <div class="d-flex align-items-center gap-3">
-        <!-- Streak Indicator -->
-        <div class="dash-streak-badge">
-          <i class="bi bi-fire text-warning"></i>
-          <span id="streakDisplay">0 Day Streak</span>
-        </div>
-
-        <!-- User Profile Pill -->
-        <div class="dash-user-pill">
-          <div class="dash-user-avatar" id="avatarInitial">A</div>
-          <div>
-            <div class="fw-bold small text-white" id="userDisplayName">Athlete</div>
-            <div class="text-muted font-mono" style="font-size: 0.68rem;" id="userStatusLabel">Pro AI Member</div>
-          </div>
-          <button type="button" class="btn btn-link text-secondary p-0 ms-2 hover-lime" id="logoutBtn" title="Log out">
-            <i class="bi bi-box-arrow-right fs-5"></i>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <!-- ========================================================================
-         MAIN CONTENT TABS
-         ======================================================================== -->
-    <main class="dash-main-content">
-
-      <!-- ======================================================================
-           TAB 1: MAIN DASHBOARD VIEW
-           ====================================================================== -->
-      <div class="dash-tab-pane active" id="paneDashboard">
-        <!-- Greeting Header -->
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-          <div>
-            <h1 class="dash-greeting-heading" id="greetingTitle">Good morning, Athlete.</h1>
-            <div class="dash-greeting-date" id="currentDateStr">CALIBRATING PROTOCOL ACTIVE</div>
-          </div>
-          <div class="d-flex gap-2">
-            <a href="../onboarding.html" class="btn-fitnexa btn-outline-lime btn-sm text-decoration-none" id="btnRetunePlan">
-              <i class="bi bi-sliders me-1"></i> Retune Plan
+      <!-- ========================================================================
+           1. CURVED FLOATING DARK SIDEBAR (Matching Reference UI)
+           ======================================================================== -->
+      <aside class="dash-sidebar" id="dashSidebar">
+        <div>
+          <!-- Logo & Brand Header -->
+          <div class="dash-sidebar-header">
+            <a href="../index.html" class="dash-brand-icon-wrap text-decoration-none">
+              <div class="dash-brand-icon">
+                <i class="bi bi-activity"></i>
+              </div>
+              <span class="dash-brand-text">FITNEXA</span>
             </a>
           </div>
+
+          <!-- Navigation Links (Restored original names & pages) -->
+          <nav class="dash-sidebar-nav" id="sidebarNav">
+            <a href="#dashboard" class="sidebar-nav-item dash-nav-link active" data-tab="dashboard">
+              <div class="nav-item-icon-box"><i class="bi bi-grid-fill"></i></div>
+              <span>Dashboard</span>
+            </a>
+            <a href="#workouts" class="sidebar-nav-item dash-nav-link" data-tab="workouts">
+              <div class="nav-item-icon-box"><i class="bi bi-lightning-charge-fill"></i></div>
+              <span>Workouts</span>
+            </a>
+            <a href="#nutrition" class="sidebar-nav-item dash-nav-link" data-tab="nutrition">
+              <div class="nav-item-icon-box"><i class="bi bi-egg-fried"></i></div>
+              <span>Nutrition</span>
+            </a>
+            <a href="#analytics" class="sidebar-nav-item dash-nav-link" data-tab="analytics">
+              <div class="nav-item-icon-box"><i class="bi bi-graph-up-arrow"></i></div>
+              <span>Analytics</span>
+            </a>
+            <a href="#aicoach" class="sidebar-nav-item dash-nav-link" data-tab="aicoach">
+              <div class="nav-item-icon-box"><i class="bi bi-cpu-fill"></i></div>
+              <span>AI Coach</span>
+            </a>
+            <a href="#settings" class="sidebar-nav-item dash-nav-link" data-tab="settings" id="navItemSettings">
+              <div class="nav-item-icon-box"><i class="bi bi-gear-fill"></i></div>
+              <span>Settings</span>
+            </a>
+          </nav>
         </div>
 
-        <!-- 1. Today's Protocol Highlight Card -->
-        <section class="dash-today-card mb-4" id="todayHeroCard">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="dash-badge-protocol">
-              <i class="bi bi-lightning-charge-fill"></i> ACTIVE PROTOCOL // TODAY
-            </span>
-            <span class="badge bg-dark border border-secondary border-opacity-50 text-secondary font-mono" id="todayGoalBadge">
-              AI OPTIMIZED FOR YOUR GOAL
-            </span>
+        <!-- Sidebar Bottom Promo Card (Matching Reference UI) -->
+        <div class="sidebar-promo-card">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="promo-card-title">Fitnexa Pro AI</div>
+            <div class="promo-lightning-badge" id="sidebarLightningBadge" title="Adaptive Protocol Active">
+              <i class="bi bi-lightning-charge-fill"></i>
+            </div>
           </div>
+          <p class="promo-card-desc mb-3">Adaptive VO2 telemetry and real-time biometric coaching unlocked.</p>
+          <button type="button" class="btn-matte-glass btn-matte-lime w-100" id="btnSidebarUpgrade" style="min-width: unset; height: 38px; font-size: 0.8rem; padding: 6px 14px;">
+            Get Started
+          </button>
+        </div>
+      </aside>
 
-          <h2 class="dash-workout-title" id="todayWorkoutName">Upper Body Power</h2>
+      <!-- ========================================================================
+           2. MAIN DASHBOARD CANVAS (Matching Reference UI)
+           ======================================================================== -->
+      <main class="dash-canvas-wrapper" id="dashCanvasWrapper">
 
-          <div class="dash-chips-row">
-            <span class="dash-chip"><i class="bi bi-clock text-warning"></i> <strong id="todayDuration">45</strong> MIN</span>
-            <span class="dash-chip"><i class="bi bi-list-check text-info"></i> <strong id="todayExercises">6</strong> EXERCISES</span>
-            <span class="dash-chip"><i class="bi bi-fire text-danger"></i> <strong id="todayCalories">420</strong> KCAL</span>
-            <span class="dash-chip"><i class="bi bi-shield-check text-lime"></i> READINESS <strong class="text-lime" id="todayReadiness">OPTIMAL</strong></span>
-          </div>
+        <!-- ======================================================================
+             TAB 1: MAIN DASHBOARD VIEW (Matching Reference UI)
+             ====================================================================== -->
+        <div class="dash-tab-pane active" id="paneDashboard">
 
-          <div class="d-flex gap-3 flex-wrap">
-            <button type="button" class="btn-fitnexa btn-accent px-4 py-3" id="btnStartWorkout">
-              <i class="bi bi-play-fill me-1"></i> Start Workout
-            </button>
-            <button type="button" class="btn-fitnexa btn-outline-lime px-4 py-3" id="btnPreviewRoutine">
-              <i class="bi bi-eye me-1"></i> Preview Routine
-            </button>
-          </div>
-        </section>
-
-        <!-- 2. Biometric Metrics Grid (6 KPI Cards - Clean 0 for new account) -->
-        <section class="dash-metrics-grid mb-4">
-          <div class="metric-glass-card">
-            <i class="bi bi-graph-up-arrow metric-card-icon"></i>
+          <!-- Unified Header Row: Greeting & User Telemetry Pill -->
+          <div class="canvas-header-row">
             <div>
-              <div class="metric-card-val text-lime" id="statProgress">0%</div>
-              <div class="metric-card-lbl">Weekly Progress</div>
+              <h1 class="canvas-heading" id="greetingTitle">Let’s start strong!</h1>
+              <div class="canvas-subheading" id="currentDateStr">PROTOCOL CALIBRATING // ACTIVE</div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+              <!-- Streak Indicator -->
+              <div class="dash-streak-badge">
+                <i class="bi bi-fire text-warning"></i>
+                <span id="streakDisplay">0 Day Streak</span>
+              </div>
+
+              <!-- User Profile Pill -->
+              <div class="dash-user-pill">
+                <div class="dash-user-avatar" id="avatarInitial">A</div>
+                <div>
+                  <div class="fw-bold small text-white" id="userDisplayName">Athlete</div>
+                  <div class="text-muted font-mono" style="font-size: 0.68rem;" id="userStatusLabel">Pro AI Member</div>
+                </div>
+                <button type="button" class="btn btn-link text-secondary p-0 ms-2 hover-lime" id="logoutBtn" title="Log out">
+                  <i class="bi bi-box-arrow-right fs-5"></i>
+                </button>
+              </div>
+
+              <a href="../onboarding.html" class="btn-matte-glass btn-matte-dark" style="min-width: 120px; height: 38px; padding: 6px 18px; font-size: 0.82rem;" id="btnRetunePlan">
+                Retune Plan
+              </a>
             </div>
           </div>
 
-          <div class="metric-glass-card">
-            <i class="bi bi-check2-circle metric-card-icon"></i>
-            <div>
-              <div class="metric-card-val" id="statWorkouts">0 / 4</div>
-              <div class="metric-card-lbl">Workouts Completed</div>
-            </div>
-          </div>
+          <!-- Hero 2-Column Grid (Goal Progress + AI Chatbot) -->
+          <div class="dash-hero-grid">
 
-          <div class="metric-glass-card">
-            <i class="bi bi-fire metric-card-icon text-warning"></i>
+            <!-- Left Column: Goal Card + 5 Quick Actions -->
             <div>
-              <div class="metric-card-val" id="statCalories">0</div>
-              <div class="metric-card-lbl">Calories Burned</div>
-            </div>
-          </div>
+              <!-- Goal Progress Card -->
+              <div class="goal-progress-card">
+                <div class="goal-card-top">
+                  <h3 class="goal-title">You're <span id="dashGoalPct">45%</span> to your daily goal</h3>
+                  <button type="button" class="goal-lightning-btn" id="btnGoalLightning" title="Start Active Protocol">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                  </button>
+                </div>
 
-          <div class="metric-glass-card">
-            <i class="bi bi-calendar-week metric-card-icon"></i>
-            <div>
-              <div class="metric-card-val" id="statActiveDays">0</div>
-              <div class="metric-card-lbl">Active Days</div>
-            </div>
-          </div>
+                <div class="goal-progress-bar-wrap">
+                  <div class="goal-progress-bar-fill" id="goalBarFill" style="width: 45%;"></div>
+                </div>
 
-          <div class="metric-glass-card">
-            <i class="bi bi-stopwatch metric-card-icon"></i>
-            <div>
-              <div class="metric-card-val" id="statHours">0.0h</div>
-              <div class="metric-card-lbl">Hours Trained</div>
-            </div>
-          </div>
-
-          <div class="metric-glass-card">
-            <i class="bi bi-trophy-fill metric-card-icon" style="color: #FF8F50;"></i>
-            <div>
-              <div class="metric-card-val" id="statStreak">0 Days</div>
-              <div class="metric-card-lbl">Current Streak</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 3. Performance Chart & AI Recommendation -->
-        <div class="row g-4">
-          <div class="col-12 col-lg-8">
-            <div class="dash-panel h-100">
-              <div class="dash-panel-header">
-                <span class="dash-panel-title">
-                  <i class="bi bi-activity"></i> VOLUME & PERFORMANCE MATRIX
-                </span>
-                <div class="d-flex gap-3 small font-mono">
-                  <span class="text-lime"><i class="bi bi-circle-fill me-1" style="font-size: 0.4rem;"></i> Strength Gain</span>
-                  <span class="text-info"><i class="bi bi-circle-fill me-1" style="font-size: 0.4rem;"></i> Endurance Gain</span>
+                <div class="goal-stats-row">
+                  <span id="goalRatioText"><strong>2,340</strong>/8000</span>
                 </div>
               </div>
 
-              <div id="chartContainer" style="position: relative;">
-                <svg viewBox="0 0 800 220" preserveAspectRatio="none" class="dash-chart-svg">
-                  <defs>
-                    <linearGradient id="limeGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="rgba(198, 255, 61, 0.35)"/>
-                      <stop offset="100%" stop-color="rgba(198, 255, 61, 0.0)"/>
-                    </linearGradient>
-                  </defs>
-                  <line x1="0" y1="55" x2="800" y2="55" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-                  <line x1="0" y1="110" x2="800" y2="110" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-                  <line x1="0" y1="165" x2="800" y2="165" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <!-- 5 Round Quick Action Buttons Row -->
+              <div class="quick-actions-row">
+                <button type="button" class="quick-action-item" id="qaWorkout">
+                  <div class="quick-action-btn"><i class="bi bi-slash-circle-fill"></i></div>
+                  <span class="quick-action-label">Workout</span>
+                </button>
+                <button type="button" class="quick-action-item" id="qaMeal">
+                  <div class="quick-action-btn"><i class="bi bi-cup-hot-fill"></i></div>
+                  <span class="quick-action-label">Meal</span>
+                </button>
+                <button type="button" class="quick-action-item" id="qaWater">
+                  <div class="quick-action-btn"><i class="bi bi-droplet-fill"></i></div>
+                  <span class="quick-action-label">Water</span>
+                </button>
+                <button type="button" class="quick-action-item" id="qaSync">
+                  <div class="quick-action-btn"><i class="bi bi-smartwatch"></i></div>
+                  <span class="quick-action-label">Sync</span>
+                </button>
+                <button type="button" class="quick-action-item" id="qaMood">
+                  <div class="quick-action-btn"><i class="bi bi-heart-pulse-fill"></i></div>
+                  <span class="quick-action-label">Mood</span>
+                </button>
+              </div>
+            </div>
 
-                  <!-- Dynamic SVG Path filled by JS -->
-                  <path id="chartArea" d="M0,210 L800,210 Z" fill="url(#limeGrad)"/>
-                  <path id="chartLine" d="M0,210 L800,210" fill="none" stroke="var(--accent-lime)" stroke-width="3"/>
+            <!-- Right Column: Embedded AI Chatbot Card -->
+            <div class="dash-chatbot-card">
+              <div class="chatbot-floating-pill">
+                <i class="bi bi-cpu-fill text-lime me-1"></i> AI Chatbot
+              </div>
+
+              <div class="chatbot-dialogue" id="dashQuickChatHistory">
+                <div class="chat-msg-user">How many calories did I burn yesterday?</div>
+                <div class="chat-time-tag">2 hours ago</div>
+                <div class="chat-msg-bot">You burned <strong class="text-white">420 kcal</strong> across 3 activities</div>
+                <div class="chat-activity-pills-row">
+                  <div class="activity-pill-card">
+                    <div>
+                      <div class="activity-pill-title">Running</div>
+                      <div class="activity-pill-val">120kcal</div>
+                    </div>
+                    <svg viewBox="0 0 36 36" class="activity-ring-svg">
+                      <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"></circle>
+                      <circle cx="18" cy="18" r="14" fill="none" stroke="#FF6B35" stroke-width="4" stroke-dasharray="65 100" stroke-linecap="round" transform="rotate(-90 18 18)"></circle>
+                    </svg>
+                  </div>
+                  <div class="activity-pill-card">
+                    <div>
+                      <div class="activity-pill-title">Push up</div>
+                      <div class="activity-pill-val">200kcal</div>
+                    </div>
+                    <svg viewBox="0 0 36 36" class="activity-ring-svg">
+                      <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"></circle>
+                      <circle cx="18" cy="18" r="14" fill="none" stroke="var(--accent-lime)" stroke-width="4" stroke-dasharray="45 100" stroke-linecap="round" transform="rotate(-90 18 18)"></circle>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Chat Input Bar -->
+              <form id="dashQuickChatForm" class="chatbot-input-bar">
+                <input type="text" id="dashQuickChatInput" class="chatbot-input-field" placeholder="Type something.." autocomplete="off">
+                <button type="button" class="chatbot-voice-btn" id="dashQuickChatMic" title="Voice command" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:1.1rem;">
+                  <i class="bi bi-mic"></i>
+                </button>
+                <button type="submit" class="chatbot-send-btn" title="Send message">
+                  <i class="bi bi-arrow-up-circle-fill"></i>
+                </button>
+              </form>
+            </div>
+
+          </div>
+
+          <!-- Summary Section (Matching Reference UI) -->
+          <section class="dash-summary-section">
+            <div class="summary-section-header">
+              <h2 class="summary-title">Summary</h2>
+              <div class="summary-filter-pills">
+                <button type="button" class="summary-filter-btn" data-sum="daily">Daily</button>
+                <button type="button" class="summary-filter-btn active" data-sum="weekly">Weekly</button>
+                <button type="button" class="summary-filter-btn" data-sum="monthly">Monthly</button>
+              </div>
+            </div>
+
+            <div class="summary-cards-grid">
+              <!-- Card 1: Concentric Activity Rings -->
+              <div class="summary-ring-card">
+                <svg viewBox="0 0 140 140" style="width: 84px; height: 84px; transform: rotate(-90deg); flex-shrink: 0;">
+                  <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+                  <circle id="sumRingExercise" cx="70" cy="70" r="54" fill="none" stroke="var(--accent-lime)" stroke-width="10" stroke-dasharray="210 340" stroke-linecap="round"/>
+                  <circle cx="70" cy="70" r="38" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+                  <circle id="sumRingStand" cx="70" cy="70" r="38" fill="none" stroke="#FF6B35" stroke-width="10" stroke-dasharray="140 240" stroke-linecap="round"/>
                 </svg>
-
-                <div id="emptyChartNotice" class="text-center py-4 text-secondary small font-mono">
-                  <i class="bi bi-reception-1 text-muted me-1"></i> Awaiting first logged session to render progression matrix.
+                <div class="summary-ring-legend">
+                  <div class="legend-row">
+                    <span class="legend-dot" style="background: var(--accent-lime);"></span>
+                    <div>
+                      <div class="legend-label">Exercise</div>
+                      <div class="legend-val" id="sumExerciseVal">240/600min</div>
+                    </div>
+                  </div>
+                  <div class="legend-row">
+                    <span class="legend-dot" style="background: #FF6B35;"></span>
+                    <div>
+                      <div class="legend-label">Stand</div>
+                      <div class="legend-val" id="sumStandVal">160/600min</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="d-flex justify-content-between text-muted small font-mono mt-2">
-                <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span><span>PEAK</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-lg-4">
-            <!-- AI Coach Recommendation Card -->
-            <div class="dash-panel mb-4">
-              <div class="dash-panel-header">
-                <span class="dash-panel-title" style="color: var(--accent-violet);">
-                  <i class="bi bi-stars"></i> AI BIOMETRIC COACH
-                </span>
-                <span class="badge bg-success bg-opacity-25 text-lime border border-success border-opacity-50 font-mono small" id="coachReadinessBadge">
-                  OPTIMAL
-                </span>
-              </div>
-
-              <div class="ai-coach-msg-box" id="aiMessage">
-                "Welcome to Fitnexa AI! Your baseline profile is ready. Start your first session today to calibrate training intensity."
+              <!-- Card 2: Steps Soundwave / Bar Chart -->
+              <div class="summary-bars-card">
+                <div class="summary-bars-left">
+                  <div class="summary-bars-lbl">Steps</div>
+                  <div class="summary-bars-val" id="sumStepsVal">2.340</div>
+                </div>
+                <div class="summary-bars-track" id="summaryBarsTrack">
+                  <div class="bar-col" style="height: 38%;"></div>
+                  <div class="bar-col" style="height: 62%;"></div>
+                  <div class="bar-col" style="height: 35%;"></div>
+                  <div class="bar-col peak" style="height: 85%;"></div>
+                  <div class="bar-col active-dark" style="height: 70%;"></div>
+                  <div class="bar-col" style="height: 48%;"></div>
+                  <div class="bar-col" style="height: 92%;"></div>
+                  <div class="bar-col" style="height: 52%;"></div>
+                  <div class="bar-col" style="height: 32%;"></div>
+                </div>
               </div>
 
-              <button type="button" class="btn-fitnexa btn-accent w-100 py-2 mb-2" id="btnAcceptProtocol">
-                <i class="bi bi-check-circle me-1"></i> Accept Protocol
-              </button>
-              <button type="button" class="btn btn-outline-secondary w-100 py-2 small text-light border-opacity-25" id="btnChatCoach">
-                <i class="bi bi-chat-dots me-1"></i> Ask AI Coach
-              </button>
-            </div>
-
-            <!-- Recent Workouts Mini List -->
-            <div class="dash-panel">
-              <div class="dash-panel-header">
-                <span class="dash-panel-title">
-                  <i class="bi bi-clock-history"></i> RECENT PROTOCOLS
-                </span>
-                <a href="#workouts" class="small text-lime text-decoration-none" id="linkViewAllWorkouts">View All →</a>
-              </div>
-
-              <div id="recentWorkoutsList">
-                <div class="text-center py-4 text-secondary small font-mono" id="emptyWorkoutsNotice">
-                  <i class="bi bi-calendar-x fs-3 d-block mb-2 text-muted"></i>
-                  No workouts recorded yet.<br>Click "Start Workout" above to log your first session!
+              <!-- Card 3: Distance Card -->
+              <div class="summary-route-card">
+                <svg viewBox="0 0 160 60" class="summary-route-svg">
+                  <path d="M 15,45 L 35,15 L 75,15 L 125,12 C 145,12 145,35 125,35 L 75,45 C 55,52 35,45 15,45 Z" fill="none" stroke="#FF6B35" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
+                <div>
+                  <div class="summary-route-lbl">Distance</div>
+                  <div class="summary-route-val" id="sumDistanceVal">3.4km</div>
                 </div>
               </div>
             </div>
+          </section>
+
+          <!-- Hidden Protocol Bindings (For JS compatibility) -->
+          <div id="todayHeroCard" style="display: none;">
+            <span id="todayGoalBadge"></span>
+            <span id="todayWorkoutName">Upper Body Power</span>
+            <span id="todayDuration">45</span>
+            <span id="todayExercises">6</span>
+            <span id="todayCalories">420</span>
+            <span id="todayReadiness">OPTIMAL</span>
+            <button type="button" id="btnStartWorkout"></button>
+            <button type="button" id="btnPreviewRoutine"></button>
           </div>
+
         </div>
-      </div>
 
       <!-- ======================================================================
            TAB 2: WORKOUTS LIBRARY VIEW
@@ -505,15 +567,149 @@
           <!-- Input Row -->
           <form class="coach-chat-input-row" id="coachChatForm">
             <input type="text" id="chatInputText" class="form-input-custom" placeholder="Ask your AI Coach about training, form, recovery, or meals..." required autocomplete="off">
-            <button type="submit" class="btn-fitnexa btn-accent px-4">
-              Send <i class="bi bi-arrow-right"></i>
+            <button type="submit" class="btn-matte-glass btn-matte-lime" style="min-width: 120px; height: 44px; padding: 10px 24px;">
+              Send
             </button>
           </form>
         </div>
       </div>
 
+      <!-- ======================================================================
+           TAB 6: SETTINGS VIEW
+           ====================================================================== -->
+      <div class="dash-tab-pane" id="paneSettings">
+        <div class="mb-4">
+          <h1 class="dash-greeting-heading">Athlete & System Settings</h1>
+          <p class="text-secondary mb-0">Calibrate telemetry sync, coaching models, and personal fitness parameters.</p>
+        </div>
+
+        <div class="settings-grid">
+          <!-- Card 1: Athlete Biometrics -->
+          <div class="settings-card">
+            <div class="settings-card-title">
+              <i class="bi bi-person-badge-fill"></i> Athlete Telemetry Profile
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-secondary small fw-bold">Athlete Display Name</label>
+              <input type="text" id="settingUserName" class="form-input-custom" value="Lead Developer">
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-secondary small fw-bold">Primary Fitness Goal</label>
+              <select id="settingUserGoal" class="form-input-custom">
+                <option value="Muscle Hypertrophy" selected>Muscle Hypertrophy</option>
+                <option value="Fat Loss & Conditioning">Fat Loss & Conditioning</option>
+                <option value="Strength & Power">Strength & Power</option>
+                <option value="Endurance & VO2 Max">Endurance & VO2 Max</option>
+                <option value="General Health">General Health & Longevity</option>
+              </select>
+            </div>
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label text-secondary small fw-bold">Weight (kg)</label>
+                <input type="number" id="settingUserWeight" class="form-input-custom" value="78">
+              </div>
+              <div class="col-6">
+                <label class="form-label text-secondary small fw-bold">Height (cm)</label>
+                <input type="number" id="settingUserHeight" class="form-input-custom" value="180">
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: AI Coach Preferences -->
+          <div class="settings-card">
+            <div class="settings-card-title">
+              <i class="bi bi-cpu-fill"></i> AI Biometric Calibration
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <span class="settings-item-title">Real-Time Form Telemetry</span>
+                <span class="settings-item-desc">Analyze movement tempo via camera / device sensors</span>
+              </div>
+              <div class="form-check form-switch m-0">
+                <input class="form-check-input" type="checkbox" id="settingFormTelemetry" checked>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <span class="settings-item-title">Haptic & Audio Pacing Cues</span>
+                <span class="settings-item-desc">Beep signals during rep concentric/eccentric phases</span>
+              </div>
+              <div class="form-check form-switch m-0">
+                <input class="form-check-input" type="checkbox" id="settingAudioCues" checked>
+              </div>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <span class="settings-item-title">Adaptive Protocol Retuning</span>
+                <span class="settings-item-desc">Automatically adjust sets and reps based on HRV</span>
+              </div>
+              <div class="form-check form-switch m-0">
+                <input class="form-check-input" type="checkbox" id="settingAdaptivePlan" checked>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Connected Hardware -->
+          <div class="settings-card">
+            <div class="settings-card-title">
+              <i class="bi bi-smartwatch"></i> Connected Wearables
+            </div>
+            <div class="settings-item">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-apple fs-4 text-white"></i>
+                <div class="settings-item-info">
+                  <span class="settings-item-title">Apple Watch Ultra</span>
+                  <span class="settings-item-desc">Heart rate & active calories sync</span>
+                </div>
+              </div>
+              <span class="device-badge-active">CONNECTED</span>
+            </div>
+            <div class="settings-item">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-activity fs-4 text-warning"></i>
+                <div class="settings-item-info">
+                  <span class="settings-item-title">Whoop 4.0</span>
+                  <span class="settings-item-desc">Recovery & strain telemetry</span>
+                </div>
+              </div>
+              <span class="device-badge-active">PAIRED</span>
+            </div>
+            <div class="settings-item">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-bluetooth fs-4 text-info"></i>
+                <div class="settings-item-info">
+                  <span class="settings-item-title">Garmin Connect</span>
+                  <span class="settings-item-desc">VO2 max & running dynamics</span>
+                </div>
+              </div>
+              <button type="button" class="btn-matte-glass btn-matte-dark" style="min-width: unset; height: 32px; padding: 4px 14px; font-size: 0.75rem;" id="btnSyncGarmin">Sync</button>
+            </div>
+          </div>
+
+          <!-- Card 4: Action & Save -->
+          <div class="settings-card d-flex flex-column justify-content-between">
+            <div>
+              <div class="settings-card-title">
+                <i class="bi bi-shield-lock-fill"></i> Save & Calibrate
+              </div>
+              <p class="text-secondary small mb-3">All changes sync directly to your secure Supabase profile and optimize your real-time daily protocols.</p>
+              <div class="p-3 mb-3 rounded-3" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex align-items-center justify-content-between small">
+                  <span class="text-secondary">Current Active Version</span>
+                  <span class="font-mono text-lime">FITNEXA CORE v2.4</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-matte-glass btn-matte-lime w-100" id="btnSaveSettings" style="height: 46px;">
+              Save Calibration Changes
+            </button>
+          </div>
+        </div>
+      </div>
+
     </main>
-  </div>
+    </div> <!-- /.dash-app-layout -->
+  </div> <!-- /.dash-wrapper -->
 
   <!-- ========================================================================
        MODAL 1: ACTIVE WORKOUT SESSION (Live Tracker)
@@ -539,11 +735,11 @@
       </div>
 
       <div class="d-flex justify-content-between align-items-center gap-3 pt-3 border-top border-secondary border-opacity-25">
-        <button type="button" class="btn btn-outline-secondary text-light px-4 py-3" id="btnCancelWorkout">
+        <button type="button" class="btn-matte-glass btn-matte-dark" style="min-width: 160px;" id="btnCancelWorkout">
           Cancel Session
         </button>
-        <button type="button" class="btn-fitnexa btn-accent px-4 py-3" id="btnFinishWorkout">
-          <i class="bi bi-check-circle-fill me-1"></i> Finish Workout
+        <button type="button" class="btn-matte-glass btn-matte-lime" style="min-width: 180px;" id="btnFinishWorkout">
+          Finish Workout
         </button>
       </div>
     </div>
@@ -575,8 +771,8 @@
       </div>
 
       <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-end">
-        <button type="button" class="btn-fitnexa btn-accent px-4 py-2" id="btnPreviewStartNow">
-          Start This Protocol <i class="bi bi-arrow-right"></i>
+        <button type="button" class="btn-matte-glass btn-matte-lime" style="min-width: 220px;" id="btnPreviewStartNow">
+          Start This Protocol
         </button>
       </div>
     </div>
@@ -785,6 +981,15 @@
       const tabPanes = document.querySelectorAll('.dash-tab-pane');
 
       function switchTab(tabKey) {
+        if (tabKey === 'mood') {
+          showToast("Readiness Score: 94% • CNS Recovery Optimal • Peak HRV: 78ms");
+          return;
+        }
+        if (tabKey === 'profile') {
+          showToast(`Athlete Profile: ${user.name || 'Athlete'} • Goal: ${user.goal || 'General Fitness'} • Calibrated Active`);
+          return;
+        }
+
         navLinks.forEach(link => {
           if (link.getAttribute('data-tab') === tabKey) {
             link.classList.add('active');
@@ -828,6 +1033,214 @@
           switchTab('aicoach');
         });
       }
+
+      // ── Reference UI Interactive Handlers ─────────────────────────────
+      // Goal Lightning Button -> Launch Workout
+      const btnGoalLightning = document.getElementById('btnGoalLightning');
+      if (btnGoalLightning) {
+        btnGoalLightning.addEventListener('click', () => {
+          launchWorkoutSession(activeWorkout);
+        });
+      }
+
+      // Quick Actions
+      const qaWorkout = document.getElementById('qaWorkout');
+      if (qaWorkout) {
+        qaWorkout.addEventListener('click', () => {
+          launchWorkoutSession(activeWorkout);
+        });
+      }
+
+      const qaMeal = document.getElementById('qaMeal');
+      if (qaMeal) {
+        qaMeal.addEventListener('click', () => {
+          switchTab('nutrition');
+        });
+      }
+
+      let waterLogged = 2250;
+      const qaWater = document.getElementById('qaWater');
+      if (qaWater) {
+        qaWater.addEventListener('click', () => {
+          waterLogged += 250;
+          showToast(`Hydration logged: +250ml (${waterLogged}ml / 3,000ml Daily Target)`);
+        });
+      }
+
+      const qaSync = document.getElementById('qaSync');
+      if (qaSync) {
+        qaSync.addEventListener('click', () => {
+          showToast("Biometric telemetry synchronized with Apple Watch & Garmin. All vitals updated.");
+        });
+      }
+
+      const qaMood = document.getElementById('qaMood');
+      if (qaMood) {
+        qaMood.addEventListener('click', () => {
+          showToast("Readiness Index: 94% • Optimal sympathetic/parasympathetic balance. Ready to lift.");
+        });
+      }
+
+      // Sidebar Promo Buttons -> Go to AI Coach
+      const btnSidebarUpgrade = document.getElementById('btnSidebarUpgrade');
+      if (btnSidebarUpgrade) {
+        btnSidebarUpgrade.addEventListener('click', () => {
+          switchTab('aicoach');
+          showToast("Fitnexa Pro AI Protocol Terminal activated.");
+        });
+      }
+
+      const sidebarLightningBadge = document.getElementById('sidebarLightningBadge');
+      if (sidebarLightningBadge) {
+        sidebarLightningBadge.addEventListener('click', () => {
+          switchTab('workouts');
+          showToast("Neural Biometric Protocols calibrated in real-time.");
+        });
+      }
+
+      // Settings Save & Hardware Sync Handlers
+      const btnSaveSettings = document.getElementById('btnSaveSettings');
+      if (btnSaveSettings) {
+        btnSaveSettings.addEventListener('click', () => {
+          const nameVal = document.getElementById('settingUserName').value.trim();
+          const goalVal = document.getElementById('settingUserGoal').value;
+          if (nameVal) {
+            document.getElementById('userDisplayName').innerText = nameVal;
+          }
+          showToast(`Preferences saved! Calibrated for ${nameVal || 'Athlete'} (${goalVal}).`);
+        });
+      }
+
+      const btnSyncGarmin = document.getElementById('btnSyncGarmin');
+      if (btnSyncGarmin) {
+        btnSyncGarmin.addEventListener('click', () => {
+          showToast("Garmin Connect synchronized: VO2 Max (54 ml/kg/min) updated.");
+        });
+      }
+
+      // Embedded AI Chatbot Interactive Logic
+      const dashQuickChatForm = document.getElementById('dashQuickChatForm');
+      const dashQuickChatInput = document.getElementById('dashQuickChatInput');
+      const dashQuickChatHistory = document.getElementById('dashQuickChatHistory');
+      const dashQuickChatMic = document.getElementById('dashQuickChatMic');
+
+      if (dashQuickChatMic) {
+        dashQuickChatMic.addEventListener('click', () => {
+          showToast("Listening for voice telemetry command... Speak your fitness question.");
+        });
+      }
+
+      if (dashQuickChatForm && dashQuickChatInput && dashQuickChatHistory) {
+        dashQuickChatForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const qText = dashQuickChatInput.value.trim();
+          if (!qText) return;
+          dashQuickChatInput.value = '';
+
+          // Append user question
+          const userBubble = document.createElement('div');
+          userBubble.className = 'chat-msg-user';
+          userBubble.innerText = qText;
+          dashQuickChatHistory.appendChild(userBubble);
+
+          const timeTag = document.createElement('div');
+          timeTag.className = 'chat-time-tag';
+          timeTag.innerText = 'Just now';
+          dashQuickChatHistory.appendChild(timeTag);
+
+          dashQuickChatHistory.scrollTop = dashQuickChatHistory.scrollHeight;
+
+          // AI Response
+          setTimeout(() => {
+            const botBubble = document.createElement('div');
+            botBubble.className = 'chat-msg-bot';
+            const q = qText.toLowerCase();
+            if (q.includes('calorie') || q.includes('burn')) {
+              botBubble.innerHTML = `You burned <strong class="text-white">420 kcal</strong> today across active sets with high metabolic intensity.`;
+            } else if (q.includes('eat') || q.includes('food') || q.includes('meal')) {
+              botBubble.innerHTML = `Target 35g protein & 50g complex carbs for your next intake window to sustain glycogen resynthesis.`;
+            } else if (q.includes('water') || q.includes('hydrate')) {
+              botBubble.innerHTML = `Current hydration is on track. Ingest 500ml mineralized water 30 minutes before heavy sets.`;
+            } else {
+              botBubble.innerHTML = `Biometrics calibrated. Current readiness is <strong class="text-lime">94%</strong>. Maintain controlled tempo on today's protocol.`;
+            }
+            dashQuickChatHistory.appendChild(botBubble);
+            dashQuickChatHistory.scrollTop = dashQuickChatHistory.scrollHeight;
+          }, 450);
+        });
+      }
+
+      // Summary Filter Pill Toggles (Daily / Weekly / Monthly)
+      const summaryFilterBtns = document.querySelectorAll('.summary-filter-btn');
+      const sumStepsVal = document.getElementById('sumStepsVal');
+      const sumExerciseVal = document.getElementById('sumExerciseVal');
+      const sumStandVal = document.getElementById('sumStandVal');
+      const sumDistanceVal = document.getElementById('sumDistanceVal');
+      const summaryBarsTrack = document.getElementById('summaryBarsTrack');
+
+      summaryFilterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          summaryFilterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const mode = btn.getAttribute('data-sum');
+          if (mode === 'daily') {
+            if (sumStepsVal) sumStepsVal.innerText = '8.420';
+            if (sumExerciseVal) sumExerciseVal.innerText = '45/60min';
+            if (sumStandVal) sumStandVal.innerText = '10/12hr';
+            if (sumDistanceVal) sumDistanceVal.innerText = '1.2km';
+            if (summaryBarsTrack) {
+              summaryBarsTrack.innerHTML = `
+                <div class="bar-col" style="height: 25%;"></div>
+                <div class="bar-col" style="height: 55%;"></div>
+                <div class="bar-col" style="height: 80%;"></div>
+                <div class="bar-col peak" style="height: 95%;"></div>
+                <div class="bar-col active-dark" style="height: 60%;"></div>
+                <div class="bar-col" style="height: 35%;"></div>
+                <div class="bar-col" style="height: 40%;"></div>
+                <div class="bar-col" style="height: 20%;"></div>
+                <div class="bar-col" style="height: 10%;"></div>
+              `;
+            }
+          } else if (mode === 'weekly') {
+            if (sumStepsVal) sumStepsVal.innerText = '2.340';
+            if (sumExerciseVal) sumExerciseVal.innerText = '240/600min';
+            if (sumStandVal) sumStandVal.innerText = '160/600min';
+            if (sumDistanceVal) sumDistanceVal.innerText = '3.4km';
+            if (summaryBarsTrack) {
+              summaryBarsTrack.innerHTML = `
+                <div class="bar-col" style="height: 38%;"></div>
+                <div class="bar-col" style="height: 62%;"></div>
+                <div class="bar-col" style="height: 35%;"></div>
+                <div class="bar-col peak" style="height: 85%;"></div>
+                <div class="bar-col active-dark" style="height: 70%;"></div>
+                <div class="bar-col" style="height: 48%;"></div>
+                <div class="bar-col" style="height: 92%;"></div>
+                <div class="bar-col" style="height: 52%;"></div>
+                <div class="bar-col" style="height: 32%;"></div>
+              `;
+            }
+          } else if (mode === 'monthly') {
+            if (sumStepsVal) sumStepsVal.innerText = '68.500';
+            if (sumExerciseVal) sumExerciseVal.innerText = '1,120/2,400min';
+            if (sumStandVal) sumStandVal.innerText = '740/2,400min';
+            if (sumDistanceVal) sumDistanceVal.innerText = '28.6km';
+            if (summaryBarsTrack) {
+              summaryBarsTrack.innerHTML = `
+                <div class="bar-col" style="height: 70%;"></div>
+                <div class="bar-col" style="height: 85%;"></div>
+                <div class="bar-col" style="height: 65%;"></div>
+                <div class="bar-col" style="height: 75%;"></div>
+                <div class="bar-col peak" style="height: 100%;"></div>
+                <div class="bar-col active-dark" style="height: 80%;"></div>
+                <div class="bar-col" style="height: 88%;"></div>
+                <div class="bar-col" style="height: 92%;"></div>
+                <div class="bar-col" style="height: 78%;"></div>
+              `;
+            }
+          }
+        });
+      });
 
       // ----------------------------------------------------------------------
       // 5. Workouts Catalog Rendering & Filters
@@ -874,8 +1287,8 @@
                   <span><i class="bi bi-speedometer2 text-info me-1"></i>${w.difficulty}</span>
                 </div>
               </div>
-              <button type="button" class="btn-fitnexa btn-accent w-100 py-2 mt-2 btn-launch-catalog" data-id="${w.id}">
-                Start Protocol <i class="bi bi-arrow-right"></i>
+              <button type="button" class="btn-matte-glass btn-matte-lime w-100 mt-2 btn-launch-catalog" data-id="${w.id}">
+                Start Protocol
               </button>
             </div>
           </div>
