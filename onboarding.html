@@ -7,10 +7,10 @@
   <meta name="description" content="Personalize your FITNEXA AI training profile.">
   <meta name="theme-color" content="#0B0C0E">
 
-  <!-- Google Fonts: Outfit, Inter, JetBrains Mono -->
+  <!-- Google Font: Outfit (Weights 300-900) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Bootstrap 5.3.3 CSS & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -475,49 +475,72 @@
     }
 
     .btn-onboard-back {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
+      background: linear-gradient(180deg, rgba(26, 30, 38, 0.75) 0%, rgba(12, 14, 18, 0.88) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      color: #FFFFFF;
       font-family: var(--font-display);
-      font-size: 0.9rem;
-      font-weight: 500;
+      font-size: 0.92rem;
+      font-weight: 600;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 0;
-      transition: color 0.2s ease;
+      justify-content: center;
+      padding: 11px 28px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.16), 0 10px 24px -5px rgba(0, 0, 0, 0.8);
     }
 
     .btn-onboard-back:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      transform: translateY(-2px);
+      box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.22), 0 14px 34px -6px rgba(0, 0, 0, 0.9);
       color: #FFFFFF;
     }
 
     .btn-onboard-next {
-      background: var(--accent-lime);
-      border: none;
-      color: #0B0C0E;
+      background: 
+        radial-gradient(140% 160% at 50% 120%, rgba(198, 255, 61, 0.22) 0%, rgba(198, 255, 61, 0.04) 55%, transparent 80%),
+        linear-gradient(180deg, rgba(28, 32, 40, 0.8) 0%, rgba(14, 16, 21, 0.9) 100%);
+      border: 1px solid rgba(198, 255, 61, 0.35);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      color: #FFFFFF !important;
       font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 14px 36px;
-      border-radius: 14px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 11px 36px;
+      min-width: 180px;
+      height: 44px;
+      border-radius: var(--radius-md);
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(198, 255, 61, 0.3);
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -1px 6px 0 rgba(198, 255, 61, 0.12),
+        0 10px 28px -6px rgba(0, 0, 0, 0.8),
+        0 0 18px -2px rgba(198, 255, 61, 0.18);
     }
 
     .btn-onboard-next:hover {
-      background: var(--accent-lime-hover);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 28px rgba(198, 255, 61, 0.45);
+      transform: translateY(-2px);
+      border-color: rgba(198, 255, 61, 0.6);
+      box-shadow: 
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 10px 0 rgba(198, 255, 61, 0.22),
+        0 14px 34px -6px rgba(0, 0, 0, 0.9),
+        0 0 24px 2px rgba(198, 255, 61, 0.3);
     }
 
     .btn-onboard-next:active {
-      transform: scale(0.97);
+      transform: translateY(0) scale(0.98);
     }
 
     .btn-onboard-next.loading {
@@ -601,13 +624,21 @@
 </head>
 <body>
 
-  <div class="onboarding-container">
+  <!-- Ambient Light Fields & Subtle Mesh Grid (Matching Landing Page) -->
+  <div class="ambient-glow-wrapper">
+    <div class="ambient-glow-lime"></div>
+    <div class="ambient-glow-violet"></div>
+  </div>
+  <div class="tech-grid-bg"></div>
+
+  <div class="onboarding-container position-relative z-1">
     <!-- ========================================================================
          TOP PROGRESS HEADER
          ======================================================================== -->
     <header class="onboarding-top-bar" id="onboardingHeader">
-      <a href="index.html" class="nav-brand-logo" style="text-decoration:none; font-family: var(--font-display); font-size: 1.4rem; font-weight: 900; letter-spacing: 0.1em; color: #fff;">
-        FITNEXA<span style="color: var(--accent-lime);">.</span>
+      <a href="index.html" class="nav-brand-logo text-decoration-none">
+        FITNEXA
+        <span class="nav-brand-dot"></span>
       </a>
 
       <!-- 6-Step Progress Bar -->

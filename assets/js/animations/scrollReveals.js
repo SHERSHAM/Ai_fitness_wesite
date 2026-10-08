@@ -145,22 +145,24 @@ function initScrollAnimations() {
     }
   });
 
-  // Pricing Cards Reveal
-  gsap.fromTo('.pricing-card',
-    { opacity: 0, y: prefersReducedMotion ? 0 : 30 },
-    {
-      scrollTrigger: {
-        trigger: '.pricing-section',
-        start: 'top 90%',
-        toggleActions: 'play none none none'
-      },
-      y: 0,
-      opacity: 1,
-      duration: animDuration,
-      stagger: prefersReducedMotion ? 0 : 0.1,
-      ease: 'power3.out'
-    }
-  );
+  // Pricing Cards Reveal (if present)
+  if (document.querySelector('.pricing-card')) {
+    gsap.fromTo('.pricing-card',
+      { opacity: 0, y: prefersReducedMotion ? 0 : 30 },
+      {
+        scrollTrigger: {
+          trigger: '.pricing-section',
+          start: 'top 90%',
+          toggleActions: 'play none none none'
+        },
+        y: 0,
+        opacity: 1,
+        duration: animDuration,
+        stagger: prefersReducedMotion ? 0 : 0.1,
+        ease: 'power3.out'
+      }
+    );
+  }
 
   // Window load and resize refresh
   window.addEventListener('load', () => ScrollTrigger.refresh());

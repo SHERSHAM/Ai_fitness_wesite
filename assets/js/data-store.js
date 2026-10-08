@@ -396,6 +396,71 @@
     // ── PRELOADED DEMO USERS ─────────────────────────────────
     const SEED_USERS = [
         {
+            id: 'dev_lead_master',
+            fullName: 'Lead Developer',
+            email: 'developer@gmail.com',
+            password: 'developer123',
+            avatar: 'images/hero-athlete.webp',
+            memberSince: 'March 2026',
+            planTier: 'Developer / Master Access',
+            profile: {
+                fitnessGoal: 'Build Strength',
+                fitnessLevel: 'Advanced',
+                preferredTraining: ['Strength', 'HIIT', 'Mobility'],
+                trainingDays: 5,
+                sessionDuration: '60 minutes',
+                equipment: ['Full gym', 'Barbell', 'Dumbbells'],
+                environment: 'Gym',
+                additionalNotes: 'Developer environment root testing access.',
+                todayWorkoutId: 'upper-body-power'
+            },
+            dashboardStats: {
+                weeklyProgressPercent: 85,
+                workoutsCompleted: 4,
+                workoutsTarget: 5,
+                activeDays: 5,
+                caloriesBurned: 2680,
+                hoursTrained: 4.2,
+                recoveryScore: 94,
+                activeStreakDays: 14,
+                strengthGainPercent: 28,
+                enduranceGainPercent: 22,
+                consistencyPercent: 95
+            },
+            recovery: {
+                score: 94,
+                sleepHours: '8h 05m',
+                sleepEfficiency: 94,
+                restingHeartRate: 52,
+                hrv: 72,
+                trainingLoad: 'High',
+                readiness: 'Peak',
+                aiRecommendation: 'Lead Developer Profile active. Autonomic nervous system primed for peak performance testing.'
+            },
+            nutrition: {
+                calorieTarget: 2500,
+                proteinGrams: 175,
+                carbsGrams: 260,
+                fatGrams: 70,
+                waterLiters: 3.5,
+                meals: [
+                    { time: 'Breakfast', name: 'Oatmeal with Whey Isolate, Banana & Chia Seeds', calories: 480, protein: 38, carbs: 62, fat: 10 },
+                    { time: 'Lunch', name: 'Grilled Chicken Breast, Quinoa & Avocado Bowl', calories: 680, protein: 52, carbs: 65, fat: 18 },
+                    { time: 'Dinner', name: 'Wild Salmon Fillet with Sweet Potato Mash & Asparagus', calories: 640, protein: 48, carbs: 54, fat: 22 },
+                    { time: 'Snack', name: 'Greek Yogurt with Mixed Berries & Almonds', calories: 310, protein: 28, carbs: 22, fat: 11 }
+                ]
+            },
+            workoutHistory: [
+                { id: 'sess_dev_1', date: 'Today', workoutName: 'Upper Body Power', duration: '48 min', calories: 435, formScore: 98, completed: true },
+                { id: 'sess_dev_2', date: 'Yesterday', workoutName: 'Lower Body Hypertrophy', duration: '52 min', calories: 510, formScore: 95, completed: true },
+                { id: 'sess_dev_3', date: '3 days ago', workoutName: 'HIIT Metabolic Blaze', duration: '35 min', calories: 460, formScore: 97, completed: true }
+            ],
+            chatHistory: [
+                { sender: 'user', text: 'Run system calibration for today\'s workout protocol.' },
+                { sender: 'ai', text: 'Developer protocol initialized. Readiness score is 94% (Peak). Today\'s prescription is Upper Body Power — all sensors calibrated.' }
+            ]
+        },
+        {
             id: 'user_alex_mercer',
             fullName: 'Alex Mercer',
             email: 'alex@fitnexa.ai',
@@ -537,8 +602,13 @@
             if (!existingUsers) {
                 localStorage.setItem(STORAGE_KEY_PREFIX + 'users', JSON.stringify(SEED_USERS));
             } else {
-                // Verify valid JSON
-                JSON.parse(existingUsers);
+                // Verify valid JSON and ensure developer account exists
+                const parsed = JSON.parse(existingUsers);
+                const hasDev = parsed.some(u => u.email && u.email.toLowerCase() === 'developer@gmail.com');
+                if (!hasDev) {
+                    parsed.unshift(SEED_USERS[0]);
+                    localStorage.setItem(STORAGE_KEY_PREFIX + 'users', JSON.stringify(parsed));
+                }
             }
         } catch (e) {
             try {

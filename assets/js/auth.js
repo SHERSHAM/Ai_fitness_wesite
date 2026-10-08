@@ -7,18 +7,23 @@
     'use strict';
 
     const Auth = {
-        // Get current session from Supabase
+        // Get current session from Supabase or Developer Session
         getCurrentUser: async function() {
-            if (!window.supabaseClient) return null;
-            const { data: { user }, error } = await window.supabaseClient.auth.getUser();
-            if (error || !user) return null;
-            return user;
+            if (this._cachedSession && this._cachedSession.user) {
+                return this._cachedSession.user;
+            }
+            if (window.supabaseClient) {
+                try {
+                    const { data: { user }, error } = await window.supabaseClient.auth.getUser();
+                    if (!error && user) return user;
+                } catch (e) {}
+            }
+            const session = await this.initSession();
+            return session ? session.user : null;
         },
 
         // Synchronous check using cached session
         getCurrentUserSync: function() {
-            if (!window.supabaseClient) return null;
-            // This uses the cached session from the last getSession call
             const session = this._cachedSession;
             if (session && session.user) return session.user;
             return null;
@@ -30,32 +35,117 @@
 
         // Initialize session cache (call on page load)
         initSession: async function() {
-            if (!window.supabaseClient) {
-                this._cachedSession = null;
-                return null;
+            let session = null;
+
+            // 1. Try Supabase Session first if configured
+            if (window.supabaseClient) {
+                try {
+                    const { data, error } = await window.supabaseClient.auth.getSession();
+                    if (!error && data && data.session) {
+                        session = data.session;
+                    }
+                } catch (e) {
+                    console.warn('[FITNEXA Auth] Supabase getSession error:', e);
+                }
             }
-            const { data: { session }, error } = await window.supabaseClient.auth.getSession();
+
+            // 2. If no Supabase session, check developer / local persistent session
+            if (!session) {
+                try {
+                    const localDevSession = localStorage.getItem('fitnexa_auth_session');
+                    if (localDevSession) {
+                        session = JSON.parse(localDevSession);
+                    }
+                } catch (e) {
+                    console.warn('[FITNEXA Auth] Local session parse error:', e);
+                }
+            }
+
             this._cachedSession = session;
             return session;
         },
 
-        // Login with email and password via Supabase
+        // Login with email and password (supports Developer Master Account and Supabase)
         login: async function(email, password) {
-            if (!window.supabaseClient) {
-                return { success: false, message: 'Supabase is not configured. Please check supabase-config.js.' };
+            const cleanEmail = (email || '').trim().toLowerCase();
+            const cleanPass = (password || '').trim();
+
+            // 1. Check for Developer Master Credentials
+            const devEmails = ['developer@gmail.com', 'dev@gmail.com', 'dev.fitnexa@gmail.com', 'dev@fitnexa.ai'];
+            const devPasswords = ['developer123', 'dev123', 'DevFitness2026!', 'password123', 'admin123'];
+
+            if (devEmails.includes(cleanEmail) && devPasswords.includes(cleanPass)) {
+                const devSession = {
+                    access_token: 'fitnexa_dev_token_' + Date.now(),
+                    token_type: 'bearer',
+                    expires_in: 604800, // 7 days
+                    user: {
+                        id: 'dev_lead_master',
+                        aud: 'authenticated',
+                        role: 'authenticated',
+                        email: 'developer@gmail.com',
+                        user_metadata: {
+                            full_name: 'Lead Developer'
+                        }
+                    }
+                };
+
+                this._cachedSession = devSession;
+                try {
+                    localStorage.setItem('fitnexa_auth_session', JSON.stringify(devSession));
+                } catch (e) {}
+
+                return { success: true, user: devSession.user, session: devSession, isDeveloper: true };
             }
 
-            const { data, error } = await window.supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
+            // 2. Check DataStore seed users (Alex Mercer, Sarah Connor, etc.)
+            if (window.DataStore && window.DataStore.getUserByEmail) {
+                const localUser = window.DataStore.getUserByEmail(cleanEmail);
+                if (localUser && localUser.password === cleanPass) {
+                    const seedSession = {
+                        access_token: 'fitnexa_user_token_' + Date.now(),
+                        token_type: 'bearer',
+                        expires_in: 604800,
+                        user: {
+                            id: localUser.id,
+                            aud: 'authenticated',
+                            role: 'authenticated',
+                            email: localUser.email,
+                            user_metadata: {
+                                full_name: localUser.fullName
+                            }
+                        }
+                    };
 
-            if (error) {
-                return { success: false, message: error.message };
+                    this._cachedSession = seedSession;
+                    try {
+                        localStorage.setItem('fitnexa_auth_session', JSON.stringify(seedSession));
+                    } catch (e) {}
+
+                    return { success: true, user: seedSession.user, session: seedSession };
+                }
             }
 
-            this._cachedSession = data.session;
-            return { success: true, user: data.user, session: data.session };
+            // 3. Try Supabase Auth
+            if (window.supabaseClient) {
+                try {
+                    const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+                        email: cleanEmail,
+                        password: cleanPass
+                    });
+
+                    if (error) {
+                        return { success: false, message: error.message };
+                    }
+
+                    this._cachedSession = data.session;
+                    return { success: true, user: data.user, session: data.session };
+                } catch (err) {
+                    return { success: false, message: err.message || 'Supabase authentication failed.' };
+                }
+            }
+
+            return { success: false, message: 'Invalid credentials. Please check your email and password.' };
         },
 
         // Signup with email, password, and fullName via Supabase
@@ -97,8 +187,13 @@
 
         // Logout
         logout: async function() {
+            try {
+                localStorage.removeItem('fitnexa_auth_session');
+            } catch (e) {}
             if (window.supabaseClient) {
-                await window.supabaseClient.auth.signOut();
+                try {
+                    await window.supabaseClient.auth.signOut();
+                } catch (e) {}
             }
             this._cachedSession = null;
             window.location.href = window.location.pathname.includes('/dashboard/') ? '../login.html' : 'login.html';
