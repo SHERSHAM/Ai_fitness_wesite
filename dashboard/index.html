@@ -855,12 +855,16 @@
 
       // Populate Header & Profile
       const firstName = user.fullName ? user.fullName.split(' ')[0] : 'Athlete';
-      document.getElementById('greetingTitle').innerText = `Good morning, ${firstName}.`;
-      document.getElementById('userDisplayName').innerText = user.fullName || 'Athlete';
-      document.getElementById('avatarInitial').innerText = (user.fullName || 'A').charAt(0).toUpperCase();
+      const elGreetingTitle = document.getElementById('greetingTitle');
+      if (elGreetingTitle) elGreetingTitle.innerText = `Good morning, ${firstName}.`;
+      const elUserDisplayName = document.getElementById('userDisplayName');
+      if (elUserDisplayName) elUserDisplayName.innerText = user.fullName || 'Athlete';
+      const elAvatarInitial = document.getElementById('avatarInitial');
+      if (elAvatarInitial) elAvatarInitial.innerText = (user.fullName || 'A').charAt(0).toUpperCase();
 
       const dateOpts = { weekday: 'long', month: 'short', day: 'numeric' };
-      document.getElementById('currentDateStr').innerText = `${new Date().toLocaleDateString('en-US', dateOpts).toUpperCase()} • PROTOCOL ACTIVE`;
+      const elCurrentDateStr = document.getElementById('currentDateStr');
+      if (elCurrentDateStr) elCurrentDateStr.innerText = `${new Date().toLocaleDateString('en-US', dateOpts).toUpperCase()} • PROTOCOL ACTIVE`;
 
       // ----------------------------------------------------------------------
       // 2. Render Metrics & KPIs
@@ -875,25 +879,69 @@
         const hours = ds.hoursTrained !== undefined ? ds.hoursTrained : 0;
         const streak = ds.activeStreakDays !== undefined ? ds.activeStreakDays : 0;
 
-        document.getElementById('statProgress').innerText = `${progress}%`;
-        document.getElementById('statWorkouts').innerText = `${completed} / ${target}`;
-        document.getElementById('statCalories').innerText = calories.toLocaleString();
-        document.getElementById('statActiveDays').innerText = days;
-        document.getElementById('statHours').innerText = `${Number(hours).toFixed(1)}h`;
-        document.getElementById('statStreak').innerText = `${streak} Days`;
-        document.getElementById('streakDisplay').innerText = `${streak} Day Streak`;
+        // Legacy / hidden KPI card fallbacks (safely guarded against null)
+        const statProgress = document.getElementById('statProgress');
+        if (statProgress) statProgress.innerText = `${progress}%`;
+        const statWorkouts = document.getElementById('statWorkouts');
+        if (statWorkouts) statWorkouts.innerText = `${completed} / ${target}`;
+        const statCalories = document.getElementById('statCalories');
+        if (statCalories) statCalories.innerText = calories.toLocaleString();
+        const statActiveDays = document.getElementById('statActiveDays');
+        if (statActiveDays) statActiveDays.innerText = days;
+        const statHours = document.getElementById('statHours');
+        if (statHours) statHours.innerText = `${Number(hours).toFixed(1)}h`;
+        const statStreak = document.getElementById('statStreak');
+        if (statStreak) statStreak.innerText = `${streak} Days`;
+
+        // Active Reference UI Goal Card & Streak Badge
+        const streakDisplay = document.getElementById('streakDisplay');
+        if (streakDisplay) streakDisplay.innerText = `${streak} Day Streak`;
+        const dashGoalPct = document.getElementById('dashGoalPct');
+        if (dashGoalPct) dashGoalPct.innerText = `${progress || (completed > 0 ? Math.min(100, completed * 25) : 45)}%`;
+        const goalBarFill = document.getElementById('goalBarFill');
+        if (goalBarFill) goalBarFill.style.width = `${progress || (completed > 0 ? Math.min(100, completed * 25) : 45)}%`;
+        const goalRatioText = document.getElementById('goalRatioText');
+        if (goalRatioText) goalRatioText.innerHTML = `<strong>${(calories || 2340).toLocaleString()}</strong>/8,000 kcal`;
 
         // Analytics Pane
-        document.getElementById('anaStrength').innerText = `+${ds.strengthGainPercent || 0}%`;
-        document.getElementById('barStrength').style.width = `${Math.min(100, (ds.strengthGainPercent || 0) * 3)}%`;
+        const anaStrength = document.getElementById('anaStrength');
+        if (anaStrength) anaStrength.innerText = `+${ds.strengthGainPercent || 0}%`;
+        const barStrength = document.getElementById('barStrength');
+        if (barStrength) barStrength.style.width = `${Math.min(100, (ds.strengthGainPercent || 0) * 3)}%`;
 
-        document.getElementById('anaEndurance').innerText = `+${ds.enduranceGainPercent || 0}%`;
-        document.getElementById('barEndurance').style.width = `${Math.min(100, (ds.enduranceGainPercent || 0) * 3)}%`;
+        const anaEndurance = document.getElementById('anaEndurance');
+        if (anaEndurance) anaEndurance.innerText = `+${ds.enduranceGainPercent || 0}%`;
+        const barEndurance = document.getElementById('barEndurance');
+        if (barEndurance) barEndurance.style.width = `${Math.min(100, (ds.enduranceGainPercent || 0) * 3)}%`;
 
-        document.getElementById('anaConsistency').innerText = `${ds.consistencyPercent || 0}%`;
-        document.getElementById('barConsistency').style.width = `${ds.consistencyPercent || 0}%`;
+        const anaConsistency = document.getElementById('anaConsistency');
+        if (anaConsistency) anaConsistency.innerText = `${ds.consistencyPercent || 0}%`;
+        const barConsistency = document.getElementById('barConsistency');
+        if (barConsistency) barConsistency.style.width = `${ds.consistencyPercent || 0}%`;
 
-        document.getElementById('anaCompletedCount').innerText = completed;
+        const anaCompletedCount = document.getElementById('anaCompletedCount');
+        if (anaCompletedCount) anaCompletedCount.innerText = completed;
+
+        const anaSummaryText = document.getElementById('anaSummaryText');
+        if (anaSummaryText) {
+          if (completed > 0) {
+            anaSummaryText.innerText = `Great job! You have logged ${completed} session(s) this week.`;
+          } else {
+            anaSummaryText.innerText = "Complete workouts from the catalog to build your biometric telemetry.";
+          }
+        }
+
+        // Calibrate Nutrition Targets from User Profile
+        if (user.nutrition) {
+          const nutriCalories = document.getElementById('nutriCalories');
+          if (nutriCalories && user.nutrition.calorieTarget) nutriCalories.innerText = user.nutrition.calorieTarget.toLocaleString();
+          const nutriProtein = document.getElementById('nutriProtein');
+          if (nutriProtein && user.nutrition.proteinGrams) nutriProtein.innerText = `${user.nutrition.proteinGrams}g`;
+          const nutriCarbs = document.getElementById('nutriCarbs');
+          if (nutriCarbs && user.nutrition.carbsGrams) nutriCarbs.innerText = `${user.nutrition.carbsGrams}g`;
+          const nutriFats = document.getElementById('nutriFats');
+          if (nutriFats && user.nutrition.fatGrams) nutriFats.innerText = `${user.nutrition.fatGrams}g`;
+        }
 
         // Render Recent Protocols List
         renderRecentWorkouts();
@@ -903,6 +951,7 @@
 
       function renderRecentWorkouts() {
         const list = document.getElementById('recentWorkoutsList');
+        if (!list) return;
         if (!user.workoutHistory || user.workoutHistory.length === 0) {
           list.innerHTML = `
             <div class="text-center py-4 text-secondary small font-mono" id="emptyWorkoutsNotice">
@@ -969,47 +1018,78 @@
         };
       }
 
-      document.getElementById('todayWorkoutName').innerText = activeWorkout.name;
-      document.getElementById('todayDuration').innerText = activeWorkout.duration;
-      document.getElementById('todayExercises').innerText = activeWorkout.exercises ? activeWorkout.exercises.length : 6;
-      document.getElementById('todayCalories').innerText = activeWorkout.calories;
+      const elTodayWorkoutName = document.getElementById('todayWorkoutName');
+      if (elTodayWorkoutName) elTodayWorkoutName.innerText = activeWorkout.name;
+      const elTodayDuration = document.getElementById('todayDuration');
+      if (elTodayDuration) elTodayDuration.innerText = activeWorkout.duration;
+      const elTodayExercises = document.getElementById('todayExercises');
+      if (elTodayExercises) elTodayExercises.innerText = activeWorkout.exercises ? activeWorkout.exercises.length : 6;
+      const elTodayCalories = document.getElementById('todayCalories');
+      if (elTodayCalories) elTodayCalories.innerText = activeWorkout.calories;
 
       // ----------------------------------------------------------------------
-      // 4. Tab Navigation (All Navbar Elements Working)
+      // 4. Tab Navigation (All Navbar & Sidebar Elements Fully Connected)
       // ----------------------------------------------------------------------
       const navLinks = document.querySelectorAll('.dash-nav-link');
       const tabPanes = document.querySelectorAll('.dash-tab-pane');
 
-      function switchTab(tabKey) {
+      function normalizeTab(rawKey) {
+        if (!rawKey) return 'dashboard';
+        const k = String(rawKey).toLowerCase().replace(/[-_#]/g, '').trim();
+        if (k === 'aicoach' || k === 'coach') return 'aicoach';
+        if (k === 'progress' || k === 'analytics') return 'analytics';
+        if (k === 'workout' || k === 'workouts') return 'workouts';
+        if (k === 'nutrition' || k === 'meals' || k === 'meal') return 'nutrition';
+        if (k === 'setting' || k === 'settings') return 'settings';
+        if (k === 'dashboard' || k === 'home') return 'dashboard';
+        return k;
+      }
+
+      function switchTab(rawKey) {
+        const tabKey = normalizeTab(rawKey);
+
         if (tabKey === 'mood') {
           showToast("Readiness Score: 94% • CNS Recovery Optimal • Peak HRV: 78ms");
           return;
         }
         if (tabKey === 'profile') {
-          showToast(`Athlete Profile: ${user.name || 'Athlete'} • Goal: ${user.goal || 'General Fitness'} • Calibrated Active`);
+          showToast(`Athlete Profile: ${user.fullName || user.name || 'Athlete'} • Goal: ${(user.profile && user.profile.fitnessGoal) || 'General Fitness'} • Calibrated Active`);
           return;
         }
 
+        // Activate matching nav links
         navLinks.forEach(link => {
-          if (link.getAttribute('data-tab') === tabKey) {
+          const linkTab = normalizeTab(link.getAttribute('data-tab'));
+          if (linkTab === tabKey) {
             link.classList.add('active');
           } else {
             link.classList.remove('active');
           }
         });
 
+        // Activate matching tab panes
+        const targetPaneId = ('pane' + tabKey.charAt(0).toUpperCase() + tabKey.slice(1)).toLowerCase();
         tabPanes.forEach(pane => {
-          const paneId = 'pane' + tabKey.charAt(0).toUpperCase() + tabKey.slice(1);
-          if (pane.id.toLowerCase() === paneId.toLowerCase()) {
+          if (pane.id.toLowerCase() === targetPaneId) {
             pane.classList.add('active');
           } else {
             pane.classList.remove('active');
           }
         });
 
+        // Update URL hash cleanly without forcing page jumps
+        if (window.location.hash !== '#' + tabKey) {
+          try {
+            history.replaceState(null, '', '#' + tabKey);
+          } catch (e) {
+            window.location.hash = '#' + tabKey;
+          }
+        }
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
+      // Attach click listeners to all sidebar and header nav links
       navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
@@ -1270,10 +1350,25 @@
           return;
         }
 
-        catalogGrid.innerHTML = list.map(w => `
+        if (!catalogGrid) return;
+
+        const catImages = {
+          'strength': '../assets/images/workout-strength.webp',
+          'hiit': '../assets/images/workout-hiit.webp',
+          'fat loss': '../assets/images/workout-fatloss.webp',
+          'muscle': '../assets/images/workout-muscle.webp',
+          'muscle building': '../assets/images/workout-muscle.webp',
+          'endurance': '../assets/images/workout-endurance.webp',
+          'mobility': '../assets/images/workout-mobility.webp'
+        };
+
+        catalogGrid.innerHTML = list.map(w => {
+          const catKey = (w.category || '').toLowerCase();
+          const imgSrc = catImages[catKey] || '../assets/images/workout-muscle.webp';
+          return `
           <div class="workout-catalog-card">
             <div class="workout-card-img-wrap">
-              <img src="../assets/images/workout-muscle.jpg" alt="${w.name}" class="workout-card-img">
+              <img src="${imgSrc}" alt="${w.name}" class="workout-card-img" onerror="this.src='../assets/images/workout-muscle.jpg'">
               <span class="badge bg-dark bg-opacity-75 text-lime border border-lime position-absolute top-0 start-0 m-3 font-mono" style="font-size: 0.72rem;">
                 ${w.category || 'Strength'}
               </span>
@@ -1292,7 +1387,8 @@
               </button>
             </div>
           </div>
-        `).join('');
+        `;
+        }).join('');
 
         // Attach launch listeners
         document.querySelectorAll('.btn-launch-catalog').forEach(btn => {
@@ -1567,11 +1663,18 @@
         });
       }
 
-      // Check URL hash on initial load (e.g. #workouts, #nutrition)
-      const hash = window.location.hash.replace('#', '');
-      if (hash && ['dashboard', 'workouts', 'nutrition', 'analytics', 'aicoach'].includes(hash)) {
-        switchTab(hash);
+      // Check URL hash on initial load (e.g. #workouts, #nutrition, #analytics, #aicoach, #settings)
+      const initialHash = window.location.hash.replace('#', '');
+      if (initialHash) {
+        switchTab(initialHash);
       }
+
+      window.addEventListener('hashchange', () => {
+        const currentHash = window.location.hash.replace('#', '');
+        if (currentHash) {
+          switchTab(currentHash);
+        }
+      });
     });
   </script>
 </body>
